@@ -7,15 +7,17 @@ body {
     margin: 0;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevents scrollbars from appearing */
 }
 
 .circles-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Prevents wrapping to new lines */
     justify-content: center;
     align-items: center;
     gap: 20px;
     padding: 20px;
+    overflow: auto; /* Allows horizontal scrolling if needed */
 }
 
 .circle-group {
@@ -23,16 +25,15 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
-    width: 100%;
-    max-width: 400px; /* Ensures the circles don’t grow too large */
+    flex: 1 0 0; /* Allows the circle groups to grow and shrink equally */
 }
 
 .circle {
     position: relative;
-    width: 100%;
-    max-width: 400px; /* Limits maximum width */
-    height: auto;
-    aspect-ratio: 1 / 1; /* Maintains a square aspect ratio */
+    width: 30vw; /* Adjusts width based on viewport width */
+    height: 30vw; /* Maintains a square aspect ratio */
+    max-width: 300px; /* Maximum width to prevent excessive scaling */
+    max-height: 300px; /* Maximum height to prevent excessive scaling */
     border: 5px solid black;
     border-radius: 50%;
     background-color: white;
@@ -48,8 +49,8 @@ body {
 
 .text {
     position: absolute;
-    color: rgba(0, 0, 0, 0.2);
-    font-size: 2.5vw; /* Responsive font size */
+    color: rgba(0, 0, 0, 1);
+    font-size: 5vw; /* Responsive font size */
     line-height: 1.2;
     transition: transform 0.3s, text-shadow 0.3s;
     z-index: 1;
@@ -99,4 +100,19 @@ input[type=range] {
 .slider-group label {
     margin-bottom: 5px;
     font-size: 16px;
+}
+
+/* Media Queries for Smaller Screens */
+@media (max-width: 800px) {
+    .circle {
+        width: 40vw; /* Adjust size for smaller screens */
+        height: 40vw; /* Maintain aspect ratio */
+    }
+}
+
+@media (max-width: 500px) {
+    .circle {
+        width: 50vw; /* Further adjust size for very small screens */
+        height: 50vw; /* Maintain aspect ratio */
+    }
 }
