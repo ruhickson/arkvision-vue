@@ -6,26 +6,33 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
 }
 
 .circles-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    gap: 20px;
+    padding: 20px;
 }
 
 .circle-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
     position: relative;
+    width: 100%;
+    max-width: 400px; /* Ensures the circles don’t grow too large */
 }
 
 .circle {
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    max-width: 400px; /* Limits maximum width */
+    height: auto;
+    aspect-ratio: 1 / 1; /* Maintains a square aspect ratio */
     border: 5px solid black;
     border-radius: 50%;
     background-color: white;
@@ -41,8 +48,8 @@ body {
 
 .text {
     position: absolute;
-    color: rgba(0, 0, 0, 1);
-    font-size: 44px;
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 2.5vw; /* Responsive font size */
     line-height: 1.2;
     transition: transform 0.3s, text-shadow 0.3s;
     z-index: 1;
@@ -78,16 +85,18 @@ body {
 }
 
 input[type=range] {
-    width: 400px;
+    width: 100%;
+    max-width: 400px; /* Ensures sliders are responsive */
 }
 
 .slider-group {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
 }
 
 .slider-group label {
-    margin-right: 10px;
+    margin-bottom: 5px;
     font-size: 16px;
 }
