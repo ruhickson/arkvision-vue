@@ -368,22 +368,39 @@ function initializeGlaucomaGrid() {
     });
 }
 
-// Initialize glaucoma grid and restore settings from URL when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    initializeGlaucomaGrid();
-    restoreFromURL();
-});
+// Simple XOR + base64 encode/decode for demo purposes
+const XOR_KEY = 42;
+function xorEncrypt(str) {
+    return btoa(Array.from(str).map(c => String.fromCharCode(c.charCodeAt(0) ^ XOR_KEY)).join(''));
+}
+function xorDecrypt(str) {
+    return atob(str).split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ XOR_KEY)).join('');
+}
 
-// Save configuration button functionality
+// Save configuration button functionality (encrypted)
 const saveConfigButton = document.getElementById('saveConfigButton');
-
 saveConfigButton.addEventListener('click', async () => {
+    // Gather all relevant state
+    const params = {};
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+        params[slider.id] = slider.value;
+    });
+    document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
+        const cells = Array.from(grid.querySelectorAll('.grid-cell'));
+        let binary = '';
+        cells.forEach(cell => {
+            binary += cell.classList.contains('active') ? '1' : '0';
+        });
+        params[`glaucoma${gridIndex + 1}`] = binary;
+    });
+    params.view = isSingleView ? 'single' : 'double';
+    // Encrypt
+    const encrypted = xorEncrypt(JSON.stringify(params));
+    const url = `${window.location.origin}${window.location.pathname}?s=${encodeURIComponent(encrypted)}`;
     try {
-        await navigator.clipboard.writeText(window.location.href);
+        await navigator.clipboard.writeText(url);
         saveConfigButton.textContent = 'Copied!';
         saveConfigButton.classList.add('copied');
-        
-        // Reset button text after 2 seconds
         setTimeout(() => {
             saveConfigButton.textContent = 'Share';
             saveConfigButton.classList.remove('copied');
@@ -394,5 +411,72 @@ saveConfigButton.addEventListener('click', async () => {
         setTimeout(() => {
             saveConfigButton.textContent = 'Share';
         }, 2000);
+    }
+});
+
+// On load, if ?s= is present, decrypt and restore state
+function restoreFromEncrypted() {
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get('s');
+    if (s) {
+        try {
+            const decoded = xorDecrypt(decodeURIComponent(s));
+            const state = JSON.parse(decoded);
+            // Restore sliders
+            document.querySelectorAll('input[type="range"]').forEach(slider => {
+                if (state[slider.id] !== undefined) {
+                    slider.value = state[slider.id];
+                    slider.dispatchEvent(new Event('input'));
+                }
+            });
+            // Restore glaucoma
+            document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
+                const binary = state[`glaucoma${gridIndex + 1}`];
+                if (binary && binary.length === 16) {
+                    const cells = Array.from(grid.querySelectorAll('.grid-cell'));
+                    cells.forEach((cell, i) => {
+                        if (binary[i] === '1') {
+                            cell.classList.add('active');
+                            const circle = grid.closest('.circle-group').querySelector('.circle');
+                            const overlay = circle.querySelector('.glaucoma-overlay');
+                            const segment = overlay.querySelectorAll('.glaucoma-segment')[i];
+                            if (segment) segment.style.opacity = '1';
+                        } else {
+                            cell.classList.remove('active');
+                            const circle = grid.closest('.circle-group').querySelector('.circle');
+                            const overlay = circle.querySelector('.glaucoma-overlay');
+                            const segment = overlay.querySelectorAll('.glaucoma-segment')[i];
+                            if (segment) segment.style.opacity = '0';
+                        }
+                    });
+                }
+            });
+            // Restore view
+            if (state.view === 'single') {
+                isSingleView = true;
+                viewToggle.textContent = 'Switch to Double View';
+                circleGroups.forEach((group, index) => {
+                    group.style.display = index === 0 ? 'flex' : 'none';
+                });
+            } else {
+                isSingleView = false;
+                viewToggle.textContent = 'Switch to Single View';
+                circleGroups.forEach(group => {
+                    group.style.display = 'flex';
+                });
+            }
+            return true;
+        } catch (e) {
+            console.error('Failed to decrypt or parse state:', e);
+        }
+    }
+    return false;
+}
+
+// Initialize glaucoma grid and restore settings from URL when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeGlaucomaGrid();
+    if (!restoreFromEncrypted()) {
+        restoreFromURL();
     }
 });
