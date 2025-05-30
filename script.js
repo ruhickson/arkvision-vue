@@ -20,6 +20,17 @@ function updateURL() {
     sliders.forEach(slider => {
         params.set(slider.id, slider.value);
     });
+    
+    // Add glaucoma state to URL as a 16-character binary string
+    document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
+        const cells = Array.from(grid.querySelectorAll('.grid-cell'));
+        let binary = '';
+        cells.forEach(cell => {
+            binary += cell.classList.contains('active') ? '1' : '0';
+        });
+        params.set(`glaucoma${gridIndex + 1}`, binary);
+    });
+    
     // Add view state to URL
     params.set('view', isSingleView ? 'single' : 'double');
     const newURL = `${window.location.pathname}?${params.toString()}`;
@@ -36,6 +47,31 @@ function restoreFromURL() {
             slider.value = value;
             // Trigger input event to update visual effects
             slider.dispatchEvent(new Event('input'));
+        }
+    });
+    
+    // Restore glaucoma state from 16-character binary string
+    document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
+        const binary = params.get(`glaucoma${gridIndex + 1}`);
+        if (binary && binary.length === 16) {
+            const cells = Array.from(grid.querySelectorAll('.grid-cell'));
+            cells.forEach((cell, i) => {
+                if (binary[i] === '1') {
+                    cell.classList.add('active');
+                    // Show overlay
+                    const circle = grid.closest('.circle-group').querySelector('.circle');
+                    const overlay = circle.querySelector('.glaucoma-overlay');
+                    const segment = overlay.querySelectorAll('.glaucoma-segment')[i];
+                    if (segment) segment.style.opacity = '1';
+                } else {
+                    cell.classList.remove('active');
+                    // Hide overlay
+                    const circle = grid.closest('.circle-group').querySelector('.circle');
+                    const overlay = circle.querySelector('.glaucoma-overlay');
+                    const segment = overlay.querySelectorAll('.glaucoma-segment')[i];
+                    if (segment) segment.style.opacity = '0';
+                }
+            });
         }
     });
     
@@ -243,8 +279,8 @@ document.getElementById('sizeSlider2').addEventListener('input', function() {
 // Reset functionality
 const resetButton = document.getElementById('resetButton');
 const defaultValues = {
-    colorSlider1: 50,
-    colorSlider2: 50,
+    colorSlider1: 0,
+    colorSlider2: 0,
     blurSlider1: 0,
     blurSlider2: 0,
     curtainSlider1: 0,
@@ -265,14 +301,78 @@ function resetToDefaults() {
         // Trigger the input event to update the visual effects
         slider.dispatchEvent(new Event('input'));
     });
+    
+    // Reset glaucoma state
+    document.querySelectorAll('.glaucoma-grid').forEach(grid => {
+        grid.querySelectorAll('.grid-cell').forEach(cell => {
+            cell.classList.remove('active');
+        });
+    });
+    document.querySelectorAll('.glaucoma-overlay').forEach(overlay => {
+        overlay.querySelectorAll('.glaucoma-segment').forEach(segment => {
+            segment.style.opacity = '0';
+        });
+    });
+    
     // Clear URL parameters after reset
     window.history.replaceState({}, '', window.location.pathname);
 }
 
 resetButton.addEventListener('click', resetToDefaults);
 
-// Restore settings from URL when page loads
-document.addEventListener('DOMContentLoaded', restoreFromURL);
+// Glaucoma grid functionality
+function initializeGlaucomaGrid() {
+    const circleGroups = document.querySelectorAll('.circle-group');
+    
+    circleGroups.forEach((group, groupIndex) => {
+        const circle = group.querySelector('.circle');
+        const grid = group.querySelector('.glaucoma-grid');
+        
+        // Create overlay container if it doesn't exist
+        let overlay = circle.querySelector('.glaucoma-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'glaucoma-overlay';
+            circle.appendChild(overlay);
+        }
+        
+        // Create segments for each grid cell
+        const segments = new Map();
+        grid.querySelectorAll('.grid-cell').forEach(cell => {
+            const [row, col] = cell.dataset.position.split(',').map(Number);
+            const segment = document.createElement('div');
+            segment.className = 'glaucoma-segment';
+            
+            // Calculate segment position and size
+            const segmentWidth = circle.offsetWidth / 4;
+            const segmentHeight = circle.offsetHeight / 4;
+            segment.style.width = `${segmentWidth}px`;
+            segment.style.height = `${segmentHeight}px`;
+            segment.style.left = `${col * segmentWidth}px`;
+            segment.style.top = `${row * segmentHeight}px`;
+            segment.style.opacity = '0';
+            
+            overlay.appendChild(segment);
+            segments.set(cell, segment);
+        });
+        
+        // Add click handlers
+        grid.querySelectorAll('.grid-cell').forEach(cell => {
+            cell.addEventListener('click', () => {
+                const segment = segments.get(cell);
+                const isActive = cell.classList.toggle('active');
+                segment.style.opacity = isActive ? '1' : '0';
+                updateURL();
+            });
+        });
+    });
+}
+
+// Initialize glaucoma grid and restore settings from URL when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeGlaucomaGrid();
+    restoreFromURL();
+});
 
 // Save configuration button functionality
 const saveConfigButton = document.getElementById('saveConfigButton');
