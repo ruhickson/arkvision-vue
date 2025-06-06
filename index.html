@@ -6,59 +6,6 @@
     <title>Vision Simulator</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .header {
-            background-color: #2196F3;
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 10;
-            max-width: 100vw;
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            white-space: nowrap;
-        }
-        .header-links {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .header-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        .header-links a:hover {
-            text-decoration: underline;
-        }
-        @media (max-width: 700px) {
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0.5rem 0;
-            }
-            .header-links {
-                margin-top: 0.5rem;
-            }
-        }
         body {
             margin: 0;
             padding: 0;
@@ -82,6 +29,33 @@
             width: 100%;
             max-width: 1200px;
         }
+        .background-text {
+            color: #b0b0b0;
+            font-size: 1.5rem;
+            letter-spacing: 0.2rem;
+            z-index: 0;
+            opacity: 0.7;
+            pointer-events: none;
+            width: 100%;
+            left: 0;
+            top: 0;
+            text-align: center;
+            line-height: 1.1;
+        }
+        .t-row {
+            width: 100%;
+            text-align: center;
+        }
+        .t-row.t-offset {
+            margin-left: 1.2rem;
+        }
+        .foreground-text {
+            color: #222;
+            font-size: 2.2rem;
+            letter-spacing: 0.7rem;
+            z-index: 1;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +65,8 @@
             <nav class="header-links">
                 <a href="index.html">Vision Simulator</a>
                 <a href="common-eye-issues.html">Common Eye Issues</a>
+                <a href="eye-care-resources.html">Eye Care Resources</a>
+                <a href="about.html">About</a>
             </nav>
         </div>
     </header>
@@ -100,7 +76,13 @@
         <div class="circles-container" id="circlesContainer">
             <div class="circle-group">
                 <div class="circle" id="circle1">
-                    <div class="text" id="text1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                    <div class="text background-text" id="backgroundText1">
+                        <div class="t-row">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                        <div class="t-row t-offset">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                        <div class="t-row">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                        <div class="t-row t-offset">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                    </div>
+                    <div class="text foreground-text" id="foregroundText1">U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U</div>
                     <div class="veil" id="veil1"></div>
                     <div class="floaters" id="floaters1"></div>
                 </div>
@@ -112,6 +94,14 @@
                     <div class="slider-group">
                         <label for="blurSlider1">Blur</label>
                         <input type="range" min="0" max="10" value="0" id="blurSlider1" aria-label="Adjust blur">
+                    </div>
+                    <div class="slider-group">
+                        <label for="blurUpCloseSlider1">Blur Up Close</label>
+                        <input type="range" min="0" max="10" value="0" id="blurUpCloseSlider1" aria-label="Adjust blur up close">
+                    </div>
+                    <div class="slider-group">
+                        <label for="blurFarAwaySlider1">Blur Far Away</label>
+                        <input type="range" min="0" max="10" value="0" id="blurFarAwaySlider1" aria-label="Adjust blur far away">
                     </div>
                     <div class="slider-group">
                         <label for="curtainSlider1">Curtain</label>
@@ -162,7 +152,13 @@
             </div>
             <div class="circle-group">
                 <div class="circle" id="circle2">
-                    <div class="text" id="text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                    <div class="text background-text" id="backgroundText2">
+                        <div class="t-row">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                        <div class="t-row t-offset">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                        <div class="t-row">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                        <div class="t-row t-offset">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
+                    </div>
+                    <div class="text foreground-text" id="foregroundText2">U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U</div>
                     <div class="veil" id="veil2"></div>
                     <div class="floaters" id="floaters2"></div>
                 </div>
@@ -174,6 +170,14 @@
                     <div class="slider-group">
                         <label for="blurSlider2">Blur</label>
                         <input type="range" min="0" max="10" value="0" id="blurSlider2" aria-label="Adjust blur">
+                    </div>
+                    <div class="slider-group">
+                        <label for="blurUpCloseSlider2">Blur Up Close</label>
+                        <input type="range" min="0" max="10" value="0" id="blurUpCloseSlider2" aria-label="Adjust blur up close">
+                    </div>
+                    <div class="slider-group">
+                        <label for="blurFarAwaySlider2">Blur Far Away</label>
+                        <input type="range" min="0" max="10" value="0" id="blurFarAwaySlider2" aria-label="Adjust blur far away">
                     </div>
                     <div class="slider-group">
                         <label for="curtainSlider2">Curtain</label>
@@ -224,6 +228,7 @@
             </div>
         </div>
         <button class="save-config-button" id="saveConfigButton">Share</button>
+        <button class="diagnose-button" id="diagnoseButton">Diagnose</button>
     </div>
     <script src="script.js"></script>
 </body>

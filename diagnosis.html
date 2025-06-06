@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Diagnosis - ArkVision</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .disclaimer-container {
+            background-color: #fff3cd;
+            border: 2px solid #ffeeba;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .disclaimer-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        .disclaimer-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .disclaimer-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .disclaimer-checkbox label {
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .diagnosis-content {
+            opacity: 0.3;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .diagnosis-content.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .diagnosis-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .diagnosis-result {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .eye-diagnosis {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .eye-diagnosis:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .diagnosis-result h3 {
+            color: #2196F3;
+            margin-bottom: 15px;
+        }
+        .diagnosis-result p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .diagnosis-result ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .diagnosis-result li {
+            margin-bottom: 8px;
+        }
+        .diagnosis-result .next-steps {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+        }
+        .diagnosis-result .next-steps h4 {
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>ArkVision</h1>
+            <nav class="header-links">
+                <a href="index.html">Vision Simulator</a>
+                <a href="common-eye-issues.html">Common Eye Issues</a>
+                <a href="eye-care-resources.html">Eye Care Resources</a>
+                <a href="about.html">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="diagnosis-container">
+        <div class="disclaimer-container">
+            <div class="disclaimer-text">
+                <strong>Important Information:</strong> This tool uses an algorithm to assess your vision based on the symptoms you've selected. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of a qualified eye care professional for proper diagnosis and treatment of any eye conditions.
+            </div>
+            <div class="disclaimer-checkbox">
+                <input type="checkbox" id="disclaimer-checkbox">
+                <label for="disclaimer-checkbox">I understand that this is an algorithmic assessment and not a substitute for professional medical advice from a trained eye care professional.</label>
+            </div>
+        </div>
+
+        <div class="diagnosis-content" id="diagnosis-content">
+            <h2>Vision Diagnosis</h2>
+            <div class="diagnosis-result">
+                <div class="eye-diagnosis">
+                    <h3>Left Eye</h3>
+                    <div id="left-eye-diagnosis">
+                        <!-- Left eye diagnosis will be inserted here -->
+                    </div>
+                </div>
+                <div class="eye-diagnosis">
+                    <h3>Right Eye</h3>
+                    <div id="right-eye-diagnosis">
+                        <!-- Right eye diagnosis will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const leftEyeSymptoms = urlParams.get('leftEyeSymptoms') ? urlParams.get('leftEyeSymptoms').split(',') : [];
+        const rightEyeSymptoms = urlParams.get('rightEyeSymptoms') ? urlParams.get('rightEyeSymptoms').split(',') : [];
+        const leftEyeSeverity = urlParams.get('leftEyeSeverity') || 'mild';
+        const rightEyeSeverity = urlParams.get('rightEyeSeverity') || 'mild';
+
+        // Function to generate diagnosis based on symptoms
+        function generateDiagnosis(symptoms, severity) {
+            let diagnosis = '';
+            let recommendations = '';
+
+            // Map symptoms to conditions
+            const conditions = {
+                'blurred-vision': {
+                    mild: 'You may be experiencing mild blurred vision, which could be related to refractive errors or eye strain.',
+                    moderate: 'Your blurred vision appears to be moderate, which could indicate developing refractive errors or other eye conditions.',
+                    severe: 'Your severe blurred vision could indicate significant refractive errors or other serious eye conditions.'
+                },
+                'floaters': {
+                    mild: 'You may be experiencing mild floaters, which are common and usually harmless.',
+                    moderate: 'Your moderate floaters could be related to age-related changes in the vitreous humor.',
+                    severe: 'Your severe floaters, especially if sudden, could indicate a more serious condition.'
+                },
+                'light-sensitivity': {
+                    mild: 'You may be experiencing mild light sensitivity, which could be related to eye strain or minor inflammation.',
+                    moderate: 'Your moderate light sensitivity could indicate inflammation or other eye conditions.',
+                    severe: 'Your severe light sensitivity could indicate significant inflammation or other serious conditions.'
+                },
+                'eye-pain': {
+                    mild: 'You may be experiencing mild eye pain, which could be related to eye strain or minor irritation.',
+                    moderate: 'Your moderate eye pain could indicate inflammation or other eye conditions.',
+                    severe: 'Your severe eye pain could indicate a serious condition that requires immediate attention.'
+                },
+                'redness': {
+                    mild: 'You may be experiencing mild eye redness, which could be related to irritation or minor inflammation.',
+                    moderate: 'Your moderate eye redness could indicate inflammation or other eye conditions.',
+                    severe: 'Your severe eye redness could indicate significant inflammation or other serious conditions.'
+                }
+            };
+
+            // Generate diagnosis text
+            if (symptoms.length > 0) {
+                diagnosis = '<p>Based on your reported symptoms and their severity, here is what you might be experiencing:</p><ul>';
+                symptoms.forEach(symptom => {
+                    if (conditions[symptom]) {
+                        diagnosis += `<li>${conditions[symptom][severity]}</li>`;
+                    }
+                });
+                diagnosis += '</ul>';
+            } else {
+                diagnosis = '<p>No specific symptoms were reported for this eye. Please use the vision simulator to select your symptoms for a more accurate assessment.</p>';
+            }
+
+            return diagnosis;
+        }
+
+        // Generate recommendations based on both eyes
+        function generateRecommendations(leftEyeSymptoms, rightEyeSymptoms) {
+            const hasSymptoms = leftEyeSymptoms.length > 0 || rightEyeSymptoms.length > 0;
+            
+            if (!hasSymptoms) {
+                return '<p>No specific symptoms were reported. Please use the vision simulator to select your symptoms for a more accurate assessment.</p>';
+            }
+
+            return `
+                <div class="next-steps">
+                    <h4>Recommended Next Steps:</h4>
+                    <ul>
+                        <li>Schedule an appointment with an eye care professional for a comprehensive eye examination</li>
+                        <li>Keep track of your symptoms and their progression in both eyes</li>
+                        <li>Visit our <a href="eye-care-resources.html">Eye Care Resources</a> page for information about professional eye care services</li>
+                        <li>Learn more about common eye conditions on our <a href="common-eye-issues.html">Common Eye Issues</a> page</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Update diagnosis text for both eyes
+        document.getElementById('left-eye-diagnosis').innerHTML = generateDiagnosis(leftEyeSymptoms, leftEyeSeverity);
+        document.getElementById('right-eye-diagnosis').innerHTML = generateDiagnosis(rightEyeSymptoms, rightEyeSeverity);
+        
+        // Add recommendations after both eye diagnoses
+        const recommendations = generateRecommendations(leftEyeSymptoms, rightEyeSymptoms);
+        document.querySelector('.diagnosis-result').insertAdjacentHTML('beforeend', recommendations);
+
+        // Handle disclaimer checkbox
+        const checkbox = document.getElementById('disclaimer-checkbox');
+        const diagnosisContent = document.getElementById('diagnosis-content');
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                diagnosisContent.classList.add('active');
+            } else {
+                diagnosisContent.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -209,14 +209,62 @@ document.getElementById('colorSlider2').addEventListener('input', function() {
     updateURL();
 });
 
+const defaultValues = {
+    colorSlider1: 100,
+    colorSlider2: 100,
+    blurSlider1: 0,
+    blurSlider2: 0,
+    blurUpCloseSlider1: 0,
+    blurUpCloseSlider2: 0,
+    blurFarAwaySlider1: 0,
+    blurFarAwaySlider2: 0,
+    curtainSlider1: 0,
+    curtainSlider2: 0,
+    warpSlider1: 0,
+    warpSlider2: 0,
+    floatersSlider1: 0,
+    floatersSlider2: 0,
+    sizeSlider1: 10,
+    sizeSlider2: 10
+};
+
+function updateBlur(circleNum) {
+    const blur = Number(document.getElementById(`blurSlider${circleNum}`).value);
+    const blurUpClose = Number(document.getElementById(`blurUpCloseSlider${circleNum}`).value);
+    const blurFarAway = Number(document.getElementById(`blurFarAwaySlider${circleNum}`).value);
+    document.getElementById(`foregroundText${circleNum}`).style.filter = `blur(${blur + blurUpClose}px)`;
+    document.getElementById(`backgroundText${circleNum}`).style.filter = `blur(${blur + blurFarAway}px)`;
+}
+
 document.getElementById('blurSlider1').addEventListener('input', function() {
-    document.getElementById('circle1').style.filter = `blur(${this.value}px)`;
+    updateBlur(1);
+    updateURL();
+});
+document.getElementById('blurSlider2').addEventListener('input', function() {
+    updateBlur(2);
+    updateURL();
+});
+document.getElementById('blurUpCloseSlider1').addEventListener('input', function() {
+    updateBlur(1);
+    updateURL();
+});
+document.getElementById('blurUpCloseSlider2').addEventListener('input', function() {
+    updateBlur(2);
+    updateURL();
+});
+document.getElementById('blurFarAwaySlider1').addEventListener('input', function() {
+    updateBlur(1);
+    updateURL();
+});
+document.getElementById('blurFarAwaySlider2').addEventListener('input', function() {
+    updateBlur(2);
     updateURL();
 });
 
-document.getElementById('blurSlider2').addEventListener('input', function() {
-    document.getElementById('circle2').style.filter = `blur(${this.value}px)`;
-    updateURL();
+// On page load, initialize blur
+window.addEventListener('DOMContentLoaded', () => {
+    updateBlur(1);
+    updateBlur(2);
 });
 
 document.getElementById('curtainSlider1').addEventListener('input', function() {
@@ -236,12 +284,18 @@ document.getElementById('curtainSlider2').addEventListener('input', function() {
 });
 
 document.getElementById('warpSlider1').addEventListener('input', function() {
-    document.getElementById('text1').style.transform = `scaleX(${1 + this.value / 100}) scaleY(${1 - this.value / 200})`;
+    const scaleY = 1 - this.value / 100; // squeeze vertically as value increases
+    const scaleX = 1 + this.value / 200; // optional: slight horizontal stretch
+    document.getElementById('foregroundText1').style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
+    document.getElementById('backgroundText1').style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
     updateURL();
 });
 
 document.getElementById('warpSlider2').addEventListener('input', function() {
-    document.getElementById('text2').style.transform = `scaleX(${1 + this.value / 100}) scaleY(${1 - this.value / 200})`;
+    const scaleY = 1 - this.value / 100;
+    const scaleX = 1 + this.value / 200;
+    document.getElementById('foregroundText2').style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
+    document.getElementById('backgroundText2').style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
     updateURL();
 });
 
@@ -280,20 +334,6 @@ document.getElementById('sizeSlider2').addEventListener('input', function() {
 
 // Reset functionality
 const resetButton = document.getElementById('resetButton');
-const defaultValues = {
-    colorSlider1: 100,
-    colorSlider2: 100,
-    blurSlider1: 0,
-    blurSlider2: 0,
-    curtainSlider1: 0,
-    curtainSlider2: 0,
-    warpSlider1: 0,
-    warpSlider2: 0,
-    floatersSlider1: 0,
-    floatersSlider2: 0,
-    sizeSlider1: 10,
-    sizeSlider2: 10
-};
 
 function resetToDefaults() {
     // Reset all sliders to their default values
@@ -414,6 +454,15 @@ saveConfigButton.addEventListener('click', async () => {
             saveConfigButton.textContent = 'Share';
         }, 2000);
     }
+});
+
+// Diagnose button functionality
+const diagnoseButton = document.getElementById('diagnoseButton');
+diagnoseButton.addEventListener('click', () => {
+    // Update URL with current state before navigating
+    updateURL();
+    // Navigate to diagnosis page
+    window.location.href = 'diagnosis.html';
 });
 
 // On load, if ?s= is present, decrypt and restore state
