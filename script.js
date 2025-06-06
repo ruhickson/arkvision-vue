@@ -225,7 +225,9 @@ const defaultValues = {
     floatersSlider1: 0,
     floatersSlider2: 0,
     sizeSlider1: 10,
-    sizeSlider2: 10
+    sizeSlider2: 10,
+    hazeSlider1: 0,
+    hazeSlider2: 0
 };
 
 function updateBlur(circleNum) {
@@ -530,4 +532,158 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!restoreFromEncrypted()) {
         restoreFromURL();
     }
+    // Always start the animation loops for both eyes
+    startPersistentHazeAnimation(1);
+    startPersistentHazeAnimation(2);
+    // Set initial haze values from sliders
+    updateHazeMeshParams(1);
+    updateHazeMeshParams(2);
+});
+
+// Haze mesh overlay implementation
+function createOrGetHazeOverlay(circleNum) {
+    let haze = document.getElementById(`hazeOverlay${circleNum}`);
+    if (!haze) {
+        haze = document.createElement('canvas');
+        haze.id = `hazeOverlay${circleNum}`;
+        haze.className = 'haze-overlay';
+        haze.width = 300;
+        haze.height = 300;
+        haze.style.position = 'absolute';
+        haze.style.top = '0';
+        haze.style.left = '0';
+        haze.style.width = '100%';
+        haze.style.height = '100%';
+        haze.style.pointerEvents = 'none';
+        haze.style.zIndex = 10;
+        const circle = document.getElementById(`circle${circleNum}`);
+        circle.appendChild(haze);
+        console.log('Haze overlay created for circle', circleNum);
+    }
+    return haze;
+}
+
+let hazeAnimationIds = [null, null];
+// Persistent mesh state for each eye
+const hazeMeshState = [null, null];
+
+function createHazeMeshState(circleNum) {
+    const hazeSlider = document.getElementById(`hazeSlider${circleNum}`);
+    const hazeValue = Number(hazeSlider.value);
+    const minMeshLines = 10;
+    const maxMeshLines = 60;
+    const meshLines = Math.round(minMeshLines + (maxMeshLines - minMeshLines) * (hazeValue / 100));
+    const controlPoints = [];
+    for (let i = 0; i < meshLines; i++) {
+        controlPoints[i] = [];
+        for (let j = 0; j < meshLines; j++) {
+            controlPoints[i][j] = {
+                phase: Math.random() * Math.PI * 2,
+                baseX: i / (meshLines - 1),
+                baseY: j / (meshLines - 1)
+            };
+        }
+    }
+    return {
+        meshLines,
+        controlPoints,
+        t: 0,
+        hazeValue
+    };
+}
+
+function startPersistentHazeAnimation(circleNum) {
+    const haze = createOrGetHazeOverlay(circleNum);
+    const ctx = haze.getContext('2d');
+    // Only create mesh state once
+    if (!hazeMeshState[circleNum - 1]) {
+        hazeMeshState[circleNum - 1] = createHazeMeshState(circleNum);
+    }
+    function draw() {
+        const hazeSlider = document.getElementById(`hazeSlider${circleNum}`);
+        const hazeValue = Number(hazeSlider.value);
+        let state = hazeMeshState[circleNum - 1];
+        // If meshLines changed, re-create mesh
+        const minMeshLines = 10;
+        const maxMeshLines = 60;
+        const meshLines = Math.round(minMeshLines + (maxMeshLines - minMeshLines) * (hazeValue / 100));
+        if (state.meshLines !== meshLines) {
+            hazeMeshState[circleNum - 1] = state = createHazeMeshState(circleNum);
+        }
+        ctx.clearRect(0, 0, haze.width, haze.height);
+        if (hazeValue > 0) {
+            ctx.save();
+            ctx.globalAlpha = 0.25 + 0.65 * (hazeValue / 100); // More opaque haze
+            ctx.strokeStyle = '#bbb'; // Lighter grey
+            const minAmp = 2;
+            const maxAmp = 8;
+            const amplitude = minAmp + (maxAmp - minAmp) * (hazeValue / 100);
+            const minSpeed = 0.0002;
+            const maxSpeed = 0.002;
+            const speed = minSpeed + (maxSpeed - minSpeed) * (hazeValue / 100);
+            const rockAmplitude = 10 * (hazeValue / 100);
+            const rock = Math.sin(state.t * speed * 2) * rockAmplitude;
+            // Draw horizontal lines
+            for (let i = 0; i < meshLines; i++) {
+                ctx.beginPath();
+                for (let j = 0; j < meshLines; j++) {
+                    const pt = state.controlPoints[i][j];
+                    const x = pt.baseX * haze.width;
+                    const y = pt.baseY * haze.height;
+                    const offset = Math.sin(state.t * speed + pt.phase) * amplitude + rock;
+                    if (j === 0) {
+                        ctx.moveTo(x + offset, y + offset);
+                    } else {
+                        ctx.lineTo(x + offset, y + offset);
+                    }
+                }
+                ctx.stroke();
+            }
+            // Draw vertical lines
+            for (let j = 0; j < meshLines; j++) {
+                ctx.beginPath();
+                for (let i = 0; i < meshLines; i++) {
+                    const pt = state.controlPoints[i][j];
+                    const x = pt.baseX * haze.width;
+                    const y = pt.baseY * haze.height;
+                    const offset = Math.cos(state.t * speed + pt.phase) * amplitude + rock;
+                    if (i === 0) {
+                        ctx.moveTo(x + offset, y + offset);
+                    } else {
+                        ctx.lineTo(x + offset, y + offset);
+                    }
+                }
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+        state.t += 2;
+        hazeAnimationIds[circleNum - 1] = requestAnimationFrame(draw);
+    }
+    draw();
+}
+
+// On slider input, do not restart animation, just update mesh parameters
+function updateHazeMeshParams(circleNum) {
+    // No-op: mesh parameters are read live in the animation loop
+    // Make the foreground Us lighter and more transparent as haze increases
+    const fgText = document.getElementById(`foregroundText${circleNum}`);
+    if (fgText) {
+        // Interpolate from #222 (default) to #eee (very light) as hazeValue increases
+        const minColor = 34; // #222
+        const maxColor = 238; // #eee
+        const colorVal = Math.round(minColor + (maxColor - minColor) * (hazeValue / 100));
+        const opacity = 1 - (hazeValue / 100) * 0.95; // Almost invisible at max haze
+        fgText.style.setProperty('color', `rgb(${colorVal},${colorVal},${colorVal})`, 'important');
+        fgText.style.setProperty('opacity', opacity, 'important');
+    }
+}
+
+document.getElementById('hazeSlider1').addEventListener('input', function() {
+    updateHazeMeshParams(1);
+    updateURL();
+});
+document.getElementById('hazeSlider2').addEventListener('input', function() {
+    updateHazeMeshParams(2);
+    updateURL();
 });
