@@ -70,7 +70,8 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1>ArkVision</h1>
+            <h1><a href="index.html">ArkVision</a></h1>
+            <button class="mobile-menu-button">☰</button>
             <nav class="header-links">
                 <a href="index.html">Vision Simulator</a>
                 <a href="common-eye-issues.html">Common Eye Issues</a>
@@ -79,6 +80,21 @@
             </nav>
         </div>
     </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <h2>ArkVision</h2>
+            <button class="mobile-menu-close">×</button>
+        </div>
+        <nav class="mobile-menu-links">
+            <a href="index.html">Vision Simulator</a>
+            <a href="common-eye-issues.html">Common Eye Issues</a>
+            <a href="eye-care-resources.html">Eye Care Resources</a>
+            <a href="about.html">About</a>
+        </nav>
+    </div>
+
     <div class="main-content">
         <div class="resources-container">
             <h2>Eye Care Resources in Ireland</h2>
@@ -105,9 +121,9 @@
                 <h3>Professional Organizations</h3>
                 <ul class="resource-list">
                     <li class="resource-item">
-                        <a href="https://www.aoi.ie/" target="_blank">Association of Optometrists Ireland (AOI)</a>
+                        <a href="https://optometryireland.org/optometryireland.ie/OI_cms/" target="_blank">Optometry Ireland (OI)</a>
                         <div class="resource-description">
-                            Professional body representing optometrists in Ireland.
+                            Professional representative body for over 800 practising Optometrists in Ireland, ensuring high standards in clinical and dispensing eye-care services.
                         </div>
                     </li>
                     <li class="resource-item">
@@ -141,15 +157,9 @@
                         </div>
                     </li>
                     <li class="resource-item">
-                        <a href="https://www.ncbi.ie/" target="_blank">National Council for the Blind of Ireland (NCBI)</a>
+                        <a href="https://retina-international.org/" target="_blank">Retina International</a>
                         <div class="resource-description">
-                            Support services for people with sight loss.
-                        </div>
-                    </li>
-                    <li class="resource-item">
-                        <a href="https://www.retina.ie/" target="_blank">Retina International</a>
-                        <div class="resource-description">
-                            Global network of patient organisations supporting research into retinal diseases.
+                            Global network of patient organisations based in Dublin, focused on retinal degenerative diseases, research, and support.
                         </div>
                     </li>
                 </ul>
@@ -159,15 +169,15 @@
                 <h3>Government Resources</h3>
                 <ul class="resource-list">
                     <li class="resource-item">
-                        <a href="https://www.hse.ie/eng/services/list/3/acutehospitals/hospitals/eye-and-ear-hospital/" target="_blank">HSE Eye Care Services</a>
+                        <a href="https://www.hse.ie/eng/services/list/1/lho/dublinse/eye%20care/" target="_blank">HSE Primary Care Eye Team</a>
                         <div class="resource-description">
-                            Information about public eye care services and entitlements.
+                            Information about public eye care services in Dublin South East and Wicklow, including paediatric eye assessments, appointments, and educational resources.
                         </div>
                     </li>
                     <li class="resource-item">
-                        <a href="https://www.citizensinformation.ie/en/health/health_services/health_services_for_people_with_disabilities/health_services_for_people_with_visual_impairment.html" target="_blank">Citizens Information - Visual Impairment Services</a>
+                        <a href="https://www.citizensinformation.ie/en/money-and-tax/tax/tax-credits-and-reliefs-for-people-with-disabilities/tax-reliefs-for-people-with-a-visual-impairment/" target="_blank">Citizens Information - Tax Reliefs for Visual Impairment</a>
                         <div class="resource-description">
-                            Information about services and supports for people with visual impairment.
+                            Information about tax reliefs and financial supports available for people with visual impairment, including medical expenses and equipment.
                         </div>
                     </li>
                 </ul>
@@ -177,9 +187,9 @@
                 <h3>Research and Education</h3>
                 <ul class="resource-list">
                     <li class="resource-item">
-                        <a href="https://www.rcsi.com/dublin/research/research-themes/ophthalmology" target="_blank">RCSI Ophthalmology Research</a>
+                        <a href="https://www.tudublin.ie/noc/" target="_blank">National Optometry Centre (NOC) - TU Dublin</a>
                         <div class="resource-description">
-                            Research initiatives in ophthalmology at RCSI.
+                            State-of-the-art centre for optometry education, research, and specialist eye care services at TU Dublin Grangegorman.
                         </div>
                     </li>
                     <li class="resource-item">
@@ -192,5 +202,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        mobileMenuClose.addEventListener('click', toggleMobileMenu);
+        mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+    </script>
 </body>
 </html> 

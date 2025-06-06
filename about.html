@@ -84,7 +84,8 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1>ArkVision</h1>
+            <h1><a href="index.html">ArkVision</a></h1>
+            <button class="mobile-menu-button">☰</button>
             <nav class="header-links">
                 <a href="index.html">Vision Simulator</a>
                 <a href="common-eye-issues.html">Common Eye Issues</a>
@@ -94,58 +95,92 @@
         </div>
     </header>
 
-    <main class="about-container">
-        <div class="about-section">
-            <div class="profile-section">
-                <h2>Ru Hickson</h2>
-                <div class="profile-image">
-                    <img src="image.png" alt="Ru Hickson">
-                </div>
-            </div>
-            <h2>About the Creator</h2>
-            <p>
-                As a data analyst and software developer with a deep understanding of visual impairments, I created this tool to help others better understand and empathize with various eye conditions. My personal experience with glaucoma and uveitis has given me unique insights into the challenges faced by those with visual impairments.
-            </p>
-            <p>
-                This project combines my technical expertise with my firsthand knowledge of visual conditions. I believe that understanding these conditions is crucial for both healthcare professionals and the general public. By creating an interactive simulation, I hope to bridge the gap between medical descriptions and real-world experience,
-                making it easier to discuss visual conditions and their impact on daily life.
-            </p>
-            
-            <h3>Professional Background</h3>
-            <ul class="experience-list">
-                <li>
-                    <strong>Data Analyst</strong>
-                    Specializing in healthcare data analysis and visualization
-                </li>
-                <li>
-                    <strong>Software Developer</strong>
-                    Creating accessible and user-friendly applications
-                </li>
-                <li>
-                    <strong>Patient Advocate</strong>
-                    Living with and managing glaucoma and uveitis
-                </li>
-            </ul>
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <h2>ArkVision</h2>
+            <button class="mobile-menu-close">×</button>
+        </div>
+        <nav class="mobile-menu-links">
+            <a href="index.html">Vision Simulator</a>
+            <a href="common-eye-issues.html">Common Eye Issues</a>
+            <a href="eye-care-resources.html">Eye Care Resources</a>
+            <a href="about.html">About</a>
+        </nav>
+    </div>
 
-            <div class="motivation-section">
-                <h3>Why I Created This Tool</h3>
+    <div class="main-content">
+        <main class="about-container">
+            <div class="about-section">
+                <div class="profile-section">
+                    <h2>Ru Hickson</h2>
+                    <div class="profile-image">
+                        <img src="image.png" alt="Ru Hickson">
+                    </div>
+                </div>
+                <h2>About the Creator</h2>
                 <p>
-                    My journey with eye conditions began at the age of 7 when I developed my first cataract. Since then, 
-                    I have experienced a litany of eye issues, including glaucoma and uveitis. These personal experiences 
-                    have given me a deep understanding of the challenges faced by those with visual conditions.
+                    As a data analyst and software developer with a deep understanding of visual impairments, I created this tool to help others better understand and empathize with various eye conditions. My personal experience with glaucoma and uveitis has given me unique insights into the challenges faced by those with visual impairments.
                 </p>
                 <p>
-                    Having experienced the difficulties of explaining my visual conditions to others, I recognized the need 
-                    for a tool that could help people visualize and understand different eye conditions. This simulator 
-                    aims to make it easier for patients to communicate their visual experiences and for others to better 
-                    understand what living with these conditions means.
-                </p>
-                <p>
-                    My hope is that this tool will help bridge the gap between patients and their support networks, 
+                    This project combines my technical expertise with my firsthand knowledge of visual conditions. I believe that understanding these conditions is crucial for both healthcare professionals and the general public. By creating an interactive simulation, I hope to bridge the gap between medical descriptions and real-world experience,
                     making it easier to discuss visual conditions and their impact on daily life.
                 </p>
+                
+                <h3>Professional Background</h3>
+                <ul class="experience-list">
+                    <li>
+                        <strong>Data Analyst</strong>
+                        Specializing in healthcare data analysis and visualization
+                    </li>
+                    <li>
+                        <strong>Software Developer</strong>
+                        Creating accessible and user-friendly applications
+                    </li>
+                    <li>
+                        <strong>Patient Advocate</strong>
+                        Living with and managing glaucoma and uveitis
+                    </li>
+                </ul>
+
+                <div class="motivation-section">
+                    <h3>Why I Created This Tool</h3>
+                    <p>
+                        My journey with eye conditions began at the age of 7 when I developed my first cataract. Since then, 
+                        I have experienced a litany of eye issues, including glaucoma and uveitis. These personal experiences 
+                        have given me a deep understanding of the challenges faced by those with visual conditions.
+                    </p>
+                    <p>
+                        Having experienced the difficulties of explaining my visual conditions to others, I recognized the need 
+                        for a tool that could help people visualize and understand different eye conditions. This simulator 
+                        aims to make it easier for patients to communicate their visual experiences and for others to better 
+                        understand what living with these conditions means.
+                    </p>
+                    <p>
+                        My hope is that this tool will help bridge the gap between patients and their support networks, 
+                        making it easier to discuss visual conditions and their impact on daily life.
+                    </p>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        mobileMenuClose.addEventListener('click', toggleMobileMenu);
+        mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+    </script>
 </body>
 </html> 
