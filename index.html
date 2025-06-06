@@ -87,8 +87,8 @@
     </div>
 
     <div class="main-content">
-        <button class="view-toggle" id="viewToggle">Switch to Single View</button>
-        <button class="reset-button" id="resetButton">Reset</button>
+        <button class="view-toggle" id="viewToggle" title="Toggle between single-eye and double-eye simulation view">Switch to Single View</button>
+        <button class="reset-button" id="resetButton" title="Reset all settings to default">Reset</button>
         <div class="circles-container" id="circlesContainer">
             <div class="circle-group">
                 <div class="circle" id="circle1">
@@ -243,8 +243,11 @@
                 </div>
             </div>
         </div>
-        <button class="save-config-button" id="saveConfigButton">Share</button>
-        <button class="diagnose-button" id="diagnoseButton">Diagnose</button>
+        <button class="save-config-button" id="saveConfigButton" title="Copy a link to your current simulation settings">Share</button>
+        <button class="diagnose-button" id="diagnoseButton" title="Get a suggested diagnosis based on your current settings">Diagnose</button>
+        <div class="vision-circle" id="visionCircle">
+            <!-- Removed the eye image -->
+        </div>
     </div>
     <script src="script.js"></script>
     <script>
