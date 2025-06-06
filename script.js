@@ -195,14 +195,16 @@ function animateFloater(floater, x, y, radius, angle) {
 // Event handlers for sliders
 document.getElementById('colorSlider1').addEventListener('input', function() {
     const value = this.value;
-    const colorValue = Math.round((255 * (100 - value)) / 100);
+    // As value decreases, image gets darker
+    const colorValue = Math.round((255 * value) / 100);
     document.getElementById('circle1').style.backgroundColor = `rgb(${colorValue},${colorValue},${colorValue})`;
     updateURL();
 });
 
 document.getElementById('colorSlider2').addEventListener('input', function() {
     const value = this.value;
-    const colorValue = Math.round((255 * (100 - value)) / 100);
+    // As value decreases, image gets darker
+    const colorValue = Math.round((255 * value) / 100);
     document.getElementById('circle2').style.backgroundColor = `rgb(${colorValue},${colorValue},${colorValue})`;
     updateURL();
 });
@@ -279,8 +281,8 @@ document.getElementById('sizeSlider2').addEventListener('input', function() {
 // Reset functionality
 const resetButton = document.getElementById('resetButton');
 const defaultValues = {
-    colorSlider1: 0,
-    colorSlider2: 0,
+    colorSlider1: 100,
+    colorSlider2: 100,
     blurSlider1: 0,
     blurSlider2: 0,
     curtainSlider1: 0,

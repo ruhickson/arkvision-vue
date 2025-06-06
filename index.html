@@ -5,137 +5,226 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vision Simulator</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .header {
+            background-color: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            max-width: 100vw;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            white-space: nowrap;
+        }
+        .header-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .header-links a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 700px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.5rem 0;
+            }
+            .header-links {
+                margin-top: 0.5rem;
+            }
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+        }
+        .main-content {
+            padding: 0;
+            margin-top: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+        .circles-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+    </style>
 </head>
 <body>
-    <button class="view-toggle" id="viewToggle">Switch to Single View</button>
-    <button class="reset-button" id="resetButton">Reset</button>
-    <div class="circles-container" id="circlesContainer">
-        <div class="circle-group">
-            <div class="circle" id="circle1">
-                <div class="text" id="text1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                <div class="veil" id="veil1"></div>
-                <div class="floaters" id="floaters1"></div>
+    <header class="header">
+        <div class="header-content">
+            <h1>Vision Simulator</h1>
+            <nav class="header-links">
+                <a href="index.html">Vision Simulator</a>
+                <a href="common-eye-issues.html">Common Eye Issues</a>
+            </nav>
+        </div>
+    </header>
+    <div class="main-content">
+        <button class="view-toggle" id="viewToggle">Switch to Single View</button>
+        <button class="reset-button" id="resetButton">Reset</button>
+        <div class="circles-container" id="circlesContainer">
+            <div class="circle-group">
+                <div class="circle" id="circle1">
+                    <div class="text" id="text1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                    <div class="veil" id="veil1"></div>
+                    <div class="floaters" id="floaters1"></div>
+                </div>
+                <div class="controls">
+                    <div class="slider-group">
+                        <label for="colorSlider1">Brightness</label>
+                        <input type="range" min="0" max="100" value="100" id="colorSlider1" aria-label="Adjust brightness">
+                    </div>
+                    <div class="slider-group">
+                        <label for="blurSlider1">Blur</label>
+                        <input type="range" min="0" max="10" value="0" id="blurSlider1" aria-label="Adjust blur">
+                    </div>
+                    <div class="slider-group">
+                        <label for="curtainSlider1">Curtain</label>
+                        <input type="range" min="0" max="100" value="0" id="curtainSlider1" aria-label="Adjust curtain">
+                    </div>
+                    <div class="slider-group">
+                        <label for="warpSlider1">Warp</label>
+                        <input type="range" min="0" max="50" value="0" id="warpSlider1" aria-label="Adjust warp">
+                    </div>
+                    <div class="slider-group">
+                        <label for="floatersSlider1">Floaters</label>
+                        <input type="range" min="0" max="100" value="0" id="floatersSlider1" aria-label="Adjust floaters">
+                    </div>
+                    <div class="slider-group">
+                        <label for="sizeSlider1">Floater Size</label>
+                        <input type="range" min="1" max="20" value="10" id="sizeSlider1" aria-label="Adjust floater size">
+                    </div>
+                </div>
+                <div class="glaucoma-section">
+                    <h3 class="glaucoma-label">Sight Loss</h3>
+                    <div class="glaucoma-grid">
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="0,0"></div>
+                            <div class="grid-cell" data-position="0,1"></div>
+                            <div class="grid-cell" data-position="0,2"></div>
+                            <div class="grid-cell" data-position="0,3"></div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="1,0"></div>
+                            <div class="grid-cell" data-position="1,1"></div>
+                            <div class="grid-cell" data-position="1,2"></div>
+                            <div class="grid-cell" data-position="1,3"></div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="2,0"></div>
+                            <div class="grid-cell" data-position="2,1"></div>
+                            <div class="grid-cell" data-position="2,2"></div>
+                            <div class="grid-cell" data-position="2,3"></div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="3,0"></div>
+                            <div class="grid-cell" data-position="3,1"></div>
+                            <div class="grid-cell" data-position="3,2"></div>
+                            <div class="grid-cell" data-position="3,3"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="controls">
-                <div class="slider-group">
-                    <label for="colorSlider1">Brightness</label>
-                    <input type="range" min="0" max="100" value="0" id="colorSlider1" aria-label="Adjust brightness">
+            <div class="circle-group">
+                <div class="circle" id="circle2">
+                    <div class="text" id="text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                    <div class="veil" id="veil2"></div>
+                    <div class="floaters" id="floaters2"></div>
                 </div>
-                <div class="slider-group">
-                    <label for="blurSlider1">Blur</label>
-                    <input type="range" min="0" max="10" value="0" id="blurSlider1" aria-label="Adjust blur">
-                </div>
-                <div class="slider-group">
-                    <label for="curtainSlider1">Curtain</label>
-                    <input type="range" min="0" max="100" value="0" id="curtainSlider1" aria-label="Adjust curtain">
-                </div>
-                <div class="slider-group">
-                    <label for="warpSlider1">Warp</label>
-                    <input type="range" min="0" max="50" value="0" id="warpSlider1" aria-label="Adjust warp">
-                </div>
-                <div class="slider-group">
-                    <label for="floatersSlider1">Floaters</label>
-                    <input type="range" min="0" max="100" value="0" id="floatersSlider1" aria-label="Adjust floaters">
-                </div>
-                <div class="slider-group">
-                    <label for="sizeSlider1">Floater Size</label>
-                    <input type="range" min="1" max="20" value="10" id="sizeSlider1" aria-label="Adjust floater size">
-                </div>
-            </div>
-            <div class="glaucoma-section">
-                <h3 class="glaucoma-label">Glaucoma Loss</h3>
-                <div class="glaucoma-grid">
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="0,0"></div>
-                        <div class="grid-cell" data-position="0,1"></div>
-                        <div class="grid-cell" data-position="0,2"></div>
-                        <div class="grid-cell" data-position="0,3"></div>
+                <div class="controls">
+                    <div class="slider-group">
+                        <label for="colorSlider2">Brightness</label>
+                        <input type="range" min="0" max="100" value="100" id="colorSlider2" aria-label="Adjust brightness">
                     </div>
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="1,0"></div>
-                        <div class="grid-cell" data-position="1,1"></div>
-                        <div class="grid-cell" data-position="1,2"></div>
-                        <div class="grid-cell" data-position="1,3"></div>
+                    <div class="slider-group">
+                        <label for="blurSlider2">Blur</label>
+                        <input type="range" min="0" max="10" value="0" id="blurSlider2" aria-label="Adjust blur">
                     </div>
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="2,0"></div>
-                        <div class="grid-cell" data-position="2,1"></div>
-                        <div class="grid-cell" data-position="2,2"></div>
-                        <div class="grid-cell" data-position="2,3"></div>
+                    <div class="slider-group">
+                        <label for="curtainSlider2">Curtain</label>
+                        <input type="range" min="0" max="100" value="0" id="curtainSlider2" aria-label="Adjust curtain">
                     </div>
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="3,0"></div>
-                        <div class="grid-cell" data-position="3,1"></div>
-                        <div class="grid-cell" data-position="3,2"></div>
-                        <div class="grid-cell" data-position="3,3"></div>
+                    <div class="slider-group">
+                        <label for="warpSlider2">Warp</label>
+                        <input type="range" min="0" max="50" value="0" id="warpSlider2" aria-label="Adjust warp">
+                    </div>
+                    <div class="slider-group">
+                        <label for="floatersSlider2">Floaters</label>
+                        <input type="range" min="0" max="100" value="0" id="floatersSlider2" aria-label="Adjust floaters">
+                    </div>
+                    <div class="slider-group">
+                        <label for="sizeSlider2">Floater Size</label>
+                        <input type="range" min="1" max="20" value="10" id="sizeSlider2" aria-label="Adjust floater size">
+                    </div>
+                </div>
+                <div class="glaucoma-section">
+                    <h3 class="glaucoma-label">Sight Loss</h3>
+                    <div class="glaucoma-grid">
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="0,0"></div>
+                            <div class="grid-cell" data-position="0,1"></div>
+                            <div class="grid-cell" data-position="0,2"></div>
+                            <div class="grid-cell" data-position="0,3"></div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="1,0"></div>
+                            <div class="grid-cell" data-position="1,1"></div>
+                            <div class="grid-cell" data-position="1,2"></div>
+                            <div class="grid-cell" data-position="1,3"></div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="2,0"></div>
+                            <div class="grid-cell" data-position="2,1"></div>
+                            <div class="grid-cell" data-position="2,2"></div>
+                            <div class="grid-cell" data-position="2,3"></div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-cell" data-position="3,0"></div>
+                            <div class="grid-cell" data-position="3,1"></div>
+                            <div class="grid-cell" data-position="3,2"></div>
+                            <div class="grid-cell" data-position="3,3"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="circle-group">
-            <div class="circle" id="circle2">
-                <div class="text" id="text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                <div class="veil" id="veil2"></div>
-                <div class="floaters" id="floaters2"></div>
-            </div>
-            <div class="controls">
-                <div class="slider-group">
-                    <label for="colorSlider2">Brightness</label>
-                    <input type="range" min="0" max="100" value="0" id="colorSlider2" aria-label="Adjust brightness">
-                </div>
-                <div class="slider-group">
-                    <label for="blurSlider2">Blur</label>
-                    <input type="range" min="0" max="10" value="0" id="blurSlider2" aria-label="Adjust blur">
-                </div>
-                <div class="slider-group">
-                    <label for="curtainSlider2">Curtain</label>
-                    <input type="range" min="0" max="100" value="0" id="curtainSlider2" aria-label="Adjust curtain">
-                </div>
-                <div class="slider-group">
-                    <label for="warpSlider2">Warp</label>
-                    <input type="range" min="0" max="50" value="0" id="warpSlider2" aria-label="Adjust warp">
-                </div>
-                <div class="slider-group">
-                    <label for="floatersSlider2">Floaters</label>
-                    <input type="range" min="0" max="100" value="0" id="floatersSlider2" aria-label="Adjust floaters">
-                </div>
-                <div class="slider-group">
-                    <label for="sizeSlider2">Floater Size</label>
-                    <input type="range" min="1" max="20" value="10" id="sizeSlider2" aria-label="Adjust floater size">
-                </div>
-            </div>
-            <div class="glaucoma-section">
-                <h3 class="glaucoma-label">Glaucoma Loss</h3>
-                <div class="glaucoma-grid">
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="0,0"></div>
-                        <div class="grid-cell" data-position="0,1"></div>
-                        <div class="grid-cell" data-position="0,2"></div>
-                        <div class="grid-cell" data-position="0,3"></div>
-                    </div>
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="1,0"></div>
-                        <div class="grid-cell" data-position="1,1"></div>
-                        <div class="grid-cell" data-position="1,2"></div>
-                        <div class="grid-cell" data-position="1,3"></div>
-                    </div>
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="2,0"></div>
-                        <div class="grid-cell" data-position="2,1"></div>
-                        <div class="grid-cell" data-position="2,2"></div>
-                        <div class="grid-cell" data-position="2,3"></div>
-                    </div>
-                    <div class="grid-row">
-                        <div class="grid-cell" data-position="3,0"></div>
-                        <div class="grid-cell" data-position="3,1"></div>
-                        <div class="grid-cell" data-position="3,2"></div>
-                        <div class="grid-cell" data-position="3,3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <button class="save-config-button" id="saveConfigButton">Share</button>
     </div>
-    <button class="save-config-button" id="saveConfigButton">Share</button>
     <script src="script.js"></script>
 </body>
 </html>

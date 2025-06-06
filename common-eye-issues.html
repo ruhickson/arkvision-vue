@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Eye Issues</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .header {
+            background-color: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            max-width: 100vw;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            white-space: nowrap;
+        }
+        .header-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .header-links a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 700px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.5rem 0;
+            }
+            .header-links {
+                margin-top: 0.5rem;
+            }
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+        }
+        .main-content {
+            padding: 0;
+            margin-top: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+        .eye-issues-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .eye-issue {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .eye-issue h3 {
+            color: #2196F3;
+            margin-top: 0;
+        }
+        .eye-issue p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Vision Simulator</h1>
+            <nav class="header-links">
+                <a href="index.html">Vision Simulator</a>
+                <a href="common-eye-issues.html">Common Eye Issues</a>
+            </nav>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="eye-issues-container">
+            <div class="eye-issue">
+                <h3>Myopia (Nearsightedness)</h3>
+                <p>A condition where distant objects appear blurry while close objects can be seen clearly. This occurs when the eyeball is too long or the cornea is too curved, causing light to focus in front of the retina instead of on it.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Hyperopia (Farsightedness)</h3>
+                <p>The opposite of myopia, where close objects appear blurry while distant objects are clear. This happens when the eyeball is too short or the cornea is too flat, causing light to focus behind the retina.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Astigmatism</h3>
+                <p>An irregular curvature of the cornea or lens that causes blurred or distorted vision at all distances. It often occurs alongside myopia or hyperopia.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Presbyopia</h3>
+                <p>An age-related condition where the eye's lens becomes less flexible, making it difficult to focus on close objects. It typically begins around age 40 and is a natural part of aging.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Glaucoma</h3>
+                <p>A group of eye conditions that damage the optic nerve, often due to high pressure in the eye. It can lead to vision loss and blindness if not treated. Early stages often have no symptoms.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Cataracts</h3>
+                <p>A clouding of the eye's natural lens, leading to blurry vision, faded colors, and increased sensitivity to glare. It's common in older adults and can be treated with surgery.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Macular Degeneration</h3>
+                <p>An age-related condition affecting the macula (central part of the retina), leading to loss of central vision. It can make it difficult to read, drive, or recognize faces.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Diabetic Retinopathy</h3>
+                <p>A complication of diabetes that affects the blood vessels in the retina. It can cause vision loss and blindness if not managed properly.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Dry Eye Syndrome</h3>
+                <p>A condition where the eyes don't produce enough tears or the tears evaporate too quickly. It can cause discomfort, irritation, and sometimes blurred vision.</p>
+            </div>
+
+            <div class="eye-issue">
+                <h3>Color Blindness</h3>
+                <p>A condition where people have difficulty distinguishing between certain colors, most commonly red and green. It's usually inherited and more common in males.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
