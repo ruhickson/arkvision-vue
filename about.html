@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Vision Simulator</title>
+    <title>About - ArkVision</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         .about-container {
@@ -14,28 +14,42 @@
         .about-section {
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .profile-section {
+            text-align: center;
             margin-bottom: 30px;
         }
-        .about-section h2 {
+        .profile-section h2 {
             color: #2196F3;
-            margin-top: 0;
             margin-bottom: 20px;
-        }
-        .about-section p {
-            line-height: 1.6;
-            color: #333;
-            margin-bottom: 20px;
+            font-size: 2em;
         }
         .profile-image {
             width: 200px;
             height: 200px;
+            margin: 0 auto 30px;
             border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .profile-image img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            margin: 20px auto;
-            display: block;
-            border: 4px solid #2196F3;
+        }
+        .about-section h2 {
+            color: #2196F3;
+            margin-bottom: 20px;
+        }
+        .about-section p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .about-section p:last-child {
+            margin-bottom: 0;
         }
         .experience-list {
             list-style: none;
@@ -70,7 +84,7 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1>Vision Simulator</h1>
+            <h1>ArkVision</h1>
             <nav class="header-links">
                 <a href="index.html">Vision Simulator</a>
                 <a href="common-eye-issues.html">Common Eye Issues</a>
@@ -79,53 +93,59 @@
             </nav>
         </div>
     </header>
-    <div class="main-content">
-        <div class="about-container">
-            <div class="about-section">
-                <img src="image.png" alt="Creator's Photo" class="profile-image">
-                <h2>About the Creator</h2>
-                <p>
-                    As a data analyst and software developer with personal experience living with glaucoma and uveitis, 
-                    I understand firsthand the challenges of explaining visual conditions to others. This project was born 
-                    from my desire to bridge the communication gap between patients, healthcare providers, and loved ones.
-                </p>
-                
-                <h3>Professional Background</h3>
-                <ul class="experience-list">
-                    <li>
-                        <strong>Data Analyst</strong>
-                        Specializing in healthcare data analysis and visualization
-                    </li>
-                    <li>
-                        <strong>Software Developer</strong>
-                        Creating accessible and user-friendly applications
-                    </li>
-                    <li>
-                        <strong>Patient Advocate</strong>
-                        Living with and managing glaucoma and uveitis
-                    </li>
-                </ul>
 
-                <div class="motivation-section">
-                    <h3>Why I Created This Tool</h3>
-                    <p>
-                        My journey with eye conditions began at the age of 7 when I developed my first cataract. Since then, 
-                        I have experienced a litany of eye issues, including glaucoma and uveitis. These personal experiences 
-                        have given me a deep understanding of the challenges faced by those with visual conditions.
-                    </p>
-                    <p>
-                        Having experienced the difficulties of explaining my visual conditions to others, I recognized the need 
-                        for a tool that could help people visualize and understand different eye conditions. This simulator 
-                        aims to make it easier for patients to communicate their visual experiences and for others to better 
-                        understand what living with these conditions means.
-                    </p>
-                    <p>
-                        My hope is that this tool will help bridge the gap between patients and their support networks, 
-                        making it easier to discuss visual conditions and their impact on daily life.
-                    </p>
+    <main class="about-container">
+        <div class="about-section">
+            <div class="profile-section">
+                <h2>Ru Hickson</h2>
+                <div class="profile-image">
+                    <img src="image.png" alt="Ru Hickson">
                 </div>
             </div>
+            <h2>About the Creator</h2>
+            <p>
+                As a data analyst and software developer with a deep understanding of visual impairments, I created this tool to help others better understand and empathize with various eye conditions. My personal experience with glaucoma and uveitis has given me unique insights into the challenges faced by those with visual impairments.
+            </p>
+            <p>
+                This project combines my technical expertise with my firsthand knowledge of visual conditions. I believe that understanding these conditions is crucial for both healthcare professionals and the general public. By creating an interactive simulation, I hope to bridge the gap between medical descriptions and real-world experience,
+                making it easier to discuss visual conditions and their impact on daily life.
+            </p>
+            
+            <h3>Professional Background</h3>
+            <ul class="experience-list">
+                <li>
+                    <strong>Data Analyst</strong>
+                    Specializing in healthcare data analysis and visualization
+                </li>
+                <li>
+                    <strong>Software Developer</strong>
+                    Creating accessible and user-friendly applications
+                </li>
+                <li>
+                    <strong>Patient Advocate</strong>
+                    Living with and managing glaucoma and uveitis
+                </li>
+            </ul>
+
+            <div class="motivation-section">
+                <h3>Why I Created This Tool</h3>
+                <p>
+                    My journey with eye conditions began at the age of 7 when I developed my first cataract. Since then, 
+                    I have experienced a litany of eye issues, including glaucoma and uveitis. These personal experiences 
+                    have given me a deep understanding of the challenges faced by those with visual conditions.
+                </p>
+                <p>
+                    Having experienced the difficulties of explaining my visual conditions to others, I recognized the need 
+                    for a tool that could help people visualize and understand different eye conditions. This simulator 
+                    aims to make it easier for patients to communicate their visual experiences and for others to better 
+                    understand what living with these conditions means.
+                </p>
+                <p>
+                    My hope is that this tool will help bridge the gap between patients and their support networks, 
+                    making it easier to discuss visual conditions and their impact on daily life.
+                </p>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 </html> 
