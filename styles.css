@@ -907,3 +907,14 @@ body.dark-mode .glaucoma-label {
     text-align: center;
     line-height: 1.1;
 }
+
+.t-row {
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+}
