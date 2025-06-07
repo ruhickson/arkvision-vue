@@ -743,6 +743,20 @@ if (!document.body.classList.contains('dark-mode')) {
 }
 
 const darkLightToggle = document.getElementById('darkLightToggle');
+if (darkLightToggle) {
+    darkLightToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        updateDarkLightButton();
+    });
+}
+const darkLightToggleDesktop = document.getElementById('darkLightToggleDesktop');
+if (darkLightToggleDesktop) {
+    darkLightToggleDesktop.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        updateDarkLightButton();
+    });
+}
+
 function updateDarkLightButton() {
     if (document.body.classList.contains('dark-mode')) {
         darkLightToggle.textContent = 'Dark';
@@ -750,11 +764,3 @@ function updateDarkLightButton() {
         darkLightToggle.textContent = 'Light';
     }
 }
-
-// Set initial button label
-updateDarkLightButton();
-
-darkLightToggle.addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-    updateDarkLightButton();
-});

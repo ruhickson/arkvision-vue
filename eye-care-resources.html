@@ -219,6 +219,28 @@
         mobileMenuButton.addEventListener('click', toggleMobileMenu);
         mobileMenuClose.addEventListener('click', toggleMobileMenu);
         mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+        function setDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('arkvision-dark-mode', '1');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('arkvision-dark-mode', '0');
+            }
+        }
+        const darkPref = localStorage.getItem('arkvision-dark-mode');
+        if (darkPref === '0') {
+            setDarkMode(false);
+        } else {
+            setDarkMode(true);
+        }
+        const darkLightToggle = document.getElementById('darkLightToggle');
+        if (darkLightToggle) {
+            darkLightToggle.addEventListener('click', function() {
+                setDarkMode(!document.body.classList.contains('dark-mode'));
+            });
+        }
     </script>
 </body>
 </html> 
