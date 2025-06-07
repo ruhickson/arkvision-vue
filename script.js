@@ -366,6 +366,9 @@ function resetToDefaults() {
         // Trigger the input event to update the visual effects
         slider.dispatchEvent(new Event('input'));
     });
+    // Ensure floaters are reset and animated for both eyes
+    createFloaters('floaters1', defaultValues.floatersSlider1, defaultValues.sizeSlider1);
+    createFloaters('floaters2', defaultValues.floatersSlider2, defaultValues.sizeSlider2);
     
     // Reset glaucoma state
     document.querySelectorAll('.glaucoma-grid').forEach(grid => {
