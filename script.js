@@ -95,12 +95,12 @@ function restoreFromURL() {
         const floaters1 = params.get('floatersSlider1');
         const size1 = params.get('sizeSlider1');
         if (floaters1 !== null && size1 !== null) {
-            debouncedCreateFloaters('floaters1', floaters1, size1);
+            createFloaters('floaters1', floaters1, size1);
         }
         const floaters2 = params.get('floatersSlider2');
         const size2 = params.get('sizeSlider2');
         if (floaters2 !== null && size2 !== null) {
-            debouncedCreateFloaters('floaters2', floaters2, size2);
+            createFloaters('floaters2', floaters2, size2);
         }
     }, 50);
 }
@@ -544,12 +544,12 @@ function restoreFromEncrypted() {
                 const floaters1 = state.floatersSlider1;
                 const size1 = state.sizeSlider1;
                 if (floaters1 !== null && size1 !== null) {
-                    debouncedCreateFloaters('floaters1', floaters1, size1);
+                    createFloaters('floaters1', floaters1, size1);
                 }
                 const floaters2 = state.floatersSlider2;
                 const size2 = state.sizeSlider2;
                 if (floaters2 !== null && size2 !== null) {
-                    debouncedCreateFloaters('floaters2', floaters2, size2);
+                    createFloaters('floaters2', floaters2, size2);
                 }
             }, 50);
             return true;
