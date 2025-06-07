@@ -1,6 +1,6 @@
-# ArkVision - Accessible Vision Simulator
+# ArkSight - Accessible Vision Simulator
 
-ArkVision is an interactive web-based tool designed to help people visualize and communicate their visual experiences. It provides an accessible platform for users to "draw" what they see with their eyes and share their vision with others.
+ArkSight is an interactive web-based tool designed to help people visualize and communicate their visual experiences. It provides an accessible platform for users to "draw" what they see with their eyes and share their vision with others.
 
 ## Key Features
 
