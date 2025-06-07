@@ -645,7 +645,7 @@ function startPersistentHazeAnimation(circleNum) {
             const maxSpeed = 0.002;
             const speed = minSpeed + (maxSpeed - minSpeed) * (hazeValue / 100);
             const rockAmplitude = 10 * (hazeValue / 100);
-            const rock = Math.sin(state.t * speed * 2) * rockAmplitude;
+            const rock = Math.sin(state.t * speed * 9) * rockAmplitude;
             // Draw horizontal lines
             for (let i = 0; i < meshLines; i++) {
                 ctx.beginPath();
