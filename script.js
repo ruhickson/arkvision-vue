@@ -540,6 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set initial haze values from sliders
     updateHazeMeshParams(1);
     updateHazeMeshParams(2);
+    updateLabels();
 });
 
 // Haze mesh overlay implementation
@@ -702,3 +703,16 @@ document.querySelector('.mobile-menu-close').addEventListener('click', () => {
 document.querySelector('.mobile-menu-overlay').addEventListener('click', () => {
     document.body.classList.remove('mobile-menu-open');
 });
+
+function updateLabels() {
+    const foregroundLabels = document.querySelectorAll('.foreground-label');
+    const backgroundLabels = document.querySelectorAll('.background-label');
+    
+    foregroundLabels.forEach(label => {
+        label.textContent = 'Close';
+    });
+    
+    backgroundLabels.forEach(label => {
+        label.textContent = 'Far';
+    });
+}
