@@ -83,7 +83,20 @@ function restoreFromURL() {
         circleGroups.forEach((group, index) => {
             group.style.display = index === 0 ? 'flex' : 'none';
         });
+    } else {
+        isSingleView = false;
+        viewToggle.textContent = 'Two Eyes';
+        circleGroups.forEach(group => {
+            group.style.display = 'flex';
+        });
     }
+    // Ensure floaters animation is started after restoring values
+    const floaters1 = document.getElementById('floatersSlider1').value;
+    const size1 = document.getElementById('sizeSlider1').value;
+    debouncedCreateFloaters('floaters1', floaters1, size1);
+    const floaters2 = document.getElementById('floatersSlider2').value;
+    const size2 = document.getElementById('sizeSlider2').value;
+    debouncedCreateFloaters('floaters2', floaters2, size2);
 }
 
 // View toggle functionality
@@ -520,6 +533,13 @@ function restoreFromEncrypted() {
                     group.style.display = 'flex';
                 });
             }
+            // Ensure floaters animation is started after restoring values
+            const floaters1 = document.getElementById('floatersSlider1').value;
+            const size1 = document.getElementById('sizeSlider1').value;
+            debouncedCreateFloaters('floaters1', floaters1, size1);
+            const floaters2 = document.getElementById('floatersSlider2').value;
+            const size2 = document.getElementById('sizeSlider2').value;
+            debouncedCreateFloaters('floaters2', floaters2, size2);
             return true;
         } catch (e) {
             console.error('Failed to decrypt or parse state:', e);
@@ -716,3 +736,25 @@ function updateLabels() {
         label.textContent = 'Far';
     });
 }
+
+// Set dark mode as default
+if (!document.body.classList.contains('dark-mode')) {
+    document.body.classList.add('dark-mode');
+}
+
+const darkLightToggle = document.getElementById('darkLightToggle');
+function updateDarkLightButton() {
+    if (document.body.classList.contains('dark-mode')) {
+        darkLightToggle.textContent = 'Dark';
+    } else {
+        darkLightToggle.textContent = 'Light';
+    }
+}
+
+// Set initial button label
+updateDarkLightButton();
+
+darkLightToggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    updateDarkLightButton();
+});

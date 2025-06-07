@@ -9,6 +9,16 @@ body {
     font-family: Arial, sans-serif;
     padding: 20px;
     box-sizing: border-box;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode {
+    background: #0f0f0f;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode .slider-group label {
+    color: #fff;
 }
 
 .header {
@@ -407,6 +417,10 @@ input[type=range]::-moz-range-thumb:hover {
     font-weight: 500;
 }
 
+body.dark-mode .glaucoma-label {
+    color: #fff;
+}
+
 .glaucoma-grid {
     display: flex;
     flex-direction: column;
@@ -744,27 +758,22 @@ input[type=range]::-moz-range-thumb:hover {
 
 .side-vertical-buttons {
     position: fixed;
-    top: 25%;
-    right: 0;
-    transform: translateY(0);
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     z-index: 1000;
     align-items: center;
-    height: auto;
+    gap: 16px;
 }
 
 .side-vertical-buttons button {
-    width: 100px;
+    width: 120px;
     height: 48px;
-    border-radius: 8px 8px 8px 8px;
-    writing-mode: horizontal-tb;
-    text-orientation: mixed;
-    transform: none;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
-    padding: 0 12px;
-    margin: 0 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -772,6 +781,8 @@ input[type=range]::-moz-range-thumb:hover {
     border: none;
     cursor: pointer;
     transition: background 0.3s;
+    margin: 0;
+    padding: 0 12px;
 }
 
 .view-toggle {
@@ -805,23 +816,57 @@ input[type=range]::-moz-range-thumb:hover {
 .diagnose-button:hover {
     background: #7B1FA2;
 }
+.dark-light-toggle {
+    background: #eee;
+    color: #222;
+}
+.dark-light-toggle:hover {
+    background: #ccc;
+}
+
+/* Remove old fixed positioning from individual buttons */
+.view-toggle,
+.reset-button,
+.save-config-button,
+.diagnose-button,
+.dark-light-toggle {
+    position: static;
+    top: auto;
+    right: auto;
+}
 
 @media (max-width: 768px) {
     .side-vertical-buttons {
+        position: fixed;
         top: auto;
         bottom: 10px;
         right: 0;
+        left: 0;
         flex-direction: row;
         justify-content: center;
         transform: none;
+        gap: 8px;
     }
     .side-vertical-buttons button {
         width: 60px;
-        height: 48px;
-        border-radius: 8px 8px 0 0;
-        writing-mode: horizontal-tb;
-        transform: none;
+        height: 44px;
         font-size: 0.9rem;
+        border-radius: 8px;
         margin: 0 4px;
+        padding: 0 6px;
     }
+}
+
+.background-text {
+    color: #808080;
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    z-index: 0;
+    opacity: 0.7;
+    pointer-events: none;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    line-height: 1.1;
 }
