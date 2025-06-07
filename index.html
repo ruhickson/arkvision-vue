@@ -87,8 +87,12 @@
     </div>
 
     <div class="main-content">
-        <button class="view-toggle" id="viewToggle" title="Toggle between single-eye and double-eye simulation view">Switch to Single View</button>
-        <button class="reset-button" id="resetButton" title="Reset all settings to default">Reset</button>
+        <div class="side-vertical-buttons">
+            <button class="view-toggle" id="viewToggle" title="Toggle between single-eye and double-eye simulation view">Switch to Single View</button>
+            <button class="reset-button" id="resetButton" title="Reset all settings to default">Reset</button>
+            <button class="save-config-button" id="saveConfigButton" title="Copy a link to your current simulation settings">Share</button>
+            <button class="diagnose-button" id="diagnoseButton" title="Get a suggested diagnosis based on your current settings">Diagnose</button>
+        </div>
         <div class="circles-container" id="circlesContainer">
             <div class="circle-group">
                 <div class="circle" id="circle1">
@@ -98,7 +102,7 @@
                         <div class="t-row">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
                         <div class="t-row t-offset">T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T T</div>
                     </div>
-                    <div class="text foreground-text" id="foregroundText1">U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U</div>
+                    <div class="text foreground-text" id="foregroundText1">U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U U</div>
                     <div class="veil" id="veil1"></div>
                     <div class="floaters" id="floaters1"></div>
                 </div>
@@ -251,8 +255,6 @@
                 </div>
             </div>
         </div>
-        <button class="save-config-button" id="saveConfigButton" title="Copy a link to your current simulation settings">Share</button>
-        <button class="diagnose-button" id="diagnoseButton" title="Get a suggested diagnosis based on your current settings">Diagnose</button>
         <div class="vision-circle" id="visionCircle">
             <!-- Removed the eye image -->
         </div>

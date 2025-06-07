@@ -79,7 +79,7 @@ function restoreFromURL() {
     const viewState = params.get('view');
     if (viewState === 'single') {
         isSingleView = true;
-        viewToggle.textContent = 'Switch to Double View';
+        viewToggle.textContent = 'One Eye';
         circleGroups.forEach((group, index) => {
             group.style.display = index === 0 ? 'flex' : 'none';
         });
@@ -92,9 +92,11 @@ const viewToggle = document.getElementById('viewToggle');
 const circlesContainer = document.getElementById('circlesContainer');
 const circleGroups = document.querySelectorAll('.circle-group');
 
+viewToggle.textContent = isSingleView ? 'One Eye' : 'Two Eyes';
+
 viewToggle.addEventListener('click', () => {
     isSingleView = !isSingleView;
-    viewToggle.textContent = isSingleView ? 'Switch to Double View' : 'Switch to Single View';
+    viewToggle.textContent = isSingleView ? 'One Eye' : 'Two Eyes';
     
     circleGroups.forEach((group, index) => {
         if (isSingleView) {
@@ -507,13 +509,13 @@ function restoreFromEncrypted() {
             // Restore view
             if (state.view === 'single') {
                 isSingleView = true;
-                viewToggle.textContent = 'Switch to Double View';
+                viewToggle.textContent = 'One Eye';
                 circleGroups.forEach((group, index) => {
                     group.style.display = index === 0 ? 'flex' : 'none';
                 });
             } else {
                 isSingleView = false;
-                viewToggle.textContent = 'Switch to Single View';
+                viewToggle.textContent = 'Two Eyes';
                 circleGroups.forEach(group => {
                     group.style.display = 'flex';
                 });
@@ -686,4 +688,17 @@ document.getElementById('hazeSlider1').addEventListener('input', function() {
 document.getElementById('hazeSlider2').addEventListener('input', function() {
     updateHazeMeshParams(2);
     updateURL();
+});
+
+// Mobile menu toggle
+document.querySelector('.mobile-menu-button').addEventListener('click', () => {
+    document.body.classList.add('mobile-menu-open');
+});
+
+document.querySelector('.mobile-menu-close').addEventListener('click', () => {
+    document.body.classList.remove('mobile-menu-open');
+});
+
+document.querySelector('.mobile-menu-overlay').addEventListener('click', () => {
+    document.body.classList.remove('mobile-menu-open');
 });
