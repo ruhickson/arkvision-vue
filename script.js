@@ -298,6 +298,34 @@ window.addEventListener('DOMContentLoaded', () => {
     updateBlur(2);
 });
 
+function createCurtain(containerId, intensity) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ''; // Clear existing curtain
+
+    const curtain = document.createElement('div');
+    curtain.className = 'curtain';
+    
+    // Set initial transform based on which eye
+    const isLeftEye = containerId === 'left-curtain-container';
+    const startAngle = isLeftEye ? -90 : 90; // -90 degrees for left eye (9 o'clock), 90 degrees for right eye (3 o'clock)
+    curtain.style.transform = `rotate(${startAngle}deg)`;
+    
+    // Adjust the transform origin to be at the top center
+    curtain.style.transformOrigin = 'top center';
+    
+    // Set the height based on intensity
+    const height = Math.min(100, intensity * 2); // Cap at 100%
+    curtain.style.height = `${height}%`;
+    
+    // Append as last child of the .circle container
+    const circle = container.closest('.circle');
+    if (circle) {
+        circle.appendChild(curtain);
+    } else {
+        container.appendChild(curtain);
+    }
+}
+
 document.getElementById('curtainSlider1').addEventListener('input', function() {
     const value = this.value;
     // Calculate radius based on the circle's diameter (200% to ensure full coverage)
