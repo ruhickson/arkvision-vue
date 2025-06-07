@@ -82,14 +82,22 @@ body.dark-mode .slider-group label {
 
 @media (max-width: 700px) {
     .header-content {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100%;
         padding: 0.5rem 1rem;
     }
     .header h1 {
         font-size: 1.2rem;
         margin: 0;
+        text-align: left;
+        flex: 1 1 auto;
+    }
+    .mobile-menu-button {
+        margin-left: auto;
+        flex: 0 0 auto;
+        align-self: center;
     }
     .header-links {
         margin-top: 0;
@@ -450,6 +458,7 @@ input[type=range]::-moz-range-thumb:hover {
     margin-top: 20px;
     width: 100%;
     max-width: 200px;
+    padding-bottom: 200px;
 }
 
 .glaucoma-label {
@@ -773,7 +782,7 @@ body.dark-mode .glaucoma-label {
 
 @media (max-width: 700px) {
     .main-content {
-        margin-top: 160px;
+        margin-top: 200px;
     }
 }
 
