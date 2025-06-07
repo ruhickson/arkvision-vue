@@ -972,3 +972,14 @@ body.dark-mode .glaucoma-label {
     pointer-events: none;
     z-index: 2;
 }
+
+@media (max-width: 768px) {
+    .mobile-menu-button {
+        display: block;
+    }
+}
+@media (max-width: 700px) {
+    .mobile-menu-button {
+        display: block;
+    }
+}
