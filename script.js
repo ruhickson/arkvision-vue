@@ -134,6 +134,14 @@ function createFloaters(containerId, intensity, size) {
     const container = document.getElementById(containerId);
     container.innerHTML = ''; // Clear existing floaters
 
+    // Find the parent .circle element to get its dimensions
+    const circle = container.closest('.circle');
+    const width = circle ? circle.offsetWidth : 400;
+    const height = circle ? circle.offsetHeight : 400;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const maxRadius = Math.min(width, height) / 2 - size / 2;
+
     // Increase the number of floaters significantly
     const numFloaters = Math.round(intensity * 2); // Changed from 0.1 to 2
     const fragment = document.createDocumentFragment();
@@ -144,11 +152,11 @@ function createFloaters(containerId, intensity, size) {
         floater.style.width = `${size}px`;
         floater.style.height = `${size}px`;
         
-        // Randomly position the floater within the circle
+        // Uniform random distribution within the circle
         const angle = Math.random() * 2 * Math.PI;
-        const radius = Math.random() * 200;
-        const x = 200 + radius * Math.cos(angle) - size / 2;
-        const y = 200 + radius * Math.sin(angle) - size / 2;
+        const radius = Math.sqrt(Math.random()) * maxRadius;
+        const x = centerX + radius * Math.cos(angle) - size / 2;
+        const y = centerY + radius * Math.sin(angle) - size / 2;
 
         floater.style.left = `${x}px`;
         floater.style.top = `${y}px`;
