@@ -90,13 +90,19 @@ function restoreFromURL() {
             group.style.display = 'flex';
         });
     }
-    // Ensure floaters animation is started after restoring values
-    const floaters1 = document.getElementById('floatersSlider1').value;
-    const size1 = document.getElementById('sizeSlider1').value;
-    debouncedCreateFloaters('floaters1', floaters1, size1);
-    const floaters2 = document.getElementById('floatersSlider2').value;
-    const size2 = document.getElementById('sizeSlider2').value;
-    debouncedCreateFloaters('floaters2', floaters2, size2);
+    // Ensure floaters animation is started after restoring values (use restored params, not slider values)
+    setTimeout(() => {
+        const floaters1 = params.get('floatersSlider1');
+        const size1 = params.get('sizeSlider1');
+        if (floaters1 !== null && size1 !== null) {
+            debouncedCreateFloaters('floaters1', floaters1, size1);
+        }
+        const floaters2 = params.get('floatersSlider2');
+        const size2 = params.get('sizeSlider2');
+        if (floaters2 !== null && size2 !== null) {
+            debouncedCreateFloaters('floaters2', floaters2, size2);
+        }
+    }, 50);
 }
 
 // View toggle functionality
@@ -533,13 +539,19 @@ function restoreFromEncrypted() {
                     group.style.display = 'flex';
                 });
             }
-            // Ensure floaters animation is started after restoring values
-            const floaters1 = document.getElementById('floatersSlider1').value;
-            const size1 = document.getElementById('sizeSlider1').value;
-            debouncedCreateFloaters('floaters1', floaters1, size1);
-            const floaters2 = document.getElementById('floatersSlider2').value;
-            const size2 = document.getElementById('sizeSlider2').value;
-            debouncedCreateFloaters('floaters2', floaters2, size2);
+            // Ensure floaters animation is started after restoring values (use restored params, not slider values)
+            setTimeout(() => {
+                const floaters1 = state.floatersSlider1;
+                const size1 = state.sizeSlider1;
+                if (floaters1 !== null && size1 !== null) {
+                    debouncedCreateFloaters('floaters1', floaters1, size1);
+                }
+                const floaters2 = state.floatersSlider2;
+                const size2 = state.sizeSlider2;
+                if (floaters2 !== null && size2 !== null) {
+                    debouncedCreateFloaters('floaters2', floaters2, size2);
+                }
+            }, 50);
             return true;
         } catch (e) {
             console.error('Failed to decrypt or parse state:', e);
@@ -557,7 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Always start the animation loops for both eyes
     startPersistentHazeAnimation(1);
     startPersistentHazeAnimation(2);
-    // Set initial haze values from sliders
     updateHazeMeshParams(1);
     updateHazeMeshParams(2);
     updateLabels();
