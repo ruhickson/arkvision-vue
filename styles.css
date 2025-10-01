@@ -1023,14 +1023,13 @@ body.dark-mode .glaucoma-label {
     
     .accessible-btn {
         font-size: 0.7rem !important;
-        padding: 3px 6px !important;
+        padding: 4px 8px !important;
         white-space: nowrap !important;
         flex-shrink: 0 !important;
         margin-left: 0 !important;
         min-width: auto !important;
-        max-width: 60px !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        max-width: 90px !important;
+        overflow: visible !important;
     }
     
     /* Fix main content spacing */
@@ -1120,8 +1119,8 @@ body.dark-mode .glaucoma-label {
     
     .accessible-btn {
         font-size: 0.65rem !important;
-        padding: 2px 4px !important;
-        max-width: 50px !important;
+        padding: 3px 6px !important;
+        max-width: 80px !important;
     }
 }
 
@@ -1138,8 +1137,8 @@ body.dark-mode .glaucoma-label {
     
     .accessible-btn {
         font-size: 0.6rem !important;
-        padding: 1px 3px !important;
-        max-width: 45px !important;
+        padding: 2px 4px !important;
+        max-width: 75px !important;
     }
     
     .side-vertical-buttons button {
