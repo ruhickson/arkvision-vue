@@ -1001,13 +1001,14 @@ body.dark-mode .glaucoma-label {
         flex-direction: row !important;
         align-items: center !important;
         justify-content: space-between !important;
-        padding: 0.5rem 1rem !important;
+        padding: 0.5rem 0.75rem !important;
         width: 100% !important;
         box-sizing: border-box !important;
+        gap: 8px !important;
     }
     
     .header h1 {
-        font-size: 1.1rem !important;
+        font-size: 1rem !important;
         margin: 0 !important;
         flex: 1 !important;
         min-width: 0 !important;
@@ -1017,12 +1018,13 @@ body.dark-mode .glaucoma-label {
     }
     
     .accessible-btn {
-        font-size: 0.8rem !important;
-        padding: 6px 10px !important;
+        font-size: 0.75rem !important;
+        padding: 4px 8px !important;
         white-space: nowrap !important;
         flex-shrink: 0 !important;
-        margin-left: 10px !important;
+        margin-left: 0 !important;
         min-width: auto !important;
+        max-width: 80px !important;
     }
     
     /* Fix main content spacing */
@@ -1101,13 +1103,19 @@ body.dark-mode .glaucoma-label {
 
 /* Extra small screens */
 @media (max-width: 480px) {
+    .header-content {
+        padding: 0.5rem 0.5rem !important;
+        gap: 4px !important;
+    }
+    
     .header h1 {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
     }
     
     .accessible-btn {
         font-size: 0.7rem !important;
-        padding: 4px 8px !important;
+        padding: 3px 6px !important;
+        max-width: 70px !important;
     }
     
     .side-vertical-buttons button {
