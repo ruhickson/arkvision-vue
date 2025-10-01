@@ -1,4 +1,4 @@
 /* Ported global styles from root styles.css */
 /* Minimal import: copy as-is for now */
-@import url('../../../styles.css');
+@import url('../../styles.css');
 
