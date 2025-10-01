@@ -1,5 +1,23 @@
 <template>
   <div>
+    <!-- Mobile Action Buttons -->
+    <div class="mobile-actions">
+      <button class="mobile-action-btn" id="mobileResetButton" title="Reset all settings">
+        <i class="fas fa-redo action-icon"></i>
+      </button>
+      <button class="mobile-action-btn" id="mobileShareButton" title="Share current settings">
+        <i class="fas fa-share action-icon"></i>
+      </button>
+      <button class="mobile-action-btn" id="mobileDiagnoseButton" title="Get diagnosis">
+        <i class="fas fa-search action-icon"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Notification Popup -->
+    <div class="mobile-notification" id="mobileNotification">
+      <span id="mobileNotificationText"></span>
+    </div>
+    
     <div class="side-buttons-card">
       <div class="side-vertical-buttons">
         <button class="view-toggle" id="viewToggle" title="Toggle between single-eye and double-eye simulation view">Switch to Single View</button>
@@ -468,6 +486,17 @@ function startHazeAnimation(circleNum) {
 onMounted(() => {
   // Default dark mode on
   document.body.classList.add('dark-mode')
+  
+  // Set mobile default to single-eye view
+  const isMobile = window.innerWidth <= 768
+  if (isMobile) {
+    const circleGroups = document.querySelectorAll('.circle-group')
+    circleGroups.forEach((group, index) => {
+      group.style.display = index === 1 ? 'none' : 'flex'
+    })
+    const viewToggle = document.getElementById('viewToggle')
+    if (viewToggle) viewToggle.textContent = 'Two Eyes'
+  }
   // Encrypted restore first if present
   const s = new URLSearchParams(window.location.search).get('s')
   if (s) {
@@ -521,18 +550,25 @@ onMounted(() => {
   // View toggle
   let isSingleView = false
   const viewToggle = document.getElementById('viewToggle')
+  const mobileViewToggle = document.getElementById('mobileViewToggle')
   const circleGroups = document.querySelectorAll('.circle-group')
+  
+  const toggleView = () => {
+    isSingleView = !isSingleView
+    const buttonText = isSingleView ? 'One Eye' : 'Two Eyes'
+    if (viewToggle) viewToggle.textContent = buttonText
+    circleGroups.forEach((group, index) => {
+      group.style.display = isSingleView && index === 1 ? 'none' : 'flex'
+    })
+    updateURL()
+  }
+  
   if (viewToggle) {
     viewToggle.textContent = isSingleView ? 'One Eye' : 'Two Eyes'
-    viewToggle.addEventListener('click', () => {
-      isSingleView = !isSingleView
-      viewToggle.textContent = isSingleView ? 'One Eye' : 'Two Eyes'
-      circleGroups.forEach((group, index) => {
-        group.style.display = isSingleView && index === 1 ? 'none' : 'flex'
-      })
-      updateURL()
-    })
+    viewToggle.addEventListener('click', toggleView)
   }
+  
+  // Mobile view toggle removed - mobile always shows single eye
 
   // Brightness sliders
   const color1 = document.getElementById('colorSlider1')
@@ -625,11 +661,15 @@ onMounted(() => {
   refreshFloaters2()
 
   // Diagnose
-  const diagnose = document.getElementById('diagnoseButton')
-  diagnose?.addEventListener('click', () => {
+  const goToDiagnosis = () => {
     updateURL()
     router.push('/diagnosis')
-  })
+  }
+  
+  const diagnose = document.getElementById('diagnoseButton')
+  const mobileDiagnose = document.getElementById('mobileDiagnoseButton')
+  diagnose?.addEventListener('click', goToDiagnosis)
+  mobileDiagnose?.addEventListener('click', goToDiagnosis)
 
   // Dark/Light toggle
   const darkToggle = document.getElementById('darkLightToggle')
@@ -638,8 +678,7 @@ onMounted(() => {
   })
 
   // Share current config (encrypted)
-  const saveBtn = document.getElementById('saveConfigButton')
-  saveBtn?.addEventListener('click', async () => {
+  const shareConfig = async () => {
     const params = {}
     document.querySelectorAll('input[type="range"]').forEach(slider => { params[slider.id] = slider.value })
     document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
@@ -654,18 +693,33 @@ onMounted(() => {
     const url = `${window.location.origin}${window.location.pathname}?s=${encodeURIComponent(encrypted)}`
     try {
       await navigator.clipboard.writeText(url)
-      saveBtn.textContent = 'Copied!'
-      saveBtn.classList.add('copied')
-      setTimeout(() => { saveBtn.textContent = 'Share'; saveBtn.classList.remove('copied') }, 2000)
+      // Show mobile notification
+      showMobileNotification('Copied!')
     } catch (err) {
-      saveBtn.textContent = 'Failed to copy'
-      setTimeout(() => { saveBtn.textContent = 'Share' }, 2000)
+      console.error('Failed to copy:', err)
     }
-  })
+  }
+  
+  const saveBtn = document.getElementById('saveConfigButton')
+  const mobileShareBtn = document.getElementById('mobileShareButton')
+  saveBtn?.addEventListener('click', shareConfig)
+  mobileShareBtn?.addEventListener('click', shareConfig)
+
+  // Mobile notification function
+  const showMobileNotification = (message) => {
+    const notification = document.getElementById('mobileNotification')
+    const notificationText = document.getElementById('mobileNotificationText')
+    if (notification && notificationText) {
+      notificationText.textContent = message
+      notification.classList.add('show')
+      setTimeout(() => {
+        notification.classList.remove('show')
+      }, 2000)
+    }
+  }
 
   // Reset to defaults
-  const resetBtn = document.getElementById('resetButton')
-  resetBtn?.addEventListener('click', () => {
+  const resetDefaults = () => {
     const defaults = {
       colorSlider1: 100, colorSlider2: 100,
       blurSlider1: 0, blurSlider2: 0,
@@ -693,7 +747,15 @@ onMounted(() => {
     createFloaters('floaters2', 0, 10)
     // clear URL
     window.history.replaceState({}, '', window.location.pathname)
-  })
+    
+    // Show mobile notification
+    showMobileNotification('Reset!')
+  }
+  
+  const resetBtn = document.getElementById('resetButton')
+  const mobileResetBtn = document.getElementById('mobileResetButton')
+  resetBtn?.addEventListener('click', resetDefaults)
+  mobileResetBtn?.addEventListener('click', resetDefaults)
 
   // Haze animations
   const haze1 = document.getElementById('hazeSlider1')
