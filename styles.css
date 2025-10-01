@@ -17,6 +17,7 @@ body.dark-mode {
     transition: background-color 0.3s;
 }
 
+
 body.dark-mode .slider-group label {
     color: #fff;
 }
@@ -313,11 +314,9 @@ input[type=range]::-moz-range-thumb:hover {
         margin: 0 0 8px 0;
         padding: 0 6px;
     }
-    .controls {
-        max-height: 40vh;
-        overflow-y: auto;
-        width: 100%;
-        margin-bottom: 20px;
+.controls {
+    width: 100%;
+    margin-bottom: 20px;
         padding-bottom: 10px;
     }
     .mobile-menu-button {
@@ -1213,8 +1212,6 @@ body.dark-mode .glaucoma-label {
     
     /* Make controls scrollable */
     .controls {
-        max-height: 50vh !important;
-        overflow-y: auto !important;
         width: 100% !important;
         margin-bottom: 20px !important;
         padding-bottom: 10px !important;
