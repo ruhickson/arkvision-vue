@@ -256,7 +256,7 @@ input[type=range]::-moz-range-thumb:hover {
         margin-top: 0.5rem;
     }
     .main-content {
-        margin-top: 130px; /* Ensure enough space for header */
+        margin-top: 60px; /* Reduced space for header */
         padding-top: 0;
     }
     .circles-container {
@@ -783,13 +783,13 @@ body.dark-mode .glaucoma-label {
 
 @media (max-width: 768px) {
     .main-content {
-        margin-top: 130px; /* Increased mobile margin */
+        margin-top: 60px; /* Reduced mobile margin */
     }
 }
 
 @media (max-width: 700px) {
     .main-content {
-        margin-top: 200px;
+        margin-top: 60px;
     }
 }
 
@@ -991,5 +991,135 @@ body.dark-mode .glaucoma-label {
 @media (max-width: 700px) {
     .mobile-menu-button {
         display: block;
+    }
+}
+
+/* Mobile Optimization - Comprehensive Fix */
+@media (max-width: 768px) {
+    /* Fix header layout */
+    .header-content {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0.5rem 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .header h1 {
+        font-size: 1.1rem !important;
+        margin: 0 !important;
+        flex: 1 !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    
+    .accessible-btn {
+        font-size: 0.8rem !important;
+        padding: 6px 10px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        margin-left: 10px !important;
+        min-width: auto !important;
+    }
+    
+    /* Fix main content spacing */
+    .main-content {
+        margin-top: 60px !important;
+        padding: 10px !important;
+        padding-bottom: 120px !important; /* Space for bottom buttons */
+    }
+    
+    /* Fix side buttons - make them visible and accessible */
+    .side-vertical-buttons {
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 10px !important;
+        right: 10px !important;
+        top: auto !important;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        transform: none !important;
+        gap: 8px !important;
+        z-index: 1100 !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+        border-radius: 12px !important;
+        padding: 10px !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .side-vertical-buttons button {
+        width: auto !important;
+        height: 44px !important;
+        font-size: 0.8rem !important;
+        border-radius: 8px !important;
+        margin: 0 !important;
+        padding: 8px 12px !important;
+        flex: 1 !important;
+        max-width: 80px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    
+    /* Hide individual fixed buttons since they're now in the bottom bar */
+    .view-toggle,
+    .reset-button,
+    .save-config-button,
+    .diagnose-button,
+    .dark-light-toggle {
+        display: none !important;
+    }
+    
+    /* Ensure circles are properly sized */
+    .circle {
+        width: 70vw !important;
+        height: 70vw !important;
+        max-width: 300px !important;
+        max-height: 300px !important;
+        min-width: 200px !important;
+        min-height: 200px !important;
+    }
+    
+    /* Make controls scrollable */
+    .controls {
+        max-height: 50vh !important;
+        overflow-y: auto !important;
+        width: 100% !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 10px !important;
+    }
+    
+    /* Fix bottom navigation spacing */
+    .bottom-nav {
+        padding-bottom: 20px !important;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1rem !important;
+    }
+    
+    .accessible-btn {
+        font-size: 0.7rem !important;
+        padding: 4px 8px !important;
+    }
+    
+    .side-vertical-buttons button {
+        font-size: 0.7rem !important;
+        padding: 6px 8px !important;
+        max-width: 70px !important;
+    }
+    
+    .circle {
+        width: 80vw !important;
+        height: 80vw !important;
+        max-width: 250px !important;
+        max-height: 250px !important;
     }
 }
