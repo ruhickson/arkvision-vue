@@ -883,6 +883,20 @@ body.dark-mode .glaucoma-label {
 .diagnose-button:hover {
     background: #7B1FA2;
 }
+.share-search-button {
+    background: #FF9800;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+.share-search-button:hover {
+    background: #F57C00;
+}
 .dark-light-toggle {
     background: #222;
     color: #fff;
@@ -905,6 +919,7 @@ body.dark-mode .glaucoma-label {
 .view-toggle,
 .reset-button,
 .save-config-button,
+.share-search-button,
 .diagnose-button,
 .dark-light-toggle {
     position: static;
@@ -1184,6 +1199,7 @@ body.dark-mode .glaucoma-label {
     .view-toggle,
     .reset-button,
     .save-config-button,
+    .share-search-button,
     .diagnose-button,
     .dark-light-toggle {
         display: none !important;

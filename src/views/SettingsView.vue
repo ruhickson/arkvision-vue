@@ -34,7 +34,22 @@ function toggleAccessible() {
 </script>
 
 <style scoped>
-.settings { max-width: 800px; margin: 20px auto; padding: 0 16px; }
-.setting-item { margin: 12px 0; }
+.settings { 
+  max-width: 800px; 
+  margin: 20px auto; 
+  padding: 0 16px; 
+  color: #fff;
+}
+.settings h2 {
+  color: #fff;
+}
+.setting-item { 
+  margin: 12px 0; 
+  color: #fff;
+}
+.setting-item label {
+  color: #fff;
+  cursor: pointer;
+}
 </style>
 

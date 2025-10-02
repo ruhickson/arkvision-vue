@@ -117,3 +117,57 @@ onMounted(() => {
 })
 </script>
 
+<style scoped>
+.diagnosis-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 16px;
+  color: #fff;
+}
+
+.diagnosis-container h2 {
+  color: #fff;
+}
+
+.diagnosis-container h3 {
+  color: #fff;
+}
+
+.diagnosis-container p {
+  color: #ccc;
+}
+
+.disclaimer-container {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.disclaimer-text {
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.disclaimer-checkbox label {
+  color: #fff;
+  cursor: pointer;
+}
+
+.diagnosis-result {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.eye-diagnosis {
+  margin-bottom: 20px;
+}
+
+.eye-diagnosis:last-child {
+  margin-bottom: 0;
+}
+</style>
+

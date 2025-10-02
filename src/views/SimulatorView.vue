@@ -8,6 +8,9 @@
       <button class="mobile-action-btn" id="mobileShareButton" title="Share current settings">
         <i class="fas fa-share action-icon"></i>
       </button>
+      <button class="mobile-action-btn" id="mobileShareSearchButton" title="Share search URL">
+        <i class="fas fa-link action-icon"></i>
+      </button>
       <button class="mobile-action-btn" id="mobileDiagnoseButton" title="Get diagnosis">
         <i class="fas fa-search action-icon"></i>
       </button>
@@ -23,6 +26,7 @@
         <button class="view-toggle" id="viewToggle" title="Toggle between single-eye and double-eye simulation view">Switch to Single View</button>
         <button class="reset-button" id="resetButton" title="Reset all settings to default">Reset</button>
         <button class="save-config-button" id="saveConfigButton" title="Copy a link to your current simulation settings">Share</button>
+        <button class="share-search-button" id="shareSearchButton" title="Copy a readable parameterized URL for search purposes">Share Search</button>
         <button class="diagnose-button" id="diagnoseButton" title="Get a suggested diagnosis based on your current settings">Diagnose</button>
         <button class="dark-light-toggle" id="darkLightToggle" title="Toggle dark/light mode">Dark</button>
       </div>
@@ -699,11 +703,40 @@ onMounted(() => {
       console.error('Failed to copy:', err)
     }
   }
+
+  // Share search URL (plain parameterized)
+  const shareSearchURL = async () => {
+    const params = new URLSearchParams()
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      params.set(slider.id, slider.value)
+    })
+    document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
+      const cells = Array.from(grid.querySelectorAll('.grid-cell'))
+      let binary = ''
+      cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
+      params.set(`glaucoma${gridIndex + 1}`, binary)
+    })
+    const view = document.querySelectorAll('.circle-group').length === 2 && (document.querySelectorAll('.circle-group')[1].getAttribute('style') || '').includes('display: none') ? 'single' : 'double'
+    params.set('view', view)
+    const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
+    try {
+      await navigator.clipboard.writeText(url)
+      // Show mobile notification
+      showMobileNotification('Search URL copied!')
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
+  }
   
   const saveBtn = document.getElementById('saveConfigButton')
   const mobileShareBtn = document.getElementById('mobileShareButton')
+  const shareSearchBtn = document.getElementById('shareSearchButton')
+  const mobileShareSearchBtn = document.getElementById('mobileShareSearchButton')
+  
   saveBtn?.addEventListener('click', shareConfig)
   mobileShareBtn?.addEventListener('click', shareConfig)
+  shareSearchBtn?.addEventListener('click', shareSearchURL)
+  mobileShareSearchBtn?.addEventListener('click', shareSearchURL)
 
   // Mobile notification function
   const showMobileNotification = (message) => {

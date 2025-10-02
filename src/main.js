@@ -3,12 +3,13 @@ import './assets/styles.css'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
-import SimulatorView from './views/SimulatorView.vue'
-import IssuesView from './views/IssuesView.vue'
-import ResourcesView from './views/ResourcesView.vue'
-import AboutView from './views/AboutView.vue'
-import DiagnosisView from './views/DiagnosisView.vue'
-import SettingsView from './views/SettingsView.vue'
+// Lazy load components for better performance
+const SimulatorView = () => import('./views/SimulatorView.vue')
+const IssuesView = () => import('./views/IssuesView.vue')
+const ResourcesView = () => import('./views/ResourcesView.vue')
+const AboutView = () => import('./views/AboutView.vue')
+const DiagnosisView = () => import('./views/DiagnosisView.vue')
+const SettingsView = () => import('./views/SettingsView.vue')
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,4 +23,12 @@ const router = createRouter({
   ]
 })
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
+
+// Hide loading spinner once app is mounted
+const spinner = document.getElementById('loading-spinner')
+if (spinner) {
+  spinner.style.display = 'none'
+}

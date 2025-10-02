@@ -6,7 +6,7 @@
       <p>Distant objects appear blurry while close objects can be seen clearly.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Myopia" target="_blank" class="read-more">Read more</a>
-        <a href="http://localhost:5173/?s=UQhJRUZFWHlGQ05PWBsIEAgbGhoIBghIRl9YeUZDTk9YGwgQCBoIBghIRl9Yf1ppRkVZT3lGQ05PWBsIEAgaCAYISEZfWGxLWGtdS1N5RkNOT1gbCBAIGQgGCElfWF5LQ0R5RkNOT1gbCBAIGggGCF1LWFp5RkNOT1gbCBAIGggGCExGRUteT1hZeUZDTk9YGwgQCBoIBghZQ1BPeUZDTk9YGwgQCBsaCAYIQktQT3lGQ05PWBsIEAgaCAYISUVGRVh5RkNOT1gYCBAIGxoaCAYISEZfWHlGQ05PWBgIEAgaCAYISEZfWH9aaUZFWU95RkNOT1gYCBAIGggGCEhGX1hsS1hrXUtTeUZDTk9YGAgQCBkIBghJX1heS0NEeUZDTk9YGAgQCBoIBghdS1haeUZDTk9YGAgQCBoIBghMRkVLXk9YWXlGQ05PWBgIEAgaCAYIWUNQT3lGQ05PWBgIEAgbGggGCEJLUE95RkNOT1gYCBAIGggGCE1GS19JRUdLGwgQCBoaGhoaGhoaGhoaGhoaGhoIBghNRktfSUVHSxgIEAgaGhoaGhoaGhoaGhoaGhoaCAYIXENPXQgQCE5FX0hGTwhX" class="simulate-btn">Simulate</a>
+        <a href="https://arksight.ie/?s=UQhJRUZFWHlGQ05PWBsIEAgbGhoIBghIRl9YeUZDTk9YGwgQCBoIBghIRl9Yf1ppRkVZT3lGQ05PWBsIEAgaCAYISEZfWGxLWGtdS1N5RkNOT1gbCBAIGQgGCElfWF5LQ0R5RkNOT1gbCBAIGggGCF1LWFp5RkNOT1gbCBAIGggGCExGRUteT1hZeUZDTk9YGwgQCBoIBghZQ1BPeUZDTk9YGwgQCBsaCAYIQktQT3lGQ05PWBsIEAgaCAYISUVGRVh5RkNOT1gYCBAIGxoaCAYISEZfWHlGQ05PWBgIEAgaCAYISEZfWH9aaUZFWU95RkNOT1gYCBAIGggGCEhGX1hsS1hrXUtTeUZDTk9YGAgQCBkIBghJX1heS0NEeUZDTk9YGAgQCBoIBghdS1haeUZDTk9YGAgQCBoIBghMRkVLXk9YWXlGQ05PWBgIEAgaCAYIWUNQT3lGQ05PWBgIEAgbGggGCEJLUE95RkNOT1gYCBAIGggGCE1GS19JRUdLGwgQCBoaGhoaGhoaGhoaGhoaGhoIBghNRktfSUVHSxgIEAgaGhoaGhoaGhoaGhoaGhoaCAYIXENPXQgQCE5FX0hGTwhX" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -51,7 +51,7 @@
       <p>Clouding of the eye's natural lens, causing reduced brightness and clarity.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Cataract" target="_blank" class="read-more">Read more</a>
-        <a href="http://localhost:5173/?s=UQhJRUZFWHlGQ05PWBsIEAgbGhoIBghIRl9YeUZDTk9YGwgQCBoIBghIRl9Yf1ppRkVZT3lGQ05PWBsIEAgaCAYISEZfWGxLWGtdS1N5RkNOT1gbCBAIGggGCElfWF5LQ0R5RkNOT1gbCBAIGggGCF1LWFp5RkNOT1gbCBAIGggGCExGRUteT1hZeUZDTk9YGwgQCBoIBghZQ1BPeUZDTk9YGwgQCBsaCAYIQktQT3lGQ05PWBsIEAgSGggGCElFRkVYeUZDTk9YGAgQCBsaGggGCEhGX1h5RkNOT1gYCBAIGggGCEhGX1h%2FWmlGRVlPeUZDTk9YGAgQCBoIBghIRl9YbEtYa11LU3lGQ05PWBgIEAgaCAYISV9YXktDRHlGQ05PWBgIEAgaCAYIXUtYWnlGQ05PWBgIEAgaCAYITEZFS15PWFl5RkNOT1gYCBAIGggGCFlDUE95RkNOT1gYCBAIGxoIBghCS1BPeUZDTk9YGAgQCBIYCAYITUZLX0lFR0sbCBAIGhoaGhoaGhoaGhoaGhoaGggGCE1GS19JRUdLGAgQCBoaGhoaGhoaGhoaGhoaGhoIBghcQ09dCBAITkVfSEZPCFc%3D" class="simulate-btn">Simulate</a>
+        <a href="https://arksight.ie/?s=UQhJRUZFWHlGQ05PWBsIEAgbGhoIBghIRl9YeUZDTk9YGwgQCBoIBghIRl9Yf1ppRkVZT3lGQ05PWBsIEAgaCAYISEZfWGxLWGtdS1N5RkNOT1gbCBAIGggGCElfWF5LQ0R5RkNOT1gbCBAIGggGCF1LWFp5RkNOT1gbCBAIGggGCExGRUteT1hZeUZDTk9YGwgQCBoIBghZQ1BPeUZDTk9YGwgQCBsaCAYIQktQT3lGQ05PWBsIEAgSGggGCElFRkVYeUZDTk9YGAgQCBsaGggGCEhGX1h5RkNOT1gYCBAIGggGCEhGX1h%2FWmlGRVlPeUZDTk9YGAgQCBoIBghIRl9YbEtYa11LU3lGQ05PWBgIEAgaCAYISV9YXktDRHlGQ05PWBgIEAgaCAYIXUtYWnlGQ05PWBgIEAgaCAYITEZFS15PWFl5RkNOT1gYCBAIGggGCFlDUE95RkNOT1gYCBAIGxoIBghCS1BPeUZDTk9YGAgQCBIYCAYITUZLX0lFR0sbCBAIGhoaGhoaGhoaGhoaGhoaGggGCE1GS19JRUdLGAgQCBoaGhoaGhoaGhoaGhoaGhoIBghcQ09dCBAITkVfSEZPCFc%3D" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -116,6 +116,17 @@
   padding: 18px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.18);
   text-align: center;
+  color: #fff;
+}
+.eye-issue h3 {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.eye-issue p {
+  color: #ccc;
+  margin-bottom: 16px;
+  line-height: 1.4;
 }
 .issue-actions { display: flex; gap: 12px; justify-content: center; }
 .simulate-btn {

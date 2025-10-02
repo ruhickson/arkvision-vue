@@ -48,14 +48,54 @@
 </script>
 
 <style scoped>
-.about-container { max-width: 900px; margin: 40px auto; padding: 0 16px; text-align: left; }
-.about-section { background: #111; border: 1px solid #222; border-radius: 14px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+.about-container { 
+  max-width: 900px; 
+  margin: 40px auto; 
+  padding: 0 16px; 
+  text-align: left; 
+  color: #fff;
+}
+.about-section { 
+  background: #111; 
+  border: 1px solid #222; 
+  border-radius: 14px; 
+  padding: 18px; 
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18); 
+  color: #fff;
+}
 .profile-section { display: flex; align-items: center; gap: 18px; margin-bottom: 14px; }
 .profile-image img { width: 220px; height: auto; border-radius: 12px; display: block; }
-h2 { margin: 0 0 8px 0; }
-h3 { margin: 14px 0 8px 0; }
-p { line-height: 1.7; margin: 8px 0; }
-.experience-list { list-style: disc; padding-left: 22px; margin: 8px 0 0 0; }
-.experience-list li { margin: 6px 0; }
-.motivation-section { background: #0e0e0e; border: 1px solid #1e1e1e; border-radius: 10px; padding: 12px; }
+h2 { 
+  margin: 0 0 8px 0; 
+  color: #fff;
+}
+h3 { 
+  margin: 14px 0 8px 0; 
+  color: #fff;
+}
+p { 
+  line-height: 1.7; 
+  margin: 8px 0; 
+  color: #ccc;
+}
+.experience-list { 
+  list-style: disc; 
+  padding-left: 22px; 
+  margin: 8px 0 0 0; 
+  color: #ccc;
+}
+.experience-list li { 
+  margin: 6px 0; 
+  color: #ccc;
+}
+.experience-list strong {
+  color: #fff;
+}
+.motivation-section { 
+  background: #0e0e0e; 
+  border: 1px solid #1e1e1e; 
+  border-radius: 10px; 
+  padding: 12px; 
+  color: #fff;
+}
 </style>

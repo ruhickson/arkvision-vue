@@ -90,16 +90,61 @@
 
 .style-fix {}
 <style scoped>
-.resources-container { max-width: 900px; margin: 40px auto; padding: 0 16px; text-align: left; }
-.resources-hero { text-align: left; margin-bottom: 12px; }
-.resources-container h2, .resources-container h3 { text-align: left; }
-.resources-hero h2 { margin: 0 0 6px 0; }
-.resource-section { margin: 20px 0 28px 0; }
-.resource-section h3 { margin: 0 0 10px 0; }
-.emergency-section h3 { color: #f57c00; }
-.resource-list { list-style: disc; padding-left: 22px; margin: 0; text-align: left; }
-.resource-item { margin: 10px 0; }
-.resource-item a { color: #90caf9; text-decoration: none; }
-.resource-item a:hover { text-decoration: underline; }
-.resource-description { color: #bbb; margin-top: 4px; max-width: 70ch; }
+.resources-container { 
+  max-width: 900px; 
+  margin: 40px auto; 
+  padding: 0 16px; 
+  text-align: left; 
+  color: #fff;
+}
+.resources-hero { 
+  text-align: left; 
+  margin-bottom: 12px; 
+  color: #fff;
+}
+.resources-container h2, .resources-container h3 { 
+  text-align: left; 
+  color: #fff;
+}
+.resources-hero h2 { 
+  margin: 0 0 6px 0; 
+  color: #fff;
+}
+.resources-hero p {
+  color: #ccc;
+}
+.resource-section { 
+  margin: 20px 0 28px 0; 
+  color: #fff;
+}
+.resource-section h3 { 
+  margin: 0 0 10px 0; 
+  color: #fff;
+}
+.emergency-section h3 { 
+  color: #f57c00; 
+}
+.resource-list { 
+  list-style: disc; 
+  padding-left: 22px; 
+  margin: 0; 
+  text-align: left; 
+  color: #fff;
+}
+.resource-item { 
+  margin: 10px 0; 
+  color: #fff;
+}
+.resource-item a { 
+  color: #90caf9; 
+  text-decoration: none; 
+}
+.resource-item a:hover { 
+  text-decoration: underline; 
+}
+.resource-description { 
+  color: #bbb; 
+  margin-top: 4px; 
+  max-width: 70ch; 
+}
 </style>
