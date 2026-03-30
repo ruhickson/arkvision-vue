@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { applyThemeFromStorage } from './theme'
 
 const mobileMenuOpen = ref(false)
 function toggleMobileMenu() {
@@ -12,7 +13,7 @@ function toggleAccessible() {
 }
 
 onMounted(() => {
-  document.body.classList.add('dark-mode')
+  applyThemeFromStorage()
 })
 </script>
 
@@ -89,6 +90,12 @@ onMounted(() => {
 }
 .nav-item.router-link-active { color: #fff; background: #1f2937; }
 .nav-icon { font-size: 18px; line-height: 1; }
-.nav-label { font-size: 12px; margin-top: 4px; }
+.nav-label {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: calc(12px + 2pt);
+  font-weight: 600;
+  margin-top: 4px;
+  letter-spacing: -0.02em;
+}
 .nav-item.nav-primary { background: #2563eb; color: #fff; border-radius: 10px; }
 </style>

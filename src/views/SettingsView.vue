@@ -18,6 +18,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { setDarkMode } from '../theme'
 
 const dark = ref(true)
 const accessible = ref(false)
@@ -27,6 +28,7 @@ onMounted(() => {
 })
 function toggleDark() {
   document.body.classList.toggle('dark-mode', dark.value)
+  setDarkMode(dark.value)
 }
 function toggleAccessible() {
   document.body.classList.toggle('accessible-mode', accessible.value)
@@ -36,5 +38,8 @@ function toggleAccessible() {
 <style scoped>
 .settings { max-width: 800px; margin: 20px auto; padding: 0 16px; }
 .setting-item { margin: 12px 0; }
+.setting-item label {
+  font-size: calc(1em + 2pt);
+}
 </style>
 

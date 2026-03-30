@@ -15,7 +15,7 @@
       <p>Close objects appear blurry while distant objects are clear.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Hyperopia" target="_blank" class="read-more">Read more</a>
-        <a href="/?colorSlider1=100&blurSlider1=0&blurUpCloseSlider1=3&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&colorSlider2=100&blurSlider2=0&blurUpCloseSlider2=3&blurFarAwaySlider2=0&curtainSlider2=0&warpSlider2=0&floatersSlider2=0&sizeSlider2=10&glaucoma1=0000000000000000&glaucoma2=0000000000000000&view=double" class="simulate-btn">Simulate</a>
+        <a href="/?colorSlider1=100&blurSlider1=0&blurUpCloseSlider1=3&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&hazeSlider1=0&glaucoma1=0000000000000000&view=single" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
       <p>Irregular curvature of the cornea or lens causing blurred or distorted vision.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Astigmatism" target="_blank" class="read-more">Read more</a>
-        <a href="/?colorSlider1=100&blurSlider1=3&blurUpCloseSlider1=0&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&colorSlider2=100&blurSlider2=3&blurUpCloseSlider2=0&blurFarAwaySlider2=0&curtainSlider2=0&warpSlider2=0&floatersSlider2=0&sizeSlider2=10&glaucoma1=0000000000000000&glaucoma2=0000000000000000&view=double" class="simulate-btn">Simulate</a>
+        <a href="/?colorSlider1=100&blurSlider1=3&blurUpCloseSlider1=0&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&hazeSlider1=0&glaucoma1=0000000000000000&view=single" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
       <p>Age-related reduction in lens flexibility making near focus difficult.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Presbyopia" target="_blank" class="read-more">Read more</a>
-        <a href="/?colorSlider1=100&blurSlider1=0&blurUpCloseSlider1=2&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&colorSlider2=100&blurSlider2=0&blurUpCloseSlider2=1&blurFarAwaySlider2=0&curtainSlider2=0&warpSlider2=0&floatersSlider2=0&sizeSlider2=10&glaucoma1=0000000000000000&glaucoma2=0000000000000000&view=double" class="simulate-btn">Simulate</a>
+        <a href="/?colorSlider1=100&blurSlider1=0&blurUpCloseSlider1=2&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&hazeSlider1=0&glaucoma1=0000000000000000&view=single" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -42,7 +42,7 @@
       <p>Damage to the optic nerve, often due to high pressure; can lead to vision loss.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Glaucoma" target="_blank" class="read-more">Read more</a>
-        <a href="/?colorSlider1=100&blurSlider1=0&blurUpCloseSlider1=2&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&colorSlider2=100&blurSlider2=0&blurUpCloseSlider2=1&blurFarAwaySlider2=0&curtainSlider2=0&warpSlider2=0&floatersSlider2=0&sizeSlider2=10&glaucoma1=0000000100110111&glaucoma2=1000100010001100&view=double" class="simulate-btn">Simulate</a>
+        <a href="/?colorSlider1=100&blurSlider1=0&blurUpCloseSlider1=2&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&hazeSlider1=0&glaucoma1=0000000100110111&view=single" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -60,7 +60,7 @@
       <p>Age-related condition affecting the macula, leading to loss of central vision.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Macular_degeneration" target="_blank" class="read-more">Read more</a>
-        <a href="/diagnosis?leftEyeSymptoms=blurred-vision&leftEyeSeverity=severe&rightEyeSymptoms=blurred-vision&rightEyeSeverity=severe" class="simulate-btn">Simulate</a>
+        <a href="/diagnosis?leftEyeSymptoms=blurred-vision&leftEyeSeverity=severe" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -69,7 +69,7 @@
       <p>Complication of diabetes that affects retinal blood vessels.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Diabetic_retinopathy" target="_blank" class="read-more">Read more</a>
-        <a href="/diagnosis?leftEyeSymptoms=blurred-vision&leftEyeSeverity=moderate&rightEyeSymptoms=blurred-vision&rightEyeSeverity=moderate" class="simulate-btn">Simulate</a>
+        <a href="/diagnosis?leftEyeSymptoms=blurred-vision&leftEyeSeverity=moderate" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -78,7 +78,7 @@
       <p>Insufficient tears or rapid evaporation causing irritation and blur.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Dry_eye_syndrome" target="_blank" class="read-more">Read more</a>
-        <a href="/diagnosis?leftEyeSymptoms=blurred-vision&leftEyeSeverity=mild&rightEyeSymptoms=blurred-vision&rightEyeSeverity=mild" class="simulate-btn">Simulate</a>
+        <a href="/diagnosis?leftEyeSymptoms=blurred-vision&leftEyeSeverity=mild" class="simulate-btn">Simulate</a>
       </div>
     </div>
 
@@ -87,7 +87,7 @@
       <p>Difficulty distinguishing certain colors, commonly red/green.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Color_blindness" target="_blank" class="read-more">Read more</a>
-        <a href="/diagnosis?leftEyeSymptoms=color-blindness&leftEyeSeverity=moderate&rightEyeSymptoms=color-blindness&rightEyeSeverity=moderate" class="simulate-btn">Simulate</a>
+        <a href="/diagnosis?leftEyeSymptoms=color-blindness&leftEyeSeverity=moderate" class="simulate-btn">Simulate</a>
       </div>
       </div>
 

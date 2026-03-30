@@ -49,7 +49,22 @@
 
 <style scoped>
 .about-container { max-width: 900px; margin: 40px auto; padding: 0 16px; text-align: left; }
-.about-section { background: #111; border: 1px solid #222; border-radius: 14px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+.about-section {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  color: #ececec;
+}
+.about-section p,
+.about-section li {
+  color: #ccc;
+}
+.about-section h2,
+.about-section h3 {
+  color: #fff;
+}
 .profile-section { display: flex; align-items: center; gap: 18px; margin-bottom: 14px; }
 .profile-image img { width: 220px; height: auto; border-radius: 12px; display: block; }
 h2 { margin: 0 0 8px 0; }

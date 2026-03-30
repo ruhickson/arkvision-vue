@@ -8,11 +8,8 @@
       <button class="mobile-action-btn" id="mobileShareButton" title="Share current settings">
         <i class="fas fa-share action-icon"></i>
       </button>
-      <button class="mobile-action-btn" id="mobileShareSearchButton" title="Share search URL">
-        <i class="fas fa-link action-icon"></i>
-      </button>
       <button class="mobile-action-btn" id="mobileDiagnoseButton" title="Get diagnosis">
-        <i class="fas fa-search action-icon"></i>
+        <i class="fas fa-check action-icon"></i>
       </button>
     </div>
     
@@ -180,6 +177,7 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { setDarkMode } from '../theme'
 import backgroundSceneImage from '../assets/simulator-scene-bg.svg'
 import foregroundDeerImage from '../assets/simulator-deer-fg.svg'
 
@@ -322,19 +320,26 @@ function animateFloater(floater, centerX, centerY, maxRadius) {
   floater.__raf = requestAnimationFrame(step)
 }
 
+function getFirstCircleGroup() {
+  return document.querySelector('.circle-group')
+}
+
+/** URL and share payloads only include the active (first) eye; the app focuses on one eye at a time. */
 function updateURL() {
   const params = new URLSearchParams()
-  const sliders = document.querySelectorAll('input[type="range"]')
-  sliders.forEach(slider => {
-    params.set(slider.id, slider.value)
-  })
-  // glaucoma state
-  document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
-    const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-    let binary = ''
-    cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
-    params.set(`glaucoma${gridIndex + 1}`, binary)
-  })
+  const group = getFirstCircleGroup()
+  if (group) {
+    group.querySelectorAll('input[type="range"]').forEach(slider => {
+      params.set(slider.id, slider.value)
+    })
+    const grid = group.querySelector('.glaucoma-grid')
+    if (grid) {
+      const cells = Array.from(grid.querySelectorAll('.grid-cell'))
+      let binary = ''
+      cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
+      params.set('glaucoma1', binary)
+    }
+  }
   params.set('view', 'single')
   const newURL = `${window.location.pathname}?${params.toString()}`
   window.history.replaceState({}, '', newURL)
@@ -350,21 +355,21 @@ function enforceSingleEye() {
 function restoreFromURL() {
   const params = new URLSearchParams(window.location.search)
   if (params.size === 0) return
-  const sliders = document.querySelectorAll('input[type="range"]')
-  sliders.forEach(slider => {
-    const value = params.get(slider.id)
-    if (value !== null) {
-      slider.value = value
-      slider.dispatchEvent(new Event('input'))
-    }
-  })
-  // restore glaucoma
-  initializeGlaucomaGrid()
-  document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
-    const binary = params.get(`glaucoma${gridIndex + 1}`)
-    if (binary && binary.length === 16) {
+  const group = getFirstCircleGroup()
+  if (group) {
+    group.querySelectorAll('input[type="range"]').forEach(slider => {
+      const value = params.get(slider.id)
+      if (value !== null) {
+        slider.value = value
+        slider.dispatchEvent(new Event('input'))
+      }
+    })
+    initializeGlaucomaGrid()
+    const grid = group.querySelector('.glaucoma-grid')
+    const binary = params.get('glaucoma1')
+    if (grid && binary && binary.length === 16) {
       const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-      const circle = grid.closest('.circle-group')?.querySelector('.circle')
+      const circle = group.querySelector('.circle')
       const overlay = circle?.querySelector('.glaucoma-overlay')
       cells.forEach((cell, i) => {
         const segment = overlay?.querySelectorAll('.glaucoma-segment')[i]
@@ -377,7 +382,7 @@ function restoreFromURL() {
         }
       })
     }
-  })
+  }
   enforceSingleEye()
   // kick floaters after restore
   createFloaters('floaters1', document.getElementById('floatersSlider1')?.value || 0, document.getElementById('sizeSlider1')?.value || 10)
@@ -472,9 +477,6 @@ function startHazeAnimation(circleNum) {
 }
 
 onMounted(() => {
-  // Default dark mode on
-  document.body.classList.add('dark-mode')
-  
   enforceSingleEye()
   // Encrypted restore first if present
   const s = new URLSearchParams(window.location.search).get('s')
@@ -482,31 +484,32 @@ onMounted(() => {
     try {
       const decoded = xorDecrypt(decodeURIComponent(s))
       const state = JSON.parse(decoded)
+      const firstGroup = getFirstCircleGroup()
       document.querySelectorAll('input[type="range"]').forEach(slider => {
+        if (!firstGroup?.contains(slider)) return
         if (state[slider.id] !== undefined) {
           slider.value = state[slider.id]
           slider.dispatchEvent(new Event('input'))
         }
       })
       initializeGlaucomaGrid()
-      document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
-        const binary = state[`glaucoma${gridIndex + 1}`]
-        if (binary && binary.length === 16) {
-          const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-          const circle = grid.closest('.circle-group')?.querySelector('.circle')
-          const overlay = circle?.querySelector('.glaucoma-overlay')
-          cells.forEach((cell, i) => {
-            const segment = overlay?.querySelectorAll('.glaucoma-segment')[i]
-            if (binary[i] === '1') {
-              cell.classList.add('active')
-              if (segment) segment.style.opacity = '1'
-            } else {
-              cell.classList.remove('active')
-              if (segment) segment.style.opacity = '0'
-            }
-          })
-        }
-      })
+      const grid = firstGroup?.querySelector('.glaucoma-grid')
+      const binary = state.glaucoma1
+      if (grid && binary && binary.length === 16) {
+        const cells = Array.from(grid.querySelectorAll('.grid-cell'))
+        const circle = firstGroup?.querySelector('.circle')
+        const overlay = circle?.querySelector('.glaucoma-overlay')
+        cells.forEach((cell, i) => {
+          const segment = overlay?.querySelectorAll('.glaucoma-segment')[i]
+          if (binary[i] === '1') {
+            cell.classList.add('active')
+            if (segment) segment.style.opacity = '1'
+          } else {
+            cell.classList.remove('active')
+            if (segment) segment.style.opacity = '0'
+          }
+        })
+      }
       enforceSingleEye()
       createFloaters('floaters1', state.floatersSlider1 ?? 0, state.sizeSlider1 ?? 10)
       createFloaters('floaters2', state.floatersSlider2 ?? 0, state.sizeSlider2 ?? 10)
@@ -613,7 +616,8 @@ onMounted(() => {
   // Diagnose
   const goToDiagnosis = () => {
     updateURL()
-    router.push('/diagnosis')
+    const search = window.location.search || ''
+    router.push(`/diagnosis${search}`)
   }
   
   const diagnose = document.getElementById('diagnoseButton')
@@ -625,19 +629,23 @@ onMounted(() => {
   const darkToggle = document.getElementById('darkLightToggle')
   darkToggle?.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode')
+    setDarkMode(document.body.classList.contains('dark-mode'))
   })
 
   // Share current config (encrypted)
   const shareConfig = async () => {
-    const params = {}
-    document.querySelectorAll('input[type="range"]').forEach(slider => { params[slider.id] = slider.value })
-    document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
-      const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-      let binary = ''
-      cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
-      params[`glaucoma${gridIndex + 1}`] = binary
-    })
-    params.view = 'single'
+    const params = { view: 'single' }
+    const group = getFirstCircleGroup()
+    if (group) {
+      group.querySelectorAll('input[type="range"]').forEach(slider => { params[slider.id] = slider.value })
+      const grid = group.querySelector('.glaucoma-grid')
+      if (grid) {
+        const cells = Array.from(grid.querySelectorAll('.grid-cell'))
+        let binary = ''
+        cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
+        params.glaucoma1 = binary
+      }
+    }
     const encrypted = xorEncrypt(JSON.stringify(params))
     const url = `${window.location.origin}${window.location.pathname}?s=${encodeURIComponent(encrypted)}`
     try {
@@ -652,15 +660,19 @@ onMounted(() => {
   // Share search URL (plain parameterized)
   const shareSearchURL = async () => {
     const params = new URLSearchParams()
-    document.querySelectorAll('input[type="range"]').forEach(slider => {
-      params.set(slider.id, slider.value)
-    })
-    document.querySelectorAll('.glaucoma-grid').forEach((grid, gridIndex) => {
-      const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-      let binary = ''
-      cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
-      params.set(`glaucoma${gridIndex + 1}`, binary)
-    })
+    const group = getFirstCircleGroup()
+    if (group) {
+      group.querySelectorAll('input[type="range"]').forEach(slider => {
+        params.set(slider.id, slider.value)
+      })
+      const grid = group.querySelector('.glaucoma-grid')
+      if (grid) {
+        const cells = Array.from(grid.querySelectorAll('.grid-cell'))
+        let binary = ''
+        cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
+        params.set('glaucoma1', binary)
+      }
+    }
     params.set('view', 'single')
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
     try {
@@ -675,12 +687,10 @@ onMounted(() => {
   const saveBtn = document.getElementById('saveConfigButton')
   const mobileShareBtn = document.getElementById('mobileShareButton')
   const shareSearchBtn = document.getElementById('shareSearchButton')
-  const mobileShareSearchBtn = document.getElementById('mobileShareSearchButton')
   
   saveBtn?.addEventListener('click', shareConfig)
   mobileShareBtn?.addEventListener('click', shareConfig)
   shareSearchBtn?.addEventListener('click', shareSearchURL)
-  mobileShareSearchBtn?.addEventListener('click', shareSearchURL)
 
   // Mobile notification function
   const showMobileNotification = (message) => {
