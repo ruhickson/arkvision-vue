@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="Green field with mountains">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9bd5ff" />
+      <stop offset="55%" stop-color="#d7f0ff" />
+      <stop offset="100%" stop-color="#f7fcff" />
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#89c76a" />
+      <stop offset="100%" stop-color="#4e8a3a" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1000" height="1000" fill="url(#sky)" />
+  <polygon points="120,620 360,320 600,620" fill="#7d8f9e" />
+  <polygon points="360,620 620,280 900,620" fill="#667a8a" />
+  <polygon points="520,400 620,280 735,405" fill="#dfe8f0" opacity="0.85" />
+  <rect x="0" y="620" width="1000" height="380" fill="url(#field)" />
+  <path d="M0 760 C180 700 320 800 500 755 C650 720 780 800 1000 740 L1000 1000 L0 1000 Z" fill="#3f7832" opacity="0.6" />
+</svg>

@@ -7,7 +7,8 @@ function toggleMobileMenu() {
   document.body.style.overflow = mobileMenuOpen.value ? 'hidden' : ''
 }
 function toggleAccessible() {
-  document.body.classList.toggle('accessible-mode')
+  const on = document.body.classList.toggle('accessible-mode')
+  document.documentElement.classList.toggle('accessible-mode', on)
 }
 
 onMounted(() => {
@@ -21,7 +22,7 @@ onMounted(() => {
       <div class="header-content">
         <h1>
           <router-link to="/">ArkSight</router-link>
-          <span class="logo-ovo"> OvO</span>
+          <span class="logo-ovo"></span>
         </h1>
         <button class="accessible-btn" @click="toggleAccessible">Accessible</button>
       </div>
@@ -41,7 +42,7 @@ onMounted(() => {
         <div class="nav-label">Resources</div>
       </router-link>
       <router-link to="/" class="nav-item nav-primary">
-        <div class="nav-icon">👁️</div>
+        <div class="nav-icon">🖥️</div>
         <div class="nav-label">Simulator</div>
       </router-link>
       <router-link to="/about" class="nav-item">

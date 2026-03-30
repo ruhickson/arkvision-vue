@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="Simple deer silhouette">
+  <g fill="#3f2a1f">
+    <ellipse cx="560" cy="620" rx="210" ry="110" />
+    <ellipse cx="355" cy="560" rx="85" ry="70" />
+    <rect x="360" y="620" width="44" height="210" rx="16" />
+    <rect x="450" y="640" width="44" height="210" rx="16" />
+    <rect x="590" y="640" width="44" height="210" rx="16" />
+    <rect x="680" y="620" width="44" height="210" rx="16" />
+    <rect x="395" y="520" width="120" height="34" rx="12" transform="rotate(-15 395 520)" />
+    <circle cx="330" cy="545" r="7" fill="#111" />
+    <path d="M298 500 C270 455 250 425 220 405 L245 392 C268 415 286 445 310 485 Z" />
+    <path d="M332 500 C350 458 375 430 410 400 L430 418 C396 443 372 472 354 512 Z" />
+  </g>
+  <path d="M712 580 C760 555 780 520 782 470 C744 495 714 533 698 568 Z" fill="#3f2a1f" />
+</svg>

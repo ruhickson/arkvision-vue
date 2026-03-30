@@ -21,110 +21,87 @@
       <span id="mobileNotificationText"></span>
     </div>
     
-    <div class="side-buttons-card">
-      <div class="side-vertical-buttons">
-        <button class="view-toggle" id="viewToggle" title="Toggle between single-eye and double-eye simulation view">Switch to Single View</button>
-        <button class="reset-button" id="resetButton" title="Reset all settings to default">Reset</button>
-        <button class="save-config-button" id="saveConfigButton" title="Copy a link to your current simulation settings">Share</button>
-        <button class="share-search-button" id="shareSearchButton" title="Copy a readable parameterized URL for search purposes">Share Search</button>
-        <button class="diagnose-button" id="diagnoseButton" title="Get a suggested diagnosis based on your current settings">Diagnose</button>
-        <button class="dark-light-toggle" id="darkLightToggle" title="Toggle dark/light mode">Dark</button>
-      </div>
-    </div>
     <div class="circles-container" id="circlesContainer">
       <div class="circle-group">
         <div class="circle" id="circle1">
-          <div class="text background-text" id="backgroundText1">
-            <div class="t-row">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row t-offset">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row t-offset">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row t-offset">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-          </div>
-          <div class="text foreground-text" id="foregroundText1">Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near</div>
+          <img class="image-layer background-image" id="backgroundText1" :src="backgroundSceneImage" alt="Green field and mountain background" />
+          <img class="image-layer foreground-image" id="foregroundText1" :src="foregroundDeerImage" alt="Deer in foreground" />
           <div class="veil" id="veil1"></div>
           <div class="floaters" id="floaters1"></div>
         </div>
-        <div class="controls">
-          <div class="slider-group">
-            <label for="colorSlider1">Brightness</label>
-            <input type="range" min="0" max="100" value="100" id="colorSlider1" aria-label="Adjust brightness">
+        <div class="controls controls-carousel" id="controlsCarousel1">
+          <div class="carousel-header">
+            <button class="carousel-nav-btn" type="button" aria-label="Previous option" @click.stop="prevCarouselSlide">
+              <span aria-hidden="true">&lt;</span>
+            </button>
+            <div :key="currentCarouselSlide" class="carousel-title" aria-live="polite">{{ carouselTitleText }}</div>
+            <button class="carousel-nav-btn" type="button" aria-label="Next option" @click.stop="nextCarouselSlide">
+              <span aria-hidden="true">&gt;</span>
+            </button>
           </div>
-          <div class="slider-group">
-            <label for="blurSlider1">Blur</label>
-            <input type="range" min="0" max="10" value="0" id="blurSlider1" aria-label="Adjust blur">
-          </div>
-          <div class="slider-group">
-            <label for="blurUpCloseSlider1">Blur Near</label>
-            <input type="range" min="0" max="10" value="0" id="blurUpCloseSlider1" aria-label="Adjust blur near">
-          </div>
-          <div class="slider-group">
-            <label for="blurFarAwaySlider1">Blur Far</label>
-            <input type="range" min="0" max="10" value="0" id="blurFarAwaySlider1" aria-label="Adjust blur far">
-          </div>
-          <div class="slider-group">
-            <label for="curtainSlider1">Curtain</label>
-            <input type="range" min="0" max="100" value="0" id="curtainSlider1" aria-label="Adjust curtain">
-          </div>
-          <div class="slider-group">
-            <label for="warpSlider1">Warp</label>
-            <input type="range" min="0" max="50" value="0" id="warpSlider1" aria-label="Adjust warp">
-          </div>
-          <div class="slider-group">
-            <label for="floatersSlider1">Floaters</label>
-            <input type="range" min="0" max="100" value="0" id="floatersSlider1" aria-label="Adjust floaters">
-          </div>
-          <div class="slider-group">
-            <label for="sizeSlider1">Floater Size</label>
-            <input type="range" min="1" max="20" value="10" id="sizeSlider1" aria-label="Adjust floater size">
-          </div>
-          <div class="slider-group">
-            <label for="hazeSlider1">Haze</label>
-            <input type="range" min="0" max="100" value="0" id="hazeSlider1" aria-label="Adjust haze">
-          </div>
-          <div class="glaucoma-section">
-            <h3 class="glaucoma-label">Sight Loss</h3>
-            <div class="glaucoma-grid">
-              <div class="grid-row">
-                <div class="grid-cell" data-position="0,0"></div>
-                <div class="grid-cell" data-position="0,1"></div>
-                <div class="grid-cell" data-position="0,2"></div>
-                <div class="grid-cell" data-position="0,3"></div>
-              </div>
-              <div class="grid-row">
-                <div class="grid-cell" data-position="1,0"></div>
-                <div class="grid-cell" data-position="1,1"></div>
-                <div class="grid-cell" data-position="1,2"></div>
-                <div class="grid-cell" data-position="1,3"></div>
-              </div>
-              <div class="grid-row">
-                <div class="grid-cell" data-position="2,0"></div>
-                <div class="grid-cell" data-position="2,1"></div>
-                <div class="grid-cell" data-position="2,2"></div>
-                <div class="grid-cell" data-position="2,3"></div>
-              </div>
-              <div class="grid-row">
-                <div class="grid-cell" data-position="3,0"></div>
-                <div class="grid-cell" data-position="3,1"></div>
-                <div class="grid-cell" data-position="3,2"></div>
-                <div class="grid-cell" data-position="3,3"></div>
+          <div class="carousel-track">
+            <div v-show="currentCarouselSlide === 0" class="slider-group carousel-slide" data-label="Brightness">
+              <input type="range" min="0" max="100" value="100" id="colorSlider1" aria-label="Adjust brightness">
+            </div>
+            <div v-show="currentCarouselSlide === 1" class="slider-group carousel-slide" data-label="Blur">
+              <input type="range" min="0" max="10" value="0" id="blurSlider1" aria-label="Adjust blur">
+            </div>
+            <div v-show="currentCarouselSlide === 2" class="slider-group carousel-slide" data-label="Blur Dog">
+              <input type="range" min="0" max="10" value="0" id="blurUpCloseSlider1" aria-label="Adjust blur near">
+            </div>
+            <div v-show="currentCarouselSlide === 3" class="slider-group carousel-slide" data-label="Blur Mountains">
+              <input type="range" min="0" max="10" value="0" id="blurFarAwaySlider1" aria-label="Adjust blur far">
+            </div>
+            <div v-show="currentCarouselSlide === 4" class="slider-group carousel-slide" data-label="Curtain">
+              <input type="range" min="0" max="100" value="0" id="curtainSlider1" aria-label="Adjust curtain">
+            </div>
+            <div v-show="currentCarouselSlide === 5" class="slider-group carousel-slide" data-label="Warp">
+              <input type="range" min="0" max="50" value="0" id="warpSlider1" aria-label="Adjust warp">
+            </div>
+            <div v-show="currentCarouselSlide === 6" class="slider-group carousel-slide" data-label="Floaters">
+              <input type="range" min="0" max="100" value="0" id="floatersSlider1" aria-label="Adjust floaters">
+            </div>
+            <div v-show="currentCarouselSlide === 7" class="slider-group carousel-slide" data-label="Floater Size">
+              <input type="range" min="1" max="20" value="10" id="sizeSlider1" aria-label="Adjust floater size">
+            </div>
+            <div v-show="currentCarouselSlide === 8" class="slider-group carousel-slide" data-label="Haze">
+              <input type="range" min="0" max="100" value="0" id="hazeSlider1" aria-label="Adjust haze">
+            </div>
+            <div v-show="currentCarouselSlide === 9" class="glaucoma-section carousel-slide" data-label="Can't see">
+              <div class="glaucoma-grid">
+                <div class="grid-row">
+                  <div class="grid-cell" data-position="0,0"></div>
+                  <div class="grid-cell" data-position="0,1"></div>
+                  <div class="grid-cell" data-position="0,2"></div>
+                  <div class="grid-cell" data-position="0,3"></div>
+                </div>
+                <div class="grid-row">
+                  <div class="grid-cell" data-position="1,0"></div>
+                  <div class="grid-cell" data-position="1,1"></div>
+                  <div class="grid-cell" data-position="1,2"></div>
+                  <div class="grid-cell" data-position="1,3"></div>
+                </div>
+                <div class="grid-row">
+                  <div class="grid-cell" data-position="2,0"></div>
+                  <div class="grid-cell" data-position="2,1"></div>
+                  <div class="grid-cell" data-position="2,2"></div>
+                  <div class="grid-cell" data-position="2,3"></div>
+                </div>
+                <div class="grid-row">
+                  <div class="grid-cell" data-position="3,0"></div>
+                  <div class="grid-cell" data-position="3,1"></div>
+                  <div class="grid-cell" data-position="3,2"></div>
+                  <div class="grid-cell" data-position="3,3"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="circle-group">
+      <div class="circle-group" style="display: none;">
         <div class="circle" id="circle2">
-          <div class="text background-text" id="backgroundText2">
-            <div class="t-row">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row t-offset">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row t-offset">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-            <div class="t-row t-offset">Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far</div>
-          </div>
-          <div class="text foreground-text" id="foregroundText2">Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near Near</div>
+          <img class="image-layer background-image" id="backgroundText2" :src="backgroundSceneImage" alt="Green field and mountain background" />
+          <img class="image-layer foreground-image" id="foregroundText2" :src="foregroundDeerImage" alt="Deer in foreground" />
           <div class="veil" id="veil2"></div>
           <div class="floaters" id="floaters2"></div>
         </div>
@@ -138,11 +115,11 @@
             <input type="range" min="0" max="10" value="0" id="blurSlider2" aria-label="Adjust blur">
           </div>
           <div class="slider-group">
-            <label for="blurUpCloseSlider2">Blur Near</label>
+            <label for="blurUpCloseSlider2">Blur Dog</label>
             <input type="range" min="0" max="10" value="0" id="blurUpCloseSlider2" aria-label="Adjust blur near">
           </div>
           <div class="slider-group">
-            <label for="blurFarAwaySlider2">Blur Far</label>
+            <label for="blurFarAwaySlider2">Blur Mountains</label>
             <input type="range" min="0" max="10" value="0" id="blurFarAwaySlider2" aria-label="Adjust blur far">
           </div>
           <div class="slider-group">
@@ -166,7 +143,7 @@
             <input type="range" min="0" max="100" value="0" id="hazeSlider2" aria-label="Adjust haze">
           </div>
           <div class="glaucoma-section">
-            <h3 class="glaucoma-label">Sight Loss</h3>
+            <h3 class="glaucoma-label">Can't see</h3>
             <div class="glaucoma-grid">
               <div class="grid-row">
                 <div class="grid-cell" data-position="0,0"></div>
@@ -201,10 +178,37 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import backgroundSceneImage from '../assets/simulator-scene-bg.svg'
+import foregroundDeerImage from '../assets/simulator-deer-fg.svg'
 
 const router = useRouter()
+
+const CAROUSEL_SLIDE_LABELS = [
+  'Brightness',
+  'Blur',
+  'Blur Dog',
+  'Blur Mountains',
+  'Curtain',
+  'Warp',
+  'Floaters',
+  'Floater Size',
+  'Haze',
+  "Can't see"
+]
+const currentCarouselSlide = ref(0)
+const carouselTitleText = computed(() => CAROUSEL_SLIDE_LABELS[currentCarouselSlide.value] ?? '')
+
+function prevCarouselSlide() {
+  const n = CAROUSEL_SLIDE_LABELS.length
+  currentCarouselSlide.value = (currentCarouselSlide.value - 1 + n) % n
+}
+
+function nextCarouselSlide() {
+  const n = CAROUSEL_SLIDE_LABELS.length
+  currentCarouselSlide.value = (currentCarouselSlide.value + 1) % n
+}
 
 // Simple XOR + base64 for share link
 const XOR_KEY = 42
@@ -331,10 +335,16 @@ function updateURL() {
     cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
     params.set(`glaucoma${gridIndex + 1}`, binary)
   })
-  const view = document.querySelectorAll('.circle-group').length === 2 && (document.querySelectorAll('.circle-group')[1].getAttribute('style') || '').includes('display: none') ? 'single' : 'double'
-  params.set('view', view)
+  params.set('view', 'single')
   const newURL = `${window.location.pathname}?${params.toString()}`
   window.history.replaceState({}, '', newURL)
+}
+
+function enforceSingleEye() {
+  const circleGroups = document.querySelectorAll('.circle-group')
+  circleGroups.forEach((group, index) => {
+    group.style.display = index === 0 ? 'flex' : 'none'
+  })
 }
 
 function restoreFromURL() {
@@ -368,55 +378,29 @@ function restoreFromURL() {
       })
     }
   })
-  const viewState = params.get('view')
-  const viewToggle = document.getElementById('viewToggle')
-  const circleGroups = document.querySelectorAll('.circle-group')
-  if (viewState === 'single') {
-    circleGroups.forEach((group, index) => {
-      group.style.display = index === 1 ? 'none' : 'flex'
-    })
-    if (viewToggle) viewToggle.textContent = 'One Eye'
-  }
+  enforceSingleEye()
   // kick floaters after restore
   createFloaters('floaters1', document.getElementById('floatersSlider1')?.value || 0, document.getElementById('sizeSlider1')?.value || 10)
   createFloaters('floaters2', document.getElementById('floatersSlider2')?.value || 0, document.getElementById('sizeSlider2')?.value || 10)
 }
 
 function updateBlur(circleNum) {
+  const bright = Number(document.getElementById(`colorSlider${circleNum}`)?.value ?? 100) / 100
   const blur = Number(document.getElementById(`blurSlider${circleNum}`)?.value || 0)
   const blurUpClose = Number(document.getElementById(`blurUpCloseSlider${circleNum}`)?.value || 0)
   const blurFarAway = Number(document.getElementById(`blurFarAwaySlider${circleNum}`)?.value || 0)
+  const hazeAmt = Number(document.getElementById(`hazeSlider${circleNum}`)?.value || 0) / 100
   const fg = document.getElementById(`foregroundText${circleNum}`)
   const bg = document.getElementById(`backgroundText${circleNum}`)
-  if (fg) fg.style.filter = `blur(${blur + blurUpClose}px)`
-  if (bg) bg.style.filter = `blur(${blur + blurFarAway}px)`
+  const base = `brightness(${bright}) grayscale(${hazeAmt})`
+  if (fg) fg.style.filter = `${base} blur(${blur + blurUpClose}px)`
+  if (bg) bg.style.filter = `${base} blur(${blur + blurFarAway}px)`
 }
 
 function fillBackgroundText(circleNum) {
-  const circle = document.getElementById(`circle${circleNum}`)
   const container = document.getElementById(`backgroundText${circleNum}`)
-  if (!circle || !container) return
-  // Clear existing children
+  if (!container || container.tagName === 'IMG') return
   container.innerHTML = ''
-  const targetHeight = circle.clientHeight
-  // Build rows until we exceed target height
-  let total = 0
-  let rowIndex = 0
-  // Create a measuring row first
-  const measure = document.createElement('div')
-  measure.className = 't-row'
-  measure.textContent = 'Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far'
-  container.appendChild(measure)
-  const rowHeight = measure.clientHeight || 20
-  container.innerHTML = ''
-  while (total < targetHeight + rowHeight) {
-    const row = document.createElement('div')
-    row.className = `t-row${rowIndex % 2 ? ' t-offset' : ''}`
-    row.textContent = 'Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far Far'
-    container.appendChild(row)
-    total += rowHeight
-    rowIndex++
-  }
 }
 
 // Haze animation helpers
@@ -491,16 +475,7 @@ onMounted(() => {
   // Default dark mode on
   document.body.classList.add('dark-mode')
   
-  // Set mobile default to single-eye view
-  const isMobile = window.innerWidth <= 768
-  if (isMobile) {
-    const circleGroups = document.querySelectorAll('.circle-group')
-    circleGroups.forEach((group, index) => {
-      group.style.display = index === 1 ? 'none' : 'flex'
-    })
-    const viewToggle = document.getElementById('viewToggle')
-    if (viewToggle) viewToggle.textContent = 'Two Eyes'
-  }
+  enforceSingleEye()
   // Encrypted restore first if present
   const s = new URLSearchParams(window.location.search).get('s')
   if (s) {
@@ -532,15 +507,7 @@ onMounted(() => {
           })
         }
       })
-      const viewToggle = document.getElementById('viewToggle')
-      const circleGroups = document.querySelectorAll('.circle-group')
-      if (state.view === 'single') {
-        circleGroups.forEach((group, index) => { group.style.display = index === 1 ? 'none' : 'flex' })
-        if (viewToggle) viewToggle.textContent = 'One Eye'
-      } else {
-        circleGroups.forEach(group => { group.style.display = 'flex' })
-        if (viewToggle) viewToggle.textContent = 'Two Eyes'
-      }
+      enforceSingleEye()
       createFloaters('floaters1', state.floatersSlider1 ?? 0, state.sizeSlider1 ?? 10)
       createFloaters('floaters2', state.floatersSlider2 ?? 0, state.sizeSlider2 ?? 10)
     } catch (e) {
@@ -551,29 +518,6 @@ onMounted(() => {
     restoreFromURL()
   }
 
-  // View toggle
-  let isSingleView = false
-  const viewToggle = document.getElementById('viewToggle')
-  const mobileViewToggle = document.getElementById('mobileViewToggle')
-  const circleGroups = document.querySelectorAll('.circle-group')
-  
-  const toggleView = () => {
-    isSingleView = !isSingleView
-    const buttonText = isSingleView ? 'One Eye' : 'Two Eyes'
-    if (viewToggle) viewToggle.textContent = buttonText
-    circleGroups.forEach((group, index) => {
-      group.style.display = isSingleView && index === 1 ? 'none' : 'flex'
-    })
-    updateURL()
-  }
-  
-  if (viewToggle) {
-    viewToggle.textContent = isSingleView ? 'One Eye' : 'Two Eyes'
-    viewToggle.addEventListener('click', toggleView)
-  }
-  
-  // Mobile view toggle removed - mobile always shows single eye
-
   // Brightness sliders
   const color1 = document.getElementById('colorSlider1')
   const color2 = document.getElementById('colorSlider2')
@@ -582,6 +526,7 @@ onMounted(() => {
     const c = Math.round((255 * v) / 100)
     const circle = document.getElementById('circle1')
     if (circle) circle.style.backgroundColor = `rgb(${c},${c},${c})`
+    updateBlur(1)
     updateURL()
   })
   color2?.addEventListener('input', function () {
@@ -589,6 +534,7 @@ onMounted(() => {
     const c = Math.round((255 * v) / 100)
     const circle = document.getElementById('circle2')
     if (circle) circle.style.backgroundColor = `rgb(${c},${c},${c})`
+    updateBlur(2)
     updateURL()
   })
 
@@ -609,13 +555,13 @@ onMounted(() => {
   const curtain1 = document.getElementById('curtainSlider1')
   const curtain2 = document.getElementById('curtainSlider2')
   curtain1?.addEventListener('input', function() {
-    const radius = Number(this.value) * 2
+    const radius = Number(this.value)
     const veil = document.getElementById('veil1')
     if (veil) veil.style.clipPath = `circle(${radius}% at 50% 0)`
     updateURL()
   })
   curtain2?.addEventListener('input', function() {
-    const radius = Number(this.value) * 2
+    const radius = Number(this.value)
     const veil = document.getElementById('veil2')
     if (veil) veil.style.clipPath = `circle(${radius}% at 50% 0)`
     updateURL()
@@ -691,8 +637,7 @@ onMounted(() => {
       cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
       params[`glaucoma${gridIndex + 1}`] = binary
     })
-    const view = document.querySelectorAll('.circle-group').length === 2 && (document.querySelectorAll('.circle-group')[1].getAttribute('style') || '').includes('display: none') ? 'single' : 'double'
-    params.view = view
+    params.view = 'single'
     const encrypted = xorEncrypt(JSON.stringify(params))
     const url = `${window.location.origin}${window.location.pathname}?s=${encodeURIComponent(encrypted)}`
     try {
@@ -716,8 +661,7 @@ onMounted(() => {
       cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
       params.set(`glaucoma${gridIndex + 1}`, binary)
     })
-    const view = document.querySelectorAll('.circle-group').length === 2 && (document.querySelectorAll('.circle-group')[1].getAttribute('style') || '').includes('display: none') ? 'single' : 'double'
-    params.set('view', view)
+    params.set('view', 'single')
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
     try {
       await navigator.clipboard.writeText(url)
@@ -799,15 +743,12 @@ onMounted(() => {
     const hv = Number(document.getElementById(`hazeSlider${circleNum}`)?.value || 0)
     const fg = document.getElementById(`foregroundText${circleNum}`)
     if (fg) {
-      const minColor = 34, maxColor = 238
-      const colorVal = Math.round(minColor + (maxColor - minColor) * (hv / 100))
       const opacity = 1 - (hv / 100) * 0.95
-      fg.style.setProperty('color', `rgb(${colorVal},${colorVal},${colorVal})`, 'important')
       fg.style.setProperty('opacity', String(opacity), 'important')
     }
   }
-  haze1?.addEventListener('input', () => { updateFg(1); updateURL() })
-  haze2?.addEventListener('input', () => { updateFg(2); updateURL() })
+  haze1?.addEventListener('input', () => { updateFg(1); updateBlur(1); updateURL() })
+  haze2?.addEventListener('input', () => { updateFg(2); updateBlur(2); updateURL() })
   updateFg(1)
   updateFg(2)
 
