@@ -9,12 +9,16 @@
       <h3>Emergency Eye Care</h3>
       <ul class="resource-list">
         <li class="resource-item">
-          <a href="https://www.hse.ie/eng/services/list/3/acutehospitals/hospitals/eye-and-ear-hospital/" target="_blank">Royal Victoria Eye and Ear Hospital</a>
+          <a href="https://www.rveeh.ie/" target="_blank">Royal Victoria Eye and Ear Hospital</a>
           <div class="resource-description">Dublin's main eye emergency department. Open 24/7 for urgent eye care.</div>
         </li>
         <li class="resource-item">
-          <a href="https://www2.hse.ie/services/hospital-service-directory/eye-and-ear-hospital/" target="_blank">HSE Eye and Ear Hospital Services</a>
-          <div class="resource-description">Directory of public eye care services across Ireland.</div>
+          <a href="https://www.materprivate.ie/our-services/eye-care/" target="_blank">Mater Private Eye Laser Clinic</a>
+          <div class="resource-description">Dublin's leading private eye care clinic.</div>
+        </li>
+        <li class="resource-item">
+          <a href="https://www.ioes.ie/" target="_blank">Institute of Eye Surgery</a>
+          <div class="resource-description">Regional eye clinic outside of Dublin.</div>
         </li>
       </ul>
     </div>
@@ -23,12 +27,12 @@
       <h3>Professional Organizations</h3>
       <ul class="resource-list">
         <li class="resource-item">
-          <a href="https://optometryireland.org/optometryireland.ie/OI_cms/" target="_blank">Optometry Ireland (OI)</a>
+          <a href="https://optometryireland.ie/" target="_blank">Optometry Ireland (OI)</a>
           <div class="resource-description">Professional representative body for practicing Optometrists in Ireland.</div>
         </li>
         <li class="resource-item">
-          <a href="https://www.rcsi.com/dublin/undergraduate/medicine/ophthalmology" target="_blank">RCSI — Ophthalmology</a>
-          <div class="resource-description">Leading institution for ophthalmology education and research.</div>
+          <a href="https://www.rcsi.com/dublin/about/faculty-of-medicine-and-health-sciences/academic-departments/ophthalmologyy" target="_blank">RCSI — Ophthalmology</a>
+          <div class="resource-description">Leading department for ophthalmology education and research.</div>
         </li>
         <li class="resource-item">
           <a href="https://www.icoph.org/" target="_blank">Irish College of Ophthalmologists</a>
