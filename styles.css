@@ -313,10 +313,11 @@ body.dark-mode .slider-group label {
 }
 
 .controls-carousel .slider-group input[type="range"] {
-    width: 50%;
-    max-width: 50%;
+    width: 100%;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    display: block;
 }
 
 .controls-carousel .glaucoma-section {
@@ -919,6 +920,9 @@ body.dark-mode .glaucoma-label {
 .main-content {
     margin-top: 70px;
     padding: 5px 20px 20px 20px; /* was 20px all sides — less top padding tightens gap under header */
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+    padding-left: calc(20px + env(safe-area-inset-left, 0px));
+    padding-right: calc(20px + env(safe-area-inset-right, 0px));
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
@@ -927,11 +931,13 @@ body.dark-mode .glaucoma-label {
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
     .main-content {
         margin-top: 54px; /* ~header + 25% of slack vs old 60px — avoids overlap */
+        padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
     }
 }
 
@@ -1158,18 +1164,17 @@ body.dark-mode .glaucoma-label {
     }
 }
 
-/* Mobile Action Buttons */
+/* Mobile action bar — under carousel (same slot as .desktop-actions); ≤768px only */
 .mobile-actions {
-  position: fixed !important;
-  top: 50% !important;
-  right: 10px !important;
-  transform: translateY(-50%) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 10px !important;
-  z-index: 1000 !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  display: none;
+  width: min(92vw, 420px);
+  margin-top: 10px;
+  margin-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .mobile-action-btn {
@@ -1185,28 +1190,36 @@ body.dark-mode .glaucoma-label {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   backdrop-filter: blur(10px);
-  visibility: visible !important;
-  opacity: 1 !important;
+  flex-shrink: 0;
+}
+
+#mobileDiagnoseButton {
+  background: #1e4d2b;
+  border-color: #38754a;
+}
+
+#mobileDiagnoseButton:hover {
+  background: #163821;
+  border-color: #38754a;
 }
 
 .mobile-action-btn:hover {
   background: rgba(0, 0, 0, 0.95);
   border-color: rgba(255, 255, 255, 0.4);
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .mobile-action-btn:active {
   transform: scale(0.95);
 }
 
-/* Prevent size changes on mobile action buttons */
 .mobile-action-btn:active,
 .mobile-action-btn:focus {
-  font-size: 18px !important;
-  width: 50px !important;
-  height: 50px !important;
+  font-size: 18px;
+  width: 50px;
+  height: 50px;
 }
 
 .action-icon {
@@ -1241,12 +1254,49 @@ body.dark-mode .glaucoma-label {
   visibility: visible;
 }
 
-/* Show mobile actions only on mobile */
+/* Show mobile action bar only on phones (desktop keeps .desktop-actions) */
 @media (max-width: 768px) {
   .mobile-actions {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: flex;
+    /* Sit above bottom nav without overlapping the eye circle */
+    padding-bottom: max(12px, calc(env(safe-area-inset-bottom, 0px) + 4px));
+  }
+}
+
+/* Desktop action bar (Reset / Share / Diagnose) — hidden on phones where FABs exist */
+.desktop-actions {
+  display: none;
+  width: min(92vw, 420px);
+  margin-top: 10px;
+  gap: 8px;
+  justify-content: stretch;
+}
+
+.desktop-actions .desktop-action-btn {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 9px;
+  border: 1px solid #38754a;
+  background: #1e4d2b;
+  color: #eaf7ea;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px 10px;
+}
+
+.desktop-actions .desktop-action-btn:hover {
+  background: #163821;
+}
+
+.desktop-actions .desktop-action-btn.diagnose {
+  border-color: #38754a;
+}
+
+@media (min-width: 769px) {
+  .desktop-actions {
+    display: flex;
   }
 }
 
@@ -1300,7 +1350,9 @@ body.dark-mode .glaucoma-label {
     .main-content {
         margin-top: 54px !important;
         padding: 10px !important;
-        padding-bottom: 120px !important; /* Space for bottom buttons */
+        padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-left: calc(10px + env(safe-area-inset-left, 0px)) !important;
+        padding-right: calc(10px + env(safe-area-inset-right, 0px)) !important;
     }
     
     /* Fix side buttons - make them visible and accessible */
@@ -1346,11 +1398,7 @@ body.dark-mode .glaucoma-label {
         display: none !important;
     }
     
-    /* Ensure side buttons are visible on mobile */
-    .side-vertical-buttons {
-        display: flex !important;
-        visibility: visible !important;
-    }
+    /* .side-vertical-buttons: legacy arkive markup only — unused by Vue templates */
     
     /* Ensure circles are properly sized */
     .circle {
@@ -1360,11 +1408,6 @@ body.dark-mode .glaucoma-label {
         max-height: 300px !important;
         min-width: 200px !important;
         min-height: 200px !important;
-    }
-    
-    /* Hide second eye by default on mobile */
-    .circle-group:nth-child(2) {
-        display: none !important;
     }
     
     /* Make controls scrollable */
@@ -1458,12 +1501,12 @@ html.accessible-mode {
         font-size: inherit !important;
     }
     
-    /* Fix mobile action buttons positioning */
+    /* Keep accessible mobile actions in the under-carousel bar (not mid-screen) */
     body.accessible-mode .mobile-actions {
-        position: fixed !important;
-        top: 50% !important;
-        right: 10px !important;
-        transform: translateY(-50%) !important;
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        transform: none !important;
     }
     
     body.accessible-mode .mobile-action-btn {

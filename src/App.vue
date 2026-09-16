@@ -79,6 +79,9 @@ onMounted(() => {
   background: #0f0f10;
   border-top: 1px solid #222;
   padding: 8px 10px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(10px + env(safe-area-inset-left, 0px));
+  padding-right: calc(10px + env(safe-area-inset-right, 0px));
   z-index: 1200;
 }
 .nav-item {

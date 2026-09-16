@@ -1,18 +1,5 @@
 <template>
   <div>
-    <!-- Mobile Action Buttons -->
-    <div class="mobile-actions">
-      <button class="mobile-action-btn" id="mobileResetButton" title="Reset all settings">
-        <i class="fas fa-redo action-icon"></i>
-      </button>
-      <button class="mobile-action-btn" id="mobileShareButton" title="Share current settings">
-        <i class="fas fa-share action-icon"></i>
-      </button>
-      <button class="mobile-action-btn" id="mobileDiagnoseButton" title="Get diagnosis">
-        <i class="fas fa-check action-icon"></i>
-      </button>
-    </div>
-    
     <!-- Mobile Notification Popup -->
     <div class="mobile-notification" id="mobileNotification">
       <span id="mobileNotificationText"></span>
@@ -94,80 +81,22 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="circle-group" style="display: none;">
-        <div class="circle" id="circle2">
-          <img class="image-layer background-image" id="backgroundText2" :src="backgroundSceneImage" alt="Green field and mountain background" />
-          <img class="image-layer foreground-image" id="foregroundText2" :src="foregroundDeerImage" alt="Deer in foreground" />
-          <div class="veil" id="veil2"></div>
-          <div class="floaters" id="floaters2"></div>
+        <!-- Desktop: text buttons; Mobile: icon FABs in the same under-carousel slot -->
+        <div class="desktop-actions" aria-label="Simulator actions">
+          <button type="button" class="desktop-action-btn" id="resetButton" title="Reset all settings">Reset</button>
+          <button type="button" class="desktop-action-btn" id="saveConfigButton" title="Share current settings">Share</button>
+          <button type="button" class="desktop-action-btn diagnose" id="diagnoseButton" title="Get diagnosis">Diagnose</button>
         </div>
-        <div class="controls">
-          <div class="slider-group">
-            <label for="colorSlider2">Brightness</label>
-            <input type="range" min="0" max="100" value="100" id="colorSlider2" aria-label="Adjust brightness">
-          </div>
-          <div class="slider-group">
-            <label for="blurSlider2">Blur</label>
-            <input type="range" min="0" max="10" value="0" id="blurSlider2" aria-label="Adjust blur">
-          </div>
-          <div class="slider-group">
-            <label for="blurUpCloseSlider2">Blur Dog</label>
-            <input type="range" min="0" max="10" value="0" id="blurUpCloseSlider2" aria-label="Adjust blur near">
-          </div>
-          <div class="slider-group">
-            <label for="blurFarAwaySlider2">Blur Mountains</label>
-            <input type="range" min="0" max="10" value="0" id="blurFarAwaySlider2" aria-label="Adjust blur far">
-          </div>
-          <div class="slider-group">
-            <label for="curtainSlider2">Curtain</label>
-            <input type="range" min="0" max="100" value="0" id="curtainSlider2" aria-label="Adjust curtain">
-          </div>
-          <div class="slider-group">
-            <label for="warpSlider2">Warp</label>
-            <input type="range" min="0" max="50" value="0" id="warpSlider2" aria-label="Adjust warp">
-          </div>
-          <div class="slider-group">
-            <label for="floatersSlider2">Floaters</label>
-            <input type="range" min="0" max="100" value="0" id="floatersSlider2" aria-label="Adjust floaters">
-          </div>
-          <div class="slider-group">
-            <label for="sizeSlider2">Floater Size</label>
-            <input type="range" min="1" max="20" value="10" id="sizeSlider2" aria-label="Adjust floater size">
-          </div>
-          <div class="slider-group">
-            <label for="hazeSlider2">Haze</label>
-            <input type="range" min="0" max="100" value="0" id="hazeSlider2" aria-label="Adjust haze">
-          </div>
-          <div class="glaucoma-section">
-            <h3 class="glaucoma-label">Can't see</h3>
-            <div class="glaucoma-grid">
-              <div class="grid-row">
-                <div class="grid-cell" data-position="0,0"></div>
-                <div class="grid-cell" data-position="0,1"></div>
-                <div class="grid-cell" data-position="0,2"></div>
-                <div class="grid-cell" data-position="0,3"></div>
-              </div>
-              <div class="grid-row">
-                <div class="grid-cell" data-position="1,0"></div>
-                <div class="grid-cell" data-position="1,1"></div>
-                <div class="grid-cell" data-position="1,2"></div>
-                <div class="grid-cell" data-position="1,3"></div>
-              </div>
-              <div class="grid-row">
-                <div class="grid-cell" data-position="2,0"></div>
-                <div class="grid-cell" data-position="2,1"></div>
-                <div class="grid-cell" data-position="2,2"></div>
-                <div class="grid-cell" data-position="2,3"></div>
-              </div>
-              <div class="grid-row">
-                <div class="grid-cell" data-position="3,0"></div>
-                <div class="grid-cell" data-position="3,1"></div>
-                <div class="grid-cell" data-position="3,2"></div>
-                <div class="grid-cell" data-position="3,3"></div>
-              </div>
-            </div>
-          </div>
+        <div class="mobile-actions" aria-label="Simulator actions">
+          <button class="mobile-action-btn" id="mobileResetButton" title="Reset all settings">
+            <i class="fas fa-redo action-icon"></i>
+          </button>
+          <button class="mobile-action-btn" id="mobileShareButton" title="Share current settings">
+            <i class="fas fa-share action-icon"></i>
+          </button>
+          <button class="mobile-action-btn" id="mobileDiagnoseButton" title="Get diagnosis">
+            <i class="fas fa-check action-icon"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -175,7 +104,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { setDarkMode } from '../theme'
 import backgroundSceneImage from '../assets/simulator-scene-bg.svg'
@@ -255,10 +184,29 @@ function initializeGlaucomaGrid() {
   })
 }
 
+const MAX_FLOATERS = 24
+let floaterRafId = null
+let activeFloaters = []
+
+function stopFloaterLoop() {
+  if (floaterRafId != null) {
+    cancelAnimationFrame(floaterRafId)
+    floaterRafId = null
+  }
+  activeFloaters = []
+}
+
 function createFloaters(containerId, intensity, size) {
   const container = document.getElementById(containerId)
   if (!container) return
+
+  // Cancel shared loop and any leftover per-floater RAFs before recreating
+  stopFloaterLoop()
+  container.querySelectorAll('.floating-element').forEach(el => {
+    if (el.__raf) cancelAnimationFrame(el.__raf)
+  })
   container.innerHTML = ''
+
   const circle = container.closest('.circle')
   const width = circle ? circle.offsetWidth : 400
   const height = circle ? circle.offsetHeight : 400
@@ -267,8 +215,11 @@ function createFloaters(containerId, intensity, size) {
   const radiusPx = Number(size) // interpret as radius
   const diameterPx = Math.max(1, radiusPx * 2)
   const maxRadius = Math.min(width, height) / 2 - radiusPx
-  const numFloaters = Math.round(Math.max(0, Number(intensity)) * 2) // 0..200
+  const clamped = Math.max(0, Math.min(100, Number(intensity) || 0))
+  const numFloaters = Math.round((clamped / 100) * MAX_FLOATERS) // 0..24
   const fragment = document.createDocumentFragment()
+  const nextFloaters = []
+
   for (let i = 0; i < numFloaters; i++) {
     const floater = document.createElement('div')
     floater.className = 'floating-element'
@@ -281,43 +232,48 @@ function createFloaters(containerId, intensity, size) {
     floater.style.left = `${x}px`
     floater.style.top = `${y}px`
     fragment.appendChild(floater)
-    animateFloater(floater, centerX, centerY, maxRadius)
+    nextFloaters.push({
+      el: floater,
+      centerX,
+      centerY,
+      maxRadius,
+      baseSpeed: 0.3 + Math.random() * 0.5,
+      direction: Math.random() * Math.PI * 2,
+      wobblePhase: Math.random() * Math.PI * 2,
+      wobbleAmp: 0.4 + Math.random() * 0.6
+    })
   }
   container.appendChild(fragment)
-}
+  activeFloaters = nextFloaters
 
-function animateFloater(floater, centerX, centerY, maxRadius) {
-  // random small velocity
-  const baseSpeed = 0.3 + Math.random() * 0.5 // px per frame
-  let direction = Math.random() * Math.PI * 2
-  let wobblePhase = Math.random() * Math.PI * 2
-  const wobbleAmp = 0.4 + Math.random() * 0.6
+  if (activeFloaters.length === 0) return
 
-  function step() {
-    const curX = parseFloat(floater.style.left)
-    const curY = parseFloat(floater.style.top)
-    wobblePhase += 0.03
-    const dx = Math.cos(direction) * baseSpeed + Math.sin(wobblePhase) * wobbleAmp
-    const dy = Math.sin(direction) * baseSpeed + Math.cos(wobblePhase) * wobbleAmp
-    let nextX = curX + dx
-    let nextY = curY + dy
-    // bounce at circle boundary
-    const relX = nextX + floater.offsetWidth / 2 - centerX
-    const relY = nextY + floater.offsetHeight / 2 - centerY
-    const dist = Math.sqrt(relX * relX + relY * relY)
-    if (dist > maxRadius) {
-      // reflect direction
-      const normal = Math.atan2(relY, relX)
-      direction = 2 * normal - direction + Math.PI
-      // move slightly inward
-      nextX = centerX + (maxRadius - 2) * Math.cos(normal) - floater.offsetWidth / 2
-      nextY = centerY + (maxRadius - 2) * Math.sin(normal) - floater.offsetHeight / 2
+  function stepAll() {
+    for (const f of activeFloaters) {
+      const curX = parseFloat(f.el.style.left)
+      const curY = parseFloat(f.el.style.top)
+      f.wobblePhase += 0.03
+      const dx = Math.cos(f.direction) * f.baseSpeed + Math.sin(f.wobblePhase) * f.wobbleAmp
+      const dy = Math.sin(f.direction) * f.baseSpeed + Math.cos(f.wobblePhase) * f.wobbleAmp
+      let nextX = curX + dx
+      let nextY = curY + dy
+      const halfW = f.el.offsetWidth / 2
+      const halfH = f.el.offsetHeight / 2
+      const relX = nextX + halfW - f.centerX
+      const relY = nextY + halfH - f.centerY
+      const dist = Math.sqrt(relX * relX + relY * relY)
+      if (dist > f.maxRadius) {
+        const normal = Math.atan2(relY, relX)
+        f.direction = 2 * normal - f.direction + Math.PI
+        nextX = f.centerX + (f.maxRadius - 2) * Math.cos(normal) - halfW
+        nextY = f.centerY + (f.maxRadius - 2) * Math.sin(normal) - halfH
+      }
+      f.el.style.left = `${nextX}px`
+      f.el.style.top = `${nextY}px`
     }
-    floater.style.left = `${nextX}px`
-    floater.style.top = `${nextY}px`
-    floater.__raf = requestAnimationFrame(step)
+    floaterRafId = requestAnimationFrame(stepAll)
   }
-  floater.__raf = requestAnimationFrame(step)
+  floaterRafId = requestAnimationFrame(stepAll)
 }
 
 function getFirstCircleGroup() {
@@ -346,10 +302,8 @@ function updateURL() {
 }
 
 function enforceSingleEye() {
-  const circleGroups = document.querySelectorAll('.circle-group')
-  circleGroups.forEach((group, index) => {
-    group.style.display = index === 0 ? 'flex' : 'none'
-  })
+  const group = getFirstCircleGroup()
+  if (group) group.style.display = 'flex'
 }
 
 function restoreFromURL() {
@@ -384,9 +338,7 @@ function restoreFromURL() {
     }
   }
   enforceSingleEye()
-  // kick floaters after restore
   createFloaters('floaters1', document.getElementById('floatersSlider1')?.value || 0, document.getElementById('sizeSlider1')?.value || 10)
-  createFloaters('floaters2', document.getElementById('floatersSlider2')?.value || 0, document.getElementById('sizeSlider2')?.value || 10)
 }
 
 function updateBlur(circleNum) {
@@ -408,7 +360,7 @@ function fillBackgroundText(circleNum) {
   container.innerHTML = ''
 }
 
-// Haze animation helpers
+// Haze animation helpers (single eye)
 function createOrGetHazeOverlay(circleNum) {
   let haze = document.getElementById(`hazeOverlay${circleNum}`)
   if (!haze) {
@@ -430,51 +382,82 @@ function createOrGetHazeOverlay(circleNum) {
   return haze
 }
 
-const hazeAnimIds = [null, null]
+let hazeAnimId = null
+let hazeRunning = false
+
+function stopHazeAnimation(circleNum) {
+  if (hazeAnimId != null) {
+    cancelAnimationFrame(hazeAnimId)
+    hazeAnimId = null
+  }
+  hazeRunning = false
+  const haze = document.getElementById(`hazeOverlay${circleNum}`)
+  if (haze) {
+    const ctx = haze.getContext('2d')
+    ctx?.clearRect(0, 0, haze.width, haze.height)
+  }
+}
+
 function startHazeAnimation(circleNum) {
+  if (hazeRunning) return
+  const slider = document.getElementById(`hazeSlider${circleNum}`)
+  if (Number(slider?.value || 0) <= 0) {
+    stopHazeAnimation(circleNum)
+    return
+  }
   const haze = createOrGetHazeOverlay(circleNum)
   const ctx = haze.getContext('2d')
   let t = 0
+  hazeRunning = true
   function draw() {
-    const slider = document.getElementById(`hazeSlider${circleNum}`)
-    const hv = Number(slider?.value || 0)
+    const hv = Number(document.getElementById(`hazeSlider${circleNum}`)?.value || 0)
     ctx.clearRect(0, 0, haze.width, haze.height)
-    if (hv > 0) {
-      const lines = Math.max(10, Math.round(10 + 50 * (hv / 100)))
-      const amp = 2 + 6 * (hv / 100)
-      const alpha = 0.25 + 0.65 * (hv / 100)
-      ctx.save()
-      ctx.globalAlpha = alpha
-      ctx.strokeStyle = '#bbb'
-      for (let i = 0; i < lines; i++) {
-        ctx.beginPath()
-        for (let j = 0; j < lines; j++) {
-          const x = (i / (lines - 1)) * haze.width
-          const y = (j / (lines - 1)) * haze.height
-          const offset = Math.sin(t * 0.02 + i * 0.3 + j * 0.2) * amp
-          if (j === 0) ctx.moveTo(x + offset, y + offset)
-          else ctx.lineTo(x + offset, y + offset)
-        }
-        ctx.stroke()
-      }
-      for (let j = 0; j < lines; j++) {
-        ctx.beginPath()
-        for (let i = 0; i < lines; i++) {
-          const x = (i / (lines - 1)) * haze.width
-          const y = (j / (lines - 1)) * haze.height
-          const offset = Math.cos(t * 0.02 + i * 0.25 + j * 0.35) * amp
-          if (i === 0) ctx.moveTo(x + offset, y + offset)
-          else ctx.lineTo(x + offset, y + offset)
-        }
-        ctx.stroke()
-      }
-      ctx.restore()
+    if (hv <= 0) {
+      stopHazeAnimation(circleNum)
+      return
     }
+    const lines = Math.max(10, Math.round(10 + 50 * (hv / 100)))
+    const amp = 2 + 6 * (hv / 100)
+    const alpha = 0.25 + 0.65 * (hv / 100)
+    ctx.save()
+    ctx.globalAlpha = alpha
+    ctx.strokeStyle = '#bbb'
+    for (let i = 0; i < lines; i++) {
+      ctx.beginPath()
+      for (let j = 0; j < lines; j++) {
+        const x = (i / (lines - 1)) * haze.width
+        const y = (j / (lines - 1)) * haze.height
+        const offset = Math.sin(t * 0.02 + i * 0.3 + j * 0.2) * amp
+        if (j === 0) ctx.moveTo(x + offset, y + offset)
+        else ctx.lineTo(x + offset, y + offset)
+      }
+      ctx.stroke()
+    }
+    for (let j = 0; j < lines; j++) {
+      ctx.beginPath()
+      for (let i = 0; i < lines; i++) {
+        const x = (i / (lines - 1)) * haze.width
+        const y = (j / (lines - 1)) * haze.height
+        const offset = Math.cos(t * 0.02 + i * 0.25 + j * 0.35) * amp
+        if (i === 0) ctx.moveTo(x + offset, y + offset)
+        else ctx.lineTo(x + offset, y + offset)
+      }
+      ctx.stroke()
+    }
+    ctx.restore()
     t += 2
-    hazeAnimIds[circleNum - 1] = requestAnimationFrame(draw)
+    hazeAnimId = requestAnimationFrame(draw)
   }
   draw()
 }
+
+function syncHazeAnimation(circleNum) {
+  const hv = Number(document.getElementById(`hazeSlider${circleNum}`)?.value || 0)
+  if (hv > 0) startHazeAnimation(circleNum)
+  else stopHazeAnimation(circleNum)
+}
+
+let resizeFillHandler = null
 
 onMounted(() => {
   enforceSingleEye()
@@ -512,7 +495,6 @@ onMounted(() => {
       }
       enforceSingleEye()
       createFloaters('floaters1', state.floatersSlider1 ?? 0, state.sizeSlider1 ?? 10)
-      createFloaters('floaters2', state.floatersSlider2 ?? 0, state.sizeSlider2 ?? 10)
     } catch (e) {
       console.error('Failed to decrypt shared state:', e)
       restoreFromURL()
@@ -521,9 +503,8 @@ onMounted(() => {
     restoreFromURL()
   }
 
-  // Brightness sliders
+  // Brightness
   const color1 = document.getElementById('colorSlider1')
-  const color2 = document.getElementById('colorSlider2')
   color1?.addEventListener('input', function () {
     const v = Number(this.value)
     const c = Math.round((255 * v) / 100)
@@ -532,47 +513,29 @@ onMounted(() => {
     updateBlur(1)
     updateURL()
   })
-  color2?.addEventListener('input', function () {
-    const v = Number(this.value)
-    const c = Math.round((255 * v) / 100)
-    const circle = document.getElementById('circle2')
-    if (circle) circle.style.backgroundColor = `rgb(${c},${c},${c})`
-    updateBlur(2)
-    updateURL()
-  })
 
   // Blur sliders
-  const blurIds = ['blurSlider1','blurSlider2','blurUpCloseSlider1','blurUpCloseSlider2','blurFarAwaySlider1','blurFarAwaySlider2']
+  const blurIds = ['blurSlider1', 'blurUpCloseSlider1', 'blurFarAwaySlider1']
   blurIds.forEach(id => {
     const el = document.getElementById(id)
     el?.addEventListener('input', () => {
-      const circleNum = id.endsWith('1') ? 1 : 2
-      updateBlur(circleNum)
+      updateBlur(1)
       updateURL()
     })
   })
   updateBlur(1)
-  updateBlur(2)
 
   // Curtain
   const curtain1 = document.getElementById('curtainSlider1')
-  const curtain2 = document.getElementById('curtainSlider2')
   curtain1?.addEventListener('input', function() {
     const radius = Number(this.value)
     const veil = document.getElementById('veil1')
     if (veil) veil.style.clipPath = `circle(${radius}% at 50% 0)`
     updateURL()
   })
-  curtain2?.addEventListener('input', function() {
-    const radius = Number(this.value)
-    const veil = document.getElementById('veil2')
-    if (veil) veil.style.clipPath = `circle(${radius}% at 50% 0)`
-    updateURL()
-  })
 
   // Warp
   const warp1 = document.getElementById('warpSlider1')
-  const warp2 = document.getElementById('warpSlider2')
   warp1?.addEventListener('input', function() {
     const scaleY = 1 - Number(this.value) / 100
     const scaleX = 1 + Number(this.value) / 200
@@ -582,36 +545,17 @@ onMounted(() => {
     if (bg) bg.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`
     updateURL()
   })
-  warp2?.addEventListener('input', function() {
-    const scaleY = 1 - Number(this.value) / 100
-    const scaleX = 1 + Number(this.value) / 200
-    const fg = document.getElementById('foregroundText2')
-    const bg = document.getElementById('backgroundText2')
-    if (fg) fg.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`
-    if (bg) bg.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`
-    updateURL()
-  })
 
   // Floaters and Floater Size
   const floaters1 = document.getElementById('floatersSlider1')
   const size1 = document.getElementById('sizeSlider1')
-  const floaters2 = document.getElementById('floatersSlider2')
-  const size2 = document.getElementById('sizeSlider2')
   function refreshFloaters1() {
     createFloaters('floaters1', floaters1?.value || 0, size1?.value || 10)
     updateURL()
   }
-  function refreshFloaters2() {
-    createFloaters('floaters2', floaters2?.value || 0, size2?.value || 10)
-    updateURL()
-  }
   floaters1?.addEventListener('input', refreshFloaters1)
   size1?.addEventListener('input', refreshFloaters1)
-  floaters2?.addEventListener('input', refreshFloaters2)
-  size2?.addEventListener('input', refreshFloaters2)
-  // initialize now
   refreshFloaters1()
-  refreshFloaters2()
 
   // Diagnose
   const goToDiagnosis = () => {
@@ -650,7 +594,6 @@ onMounted(() => {
     const url = `${window.location.origin}${window.location.pathname}?s=${encodeURIComponent(encrypted)}`
     try {
       await navigator.clipboard.writeText(url)
-      // Show mobile notification
       showMobileNotification('Copied!')
     } catch (err) {
       console.error('Failed to copy:', err)
@@ -677,7 +620,6 @@ onMounted(() => {
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
     try {
       await navigator.clipboard.writeText(url)
-      // Show mobile notification
       showMobileNotification('Search URL copied!')
     } catch (err) {
       console.error('Failed to copy:', err)
@@ -692,7 +634,6 @@ onMounted(() => {
   mobileShareBtn?.addEventListener('click', shareConfig)
   shareSearchBtn?.addEventListener('click', shareSearchURL)
 
-  // Mobile notification function
   const showMobileNotification = (message) => {
     const notification = document.getElementById('mobileNotification')
     const notificationText = document.getElementById('mobileNotificationText')
@@ -705,37 +646,31 @@ onMounted(() => {
     }
   }
 
-  // Reset to defaults
+  // Reset to defaults (eye 1 only)
   const resetDefaults = () => {
     const defaults = {
-      colorSlider1: 100, colorSlider2: 100,
-      blurSlider1: 0, blurSlider2: 0,
-      blurUpCloseSlider1: 0, blurUpCloseSlider2: 0,
-      blurFarAwaySlider1: 0, blurFarAwaySlider2: 0,
-      curtainSlider1: 0, curtainSlider2: 0,
-      warpSlider1: 0, warpSlider2: 0,
-      floatersSlider1: 0, floatersSlider2: 0,
-      sizeSlider1: 10, sizeSlider2: 10,
-      hazeSlider1: 0, hazeSlider2: 0
+      colorSlider1: 100,
+      blurSlider1: 0,
+      blurUpCloseSlider1: 0,
+      blurFarAwaySlider1: 0,
+      curtainSlider1: 0,
+      warpSlider1: 0,
+      floatersSlider1: 0,
+      sizeSlider1: 10,
+      hazeSlider1: 0
     }
     Object.entries(defaults).forEach(([id, value]) => {
       const el = document.getElementById(id)
       if (el) { el.value = value; el.dispatchEvent(new Event('input')) }
     })
-    // clear glaucoma
     document.querySelectorAll('.glaucoma-grid').forEach(grid => {
       grid.querySelectorAll('.grid-cell').forEach(cell => cell.classList.remove('active'))
     })
     document.querySelectorAll('.glaucoma-overlay').forEach(overlay => {
       overlay.querySelectorAll('.glaucoma-segment').forEach(seg => { seg.style.opacity = '0' })
     })
-    // refresh floaters
     createFloaters('floaters1', 0, 10)
-    createFloaters('floaters2', 0, 10)
-    // clear URL
     window.history.replaceState({}, '', window.location.pathname)
-    
-    // Show mobile notification
     showMobileNotification('Reset!')
   }
   
@@ -744,11 +679,9 @@ onMounted(() => {
   resetBtn?.addEventListener('click', resetDefaults)
   mobileResetBtn?.addEventListener('click', resetDefaults)
 
-  // Haze animations
+  // Haze animations — only run while intensity > 0
   const haze1 = document.getElementById('hazeSlider1')
-  const haze2 = document.getElementById('hazeSlider2')
-  startHazeAnimation(1)
-  startHazeAnimation(2)
+  syncHazeAnimation(1)
   const updateFg = (circleNum) => {
     const hv = Number(document.getElementById(`hazeSlider${circleNum}`)?.value || 0)
     const fg = document.getElementById(`foregroundText${circleNum}`)
@@ -757,15 +690,25 @@ onMounted(() => {
       fg.style.setProperty('opacity', String(opacity), 'important')
     }
   }
-  haze1?.addEventListener('input', () => { updateFg(1); updateBlur(1); updateURL() })
-  haze2?.addEventListener('input', () => { updateFg(2); updateBlur(2); updateURL() })
+  haze1?.addEventListener('input', () => {
+    updateFg(1)
+    updateBlur(1)
+    syncHazeAnimation(1)
+    updateURL()
+  })
   updateFg(1)
-  updateFg(2)
 
-  // Fill background text to cover eyes
-  const fillAll = () => { fillBackgroundText(1); fillBackgroundText(2) }
-  fillAll()
-  window.addEventListener('resize', fillAll)
+  fillBackgroundText(1)
+  resizeFillHandler = () => fillBackgroundText(1)
+  window.addEventListener('resize', resizeFillHandler)
+})
+
+onUnmounted(() => {
+  stopFloaterLoop()
+  stopHazeAnimation(1)
+  if (resizeFillHandler) {
+    window.removeEventListener('resize', resizeFillHandler)
+    resizeFillHandler = null
+  }
 })
 </script>
-

@@ -3,7 +3,17 @@
     <div class="about-section">
       <div class="profile-section">
         <div class="profile-image">
-          <img src="/image.png" alt="Ru Hickson">
+          <picture>
+            <source srcset="/image.webp" type="image/webp" />
+            <img
+              src="/image-sm.jpg"
+              alt="Ru Hickson"
+              width="384"
+              height="512"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
         </div>
         <div>
           <h2>Ru Hickson</h2>
