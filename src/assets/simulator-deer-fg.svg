@@ -1,4 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="Simple deer silhouette">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="Deer and streetlight in foreground">
+  <!-- Streetlight (same ground plane as the deer) -->
+  <ellipse cx="280" cy="250" rx="110" ry="70" fill="#ffe9a0" opacity="0.35" />
+  <ellipse cx="280" cy="230" rx="55" ry="34" fill="#fff3c4" opacity="0.55" />
+  <g>
+    <rect x="168" y="260" width="28" height="570" rx="8" fill="#1a222e" />
+    <rect x="168" y="260" width="28" height="570" rx="8" fill="#4a5568" opacity="0.35" />
+    <rect x="148" y="820" width="68" height="22" rx="5" fill="#141a24" />
+    <path d="M182 260 L182 188 L300 168 L300 214 L210 228 L210 260 Z" fill="#2a3344" />
+    <path d="M182 260 L182 188 L300 168 L300 214 L210 228 L210 260 Z" fill="#5b677a" opacity="0.3" />
+    <ellipse cx="300" cy="190" rx="58" ry="34" fill="#2f3848" />
+    <ellipse cx="300" cy="198" rx="40" ry="20" fill="#ffe7a0" />
+    <ellipse cx="300" cy="198" rx="22" ry="11" fill="#fff8d6" />
+  </g>
+
+  <!-- Deer -->
   <g fill="#3f2a1f">
     <ellipse cx="560" cy="620" rx="210" ry="110" />
     <ellipse cx="355" cy="560" rx="85" ry="70" />

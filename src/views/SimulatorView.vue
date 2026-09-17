@@ -9,7 +9,16 @@
       <div class="circle-group">
         <div class="circle" id="circle1">
           <img class="image-layer background-image" id="backgroundText1" :src="backgroundSceneImage" alt="Green field and mountain background" />
-          <img class="image-layer foreground-image" id="foregroundText1" :src="foregroundDeerImage" alt="Deer in foreground" />
+          <img class="image-layer foreground-image" id="foregroundText1" :src="foregroundDeerImage" alt="Deer and streetlight in foreground" />
+          <div class="noisy-light-glow" id="noisyLightGlow1" aria-hidden="true"></div>
+          <div class="noisy-light-rays" id="noisyLightRays1" aria-hidden="true">
+            <span
+              v-for="i in 16"
+              :key="`ray-${i}`"
+              class="noisy-light-ray"
+              :style="{ '--ray-index': i - 1 }"
+            />
+          </div>
           <div class="veil" id="veil1"></div>
           <div class="floaters" id="floaters1"></div>
         </div>
@@ -51,7 +60,10 @@
             <div v-show="currentCarouselSlide === 8" class="slider-group carousel-slide" data-label="Haze">
               <input type="range" min="0" max="100" value="0" id="hazeSlider1" aria-label="Adjust haze">
             </div>
-            <div v-show="currentCarouselSlide === 9" class="glaucoma-section carousel-slide" data-label="Can't see">
+            <div v-show="currentCarouselSlide === 9" class="slider-group carousel-slide" data-label="Noisy Light">
+              <input type="range" min="0" max="100" value="0" id="noisyLightSlider1" aria-label="Adjust noisy light">
+            </div>
+            <div v-show="currentCarouselSlide === 10" class="glaucoma-section carousel-slide" data-label="Can't see">
               <div class="glaucoma-grid" role="grid" aria-label="Can't see regions">
                 <div v-for="row in 4" :key="`row-${row}`" class="grid-row" role="row">
                   <button
@@ -111,8 +123,10 @@ const CAROUSEL_SLIDE_LABELS = [
   'Floaters',
   'Floater Size',
   'Haze',
+  'Noisy Light',
   "Can't see"
 ]
+const CANT_SEE_SLIDE = 10
 const currentCarouselSlide = ref(0)
 const carouselTitleText = computed(() => CAROUSEL_SLIDE_LABELS[currentCarouselSlide.value] ?? '')
 const glaucomaCells = ref(Array.from({ length: 16 }, () => false))
@@ -139,7 +153,7 @@ function glaucomaBinaryFromState() {
 function prevCarouselSlide() {
   const n = CAROUSEL_SLIDE_LABELS.length
   currentCarouselSlide.value = (currentCarouselSlide.value - 1 + n) % n
-  if (currentCarouselSlide.value === 9) {
+  if (currentCarouselSlide.value === CANT_SEE_SLIDE) {
     const circle = document.getElementById('circle1')
     const overlay = circle?.querySelector('.glaucoma-overlay')
     layoutGlaucomaSegments(circle, overlay)
@@ -149,7 +163,7 @@ function prevCarouselSlide() {
 function nextCarouselSlide() {
   const n = CAROUSEL_SLIDE_LABELS.length
   currentCarouselSlide.value = (currentCarouselSlide.value + 1) % n
-  if (currentCarouselSlide.value === 9) {
+  if (currentCarouselSlide.value === CANT_SEE_SLIDE) {
     const circle = document.getElementById('circle1')
     const overlay = circle?.querySelector('.glaucoma-overlay')
     layoutGlaucomaSegments(circle, overlay)
@@ -355,11 +369,45 @@ function updateBlur(circleNum) {
   const blurUpClose = Number(document.getElementById(`blurUpCloseSlider${circleNum}`)?.value || 0)
   const blurFarAway = Number(document.getElementById(`blurFarAwaySlider${circleNum}`)?.value || 0)
   const hazeAmt = Number(document.getElementById(`hazeSlider${circleNum}`)?.value || 0) / 100
+  const noisy = Number(document.getElementById(`noisyLightSlider${circleNum}`)?.value || 0) / 100
+  const noisyBlur = noisy * 14
   const fg = document.getElementById(`foregroundText${circleNum}`)
   const bg = document.getElementById(`backgroundText${circleNum}`)
   const base = `brightness(${bright}) grayscale(${hazeAmt})`
-  if (fg) fg.style.filter = `${base} blur(${blur + blurUpClose}px)`
-  if (bg) bg.style.filter = `${base} blur(${blur + blurFarAway}px)`
+  // Scene softens under noisy light; lamp bloom/rays stay sharp on their own overlays
+  if (fg) fg.style.filter = `${base} blur(${blur + blurUpClose + noisyBlur}px)`
+  if (bg) bg.style.filter = `${base} blur(${blur + blurFarAway + noisyBlur}px)`
+  updateNoisyLightGlow(circleNum)
+}
+
+function updateNoisyLightGlow(circleNum) {
+  const noisy = Number(document.getElementById(`noisyLightSlider${circleNum}`)?.value || 0) / 100
+  // Ease hard so mid/high values feel extreme
+  const punch = Math.pow(noisy, 1.35)
+  const glow = document.getElementById(`noisyLightGlow${circleNum}`)
+  if (glow) {
+    const scale = 0.3 + punch * 7.5
+    const opacity = Math.min(1, punch * 1.25)
+    glow.style.setProperty('--noisy-scale', String(scale))
+    glow.style.setProperty('--noisy-opacity', String(opacity))
+    glow.style.setProperty('--noisy-bloom', String(10 + punch * 64))
+  }
+  const rays = document.getElementById(`noisyLightRays${circleNum}`)
+  if (rays) {
+    const circle = document.getElementById(`circle${circleNum}`)
+    const size = circle?.clientWidth || 300
+    // Rays length/width ramp aggressively; near-zero stays invisible
+    const rayOpacity = noisy < 0.04 ? 0 : Math.min(1, 0.15 + punch * 1.1)
+    const rayLengthPx = (0.2 + punch * 1.55) * size
+    const rayWidth = 2 + punch * (size * 0.045)
+    const raySpread = 0.55 + punch * 1.05
+    rays.style.setProperty('--ray-opacity', String(rayOpacity))
+    rays.style.setProperty('--ray-length', `${rayLengthPx}px`)
+    rays.style.setProperty('--ray-width', `${rayWidth}px`)
+    rays.style.setProperty('--ray-spread', String(raySpread))
+    rays.style.setProperty('--ray-blur', `${1 + punch * 7}px`)
+    rays.style.setProperty('--ray-glow', `${4 + punch * 32}px`)
+  }
 }
 
 function fillBackgroundText(circleNum) {
@@ -551,6 +599,14 @@ onMounted(() => {
   size1?.addEventListener('input', refreshFloaters1)
   refreshFloaters1()
 
+  // Noisy Light — bloom/rays over a softening scene
+  const noisy1 = document.getElementById('noisyLightSlider1')
+  noisy1?.addEventListener('input', () => {
+    updateBlur(1)
+    updateURL()
+  })
+  updateNoisyLightGlow(1)
+
   // Diagnose
   const goToDiagnosis = () => {
     updateURL()
@@ -638,7 +694,8 @@ onMounted(() => {
       warpSlider1: 0,
       floatersSlider1: 0,
       sizeSlider1: 10,
-      hazeSlider1: 0
+      hazeSlider1: 0,
+      noisyLightSlider1: 0
     }
     Object.entries(defaults).forEach(([id, value]) => {
       const el = document.getElementById(id)

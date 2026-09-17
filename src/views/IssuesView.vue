@@ -24,7 +24,7 @@
       <p>Irregular curvature of the cornea or lens causing blurred or distorted vision.</p>
       <div class="issue-actions">
         <a href="https://en.wikipedia.org/wiki/Astigmatism" target="_blank" class="read-more">Read more</a>
-        <a href="/?colorSlider1=100&blurSlider1=3&blurUpCloseSlider1=0&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&hazeSlider1=0&glaucoma1=0000000000000000&view=single" class="simulate-btn">Simulate</a>
+        <a href="/?colorSlider1=100&blurSlider1=0&blurUpCloseSlider1=0&blurFarAwaySlider1=0&curtainSlider1=0&warpSlider1=0&floatersSlider1=0&sizeSlider1=10&hazeSlider1=0&noisyLightSlider1=60&glaucoma1=0000000000000000&view=single" class="simulate-btn">Simulate</a>
       </div>
     </div>
 

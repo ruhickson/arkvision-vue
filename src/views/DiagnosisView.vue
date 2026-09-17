@@ -5,12 +5,21 @@
         <strong>Important Information:</strong> This tool uses an algorithm to assess your vision based on the symptoms you've selected. It is not a substitute for professional medical advice, diagnosis, or treatment.
       </div>
       <div class="disclaimer-checkbox">
-        <input type="checkbox" id="disclaimer-checkbox">
+        <input
+          id="disclaimer-checkbox"
+          v-model="disclaimerAccepted"
+          type="checkbox"
+        >
         <label for="disclaimer-checkbox">I understand this is an algorithmic assessment, not a substitute for professional advice.</label>
       </div>
     </div>
 
-    <div class="diagnosis-content" id="diagnosis-content">
+    <div
+      class="diagnosis-content"
+      id="diagnosis-content"
+      :class="{ active: disclaimerAccepted }"
+      :aria-hidden="disclaimerAccepted ? 'false' : 'true'"
+    >
       <h2>Vision Diagnosis</h2>
 
       <section v-if="hasReport" class="diagnosis-report" aria-labelledby="report-heading">
@@ -101,10 +110,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+const disclaimerAccepted = ref(false)
 
 function symptomListFromQuery(q) {
   const left = q.leftEyeSymptoms ? String(q.leftEyeSymptoms).split(',').filter(Boolean) : []
@@ -124,7 +134,8 @@ const SLIDER_EYE1 = [
   ['warpSlider1', 'Warp'],
   ['floatersSlider1', 'Floaters'],
   ['sizeSlider1', 'Floater size'],
-  ['hazeSlider1', 'Haze']
+  ['hazeSlider1', 'Haze'],
+  ['noisyLightSlider1', 'Noisy Light']
 ]
 
 /** Threshold on a 0–100 style scale (blur sliders 0–10 are compared as value × 10). */
@@ -207,7 +218,7 @@ const potentialDiagnosesFromScores = computed(() => {
   const blur = numVal(q, 'blurSlider1')
   if (blur != null && blur * 10 >= SCORE_THRESHOLD) {
     rows.push({
-      key: 'astigmatism',
+      key: 'astigmatism-blur',
       label: 'Astigmatism',
       from: 'Blur',
       scoreLabel: `${blur} / 10`
@@ -244,6 +255,16 @@ const potentialDiagnosesFromScores = computed(() => {
       label: 'Detached retina (possible)',
       from: 'Curtain',
       scoreLabel: `${curtain} / 100`
+    })
+  }
+
+  const noisy = numVal(q, 'noisyLightSlider1')
+  if (noisy != null && noisy >= SCORE_THRESHOLD) {
+    rows.push({
+      key: 'astigmatism',
+      label: 'Astigmatism',
+      from: 'Noisy Light',
+      scoreLabel: `${noisy} / 100`
     })
   }
 
@@ -323,17 +344,58 @@ onMounted(() => {
   const recommendations = generateRecommendations(symptoms)
   const result = document.querySelector('.diagnosis-result')
   result?.insertAdjacentHTML('beforeend', recommendations)
-
-  const checkbox = document.getElementById('disclaimer-checkbox')
-  const diagnosisContent = document.getElementById('diagnosis-content')
-  checkbox?.addEventListener('change', function() {
-    if (this.checked) diagnosisContent?.classList.add('active')
-    else diagnosisContent?.classList.remove('active')
-  })
 })
 </script>
 
 <style scoped>
+.disclaimer-container {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid #c9a227;
+  background: rgba(255, 236, 150, 0.18);
+}
+
+.disclaimer-text {
+  margin-bottom: 0.85rem;
+  line-height: 1.45;
+}
+
+.disclaimer-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.disclaimer-checkbox input[type='checkbox'] {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.disclaimer-checkbox label {
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.diagnosis-content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.25s ease;
+}
+
+.diagnosis-content.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  max-height: none;
+  overflow: visible;
+}
+
 .diagnosis-report {
   margin: 1rem 0 1.5rem;
   padding: 1rem 1.1rem;

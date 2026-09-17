@@ -206,6 +206,67 @@ body.dark-mode .slider-group label {
     z-index: 1;
 }
 
+.noisy-light-glow {
+    position: absolute;
+    left: 30%;
+    top: 19.5%;
+    width: 22%;
+    height: 22%;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 3;
+    mix-blend-mode: screen;
+    background:
+      radial-gradient(
+        circle,
+        rgba(255, 248, 210, 0.98) 0%,
+        rgba(255, 214, 110, 0.7) 28%,
+        rgba(255, 180, 60, 0.28) 52%,
+        transparent 72%
+      );
+    transform: translate(-50%, -50%) scale(var(--noisy-scale, 0.35));
+    opacity: var(--noisy-opacity, 0);
+    filter: blur(calc(var(--noisy-bloom, 12) * 1px));
+    transition: transform 0.12s ease-out, opacity 0.12s ease-out, filter 0.12s ease-out;
+}
+
+.noisy-light-rays {
+    position: absolute;
+    left: 30%;
+    top: 19.5%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 3;
+    opacity: var(--ray-opacity, 0);
+    mix-blend-mode: screen;
+    filter: blur(var(--ray-blur, 1px));
+    transition: opacity 0.12s ease-out;
+}
+
+.noisy-light-ray {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--ray-width, 2px);
+    height: var(--ray-length, 40px);
+    transform-origin: 50% 100%;
+    transform:
+      translate(-50%, -100%)
+      rotate(calc(var(--ray-index) * 22.5deg))
+      scaleY(var(--ray-spread, 0.55));
+    background: linear-gradient(
+      to top,
+      rgba(255, 252, 230, 0.98) 0%,
+      rgba(255, 220, 120, 0.75) 35%,
+      rgba(255, 180, 70, 0.25) 70%,
+      transparent 100%
+    );
+    border-radius: 40% 40% 0 0;
+    box-shadow: 0 0 var(--ray-glow, 4px) rgba(255, 230, 140, 0.85);
+    transition: height 0.12s ease-out, width 0.12s ease-out, transform 0.12s ease-out;
+}
+
 .veil {
     position: absolute;
     top: 0;
@@ -215,7 +276,7 @@ body.dark-mode .slider-group label {
     background-color: rgba(0, 0, 0, 0.8);
     transition: clip-path 0.3s;
     pointer-events: none;
-    z-index: 2;
+    z-index: 4;
     clip-path: circle(0% at 50% 0); /* Start with no curtain */
 }
 
@@ -1420,7 +1481,7 @@ body.dark-mode .grid-cell.active {
         display: none !important;
     }
     
-    /* .side-vertical-buttons: legacy arkive markup only — unused by Vue templates */
+    /* .side-vertical-buttons: unused by Vue templates */
     
     /* Ensure circles are properly sized */
     .circle {
