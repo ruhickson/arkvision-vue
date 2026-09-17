@@ -52,30 +52,19 @@
               <input type="range" min="0" max="100" value="0" id="hazeSlider1" aria-label="Adjust haze">
             </div>
             <div v-show="currentCarouselSlide === 9" class="glaucoma-section carousel-slide" data-label="Can't see">
-              <div class="glaucoma-grid">
-                <div class="grid-row">
-                  <div class="grid-cell" data-position="0,0"></div>
-                  <div class="grid-cell" data-position="0,1"></div>
-                  <div class="grid-cell" data-position="0,2"></div>
-                  <div class="grid-cell" data-position="0,3"></div>
-                </div>
-                <div class="grid-row">
-                  <div class="grid-cell" data-position="1,0"></div>
-                  <div class="grid-cell" data-position="1,1"></div>
-                  <div class="grid-cell" data-position="1,2"></div>
-                  <div class="grid-cell" data-position="1,3"></div>
-                </div>
-                <div class="grid-row">
-                  <div class="grid-cell" data-position="2,0"></div>
-                  <div class="grid-cell" data-position="2,1"></div>
-                  <div class="grid-cell" data-position="2,2"></div>
-                  <div class="grid-cell" data-position="2,3"></div>
-                </div>
-                <div class="grid-row">
-                  <div class="grid-cell" data-position="3,0"></div>
-                  <div class="grid-cell" data-position="3,1"></div>
-                  <div class="grid-cell" data-position="3,2"></div>
-                  <div class="grid-cell" data-position="3,3"></div>
+              <div class="glaucoma-grid" role="grid" aria-label="Can't see regions">
+                <div v-for="row in 4" :key="`row-${row}`" class="grid-row" role="row">
+                  <button
+                    v-for="col in 4"
+                    :key="`cell-${row}-${col}`"
+                    type="button"
+                    class="grid-cell"
+                    :class="{ active: glaucomaCells[(row - 1) * 4 + (col - 1)] }"
+                    :data-position="`${row - 1},${col - 1}`"
+                    :aria-pressed="glaucomaCells[(row - 1) * 4 + (col - 1)] ? 'true' : 'false'"
+                    :aria-label="`Can't see region row ${row}, column ${col}`"
+                    @click="toggleGlaucomaCell((row - 1) * 4 + (col - 1))"
+                  />
                 </div>
               </div>
             </div>
@@ -126,15 +115,45 @@ const CAROUSEL_SLIDE_LABELS = [
 ]
 const currentCarouselSlide = ref(0)
 const carouselTitleText = computed(() => CAROUSEL_SLIDE_LABELS[currentCarouselSlide.value] ?? '')
+const glaucomaCells = ref(Array.from({ length: 16 }, () => false))
+
+function toggleGlaucomaCell(index) {
+  if (index < 0 || index > 15) return
+  const next = glaucomaCells.value.slice()
+  next[index] = !next[index]
+  glaucomaCells.value = next
+  syncGlaucomaOverlayFromState()
+  updateURL()
+}
+
+function applyGlaucomaBinary(binary) {
+  if (!binary || binary.length !== 16) return
+  glaucomaCells.value = [...binary].map(c => c === '1')
+  syncGlaucomaOverlayFromState()
+}
+
+function glaucomaBinaryFromState() {
+  return glaucomaCells.value.map(on => (on ? '1' : '0')).join('')
+}
 
 function prevCarouselSlide() {
   const n = CAROUSEL_SLIDE_LABELS.length
   currentCarouselSlide.value = (currentCarouselSlide.value - 1 + n) % n
+  if (currentCarouselSlide.value === 9) {
+    const circle = document.getElementById('circle1')
+    const overlay = circle?.querySelector('.glaucoma-overlay')
+    layoutGlaucomaSegments(circle, overlay)
+  }
 }
 
 function nextCarouselSlide() {
   const n = CAROUSEL_SLIDE_LABELS.length
   currentCarouselSlide.value = (currentCarouselSlide.value + 1) % n
+  if (currentCarouselSlide.value === 9) {
+    const circle = document.getElementById('circle1')
+    const overlay = circle?.querySelector('.glaucoma-overlay')
+    layoutGlaucomaSegments(circle, overlay)
+  }
 }
 
 // Simple XOR + base64 for share link
@@ -146,42 +165,54 @@ function xorDecrypt(str) {
   return atob(str).split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ XOR_KEY)).join('')
 }
 
-function initializeGlaucomaGrid() {
-  const groups = document.querySelectorAll('.circle-group')
-  groups.forEach((group) => {
-    const circle = group.querySelector('.circle')
-    const grid = group.querySelector('.glaucoma-grid')
-    if (!circle || !grid) return
-    let overlay = circle.querySelector('.glaucoma-overlay')
-    if (!overlay) {
-      overlay = document.createElement('div')
-      overlay.className = 'glaucoma-overlay'
-      circle.appendChild(overlay)
-    }
-    const segments = new Map()
-    grid.querySelectorAll('.grid-cell').forEach(cell => {
-      const [row, col] = cell.dataset.position.split(',').map(Number)
+let glaucomaReady = false
+
+function layoutGlaucomaSegments(circle, overlay) {
+  if (!circle || !overlay) return
+  const segmentWidth = circle.clientWidth / 4
+  const segmentHeight = circle.clientHeight / 4
+  overlay.querySelectorAll('.glaucoma-segment').forEach(segment => {
+    const row = Number(segment.dataset.row)
+    const col = Number(segment.dataset.col)
+    segment.style.width = `${segmentWidth}px`
+    segment.style.height = `${segmentHeight}px`
+    segment.style.left = `${col * segmentWidth}px`
+    segment.style.top = `${row * segmentHeight}px`
+  })
+}
+
+function syncGlaucomaOverlayFromState() {
+  const circle = document.getElementById('circle1')
+  if (!circle) return
+  let overlay = circle.querySelector('.glaucoma-overlay')
+  if (!overlay) {
+    overlay = document.createElement('div')
+    overlay.className = 'glaucoma-overlay'
+    circle.appendChild(overlay)
+  }
+  if (!glaucomaReady || overlay.querySelectorAll('.glaucoma-segment').length !== 16) {
+    overlay.innerHTML = ''
+    for (let i = 0; i < 16; i++) {
+      const row = Math.floor(i / 4)
+      const col = i % 4
       const segment = document.createElement('div')
       segment.className = 'glaucoma-segment'
-      const segmentWidth = circle.offsetWidth / 4
-      const segmentHeight = circle.offsetHeight / 4
-      segment.style.width = `${segmentWidth}px`
-      segment.style.height = `${segmentHeight}px`
-      segment.style.left = `${col * segmentWidth}px`
-      segment.style.top = `${row * segmentHeight}px`
-      segment.style.opacity = '0'
+      segment.dataset.row = String(row)
+      segment.dataset.col = String(col)
+      segment.style.opacity = glaucomaCells.value[i] ? '1' : '0'
       overlay.appendChild(segment)
-      segments.set(cell, segment)
+    }
+    glaucomaReady = true
+  } else {
+    overlay.querySelectorAll('.glaucoma-segment').forEach((segment, i) => {
+      segment.style.opacity = glaucomaCells.value[i] ? '1' : '0'
     })
-    grid.querySelectorAll('.grid-cell').forEach(cell => {
-      cell.addEventListener('click', () => {
-        const segment = segments.get(cell)
-        const isActive = cell.classList.toggle('active')
-        if (segment) segment.style.opacity = isActive ? '1' : '0'
-        updateURL()
-      })
-    })
-  })
+  }
+  layoutGlaucomaSegments(circle, overlay)
+}
+
+function initializeGlaucomaGrid() {
+  syncGlaucomaOverlayFromState()
 }
 
 const MAX_FLOATERS = 24
@@ -288,14 +319,8 @@ function updateURL() {
     group.querySelectorAll('input[type="range"]').forEach(slider => {
       params.set(slider.id, slider.value)
     })
-    const grid = group.querySelector('.glaucoma-grid')
-    if (grid) {
-      const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-      let binary = ''
-      cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
-      params.set('glaucoma1', binary)
-    }
   }
+  params.set('glaucoma1', glaucomaBinaryFromState())
   params.set('view', 'single')
   const newURL = `${window.location.pathname}?${params.toString()}`
   window.history.replaceState({}, '', newURL)
@@ -318,25 +343,8 @@ function restoreFromURL() {
         slider.dispatchEvent(new Event('input'))
       }
     })
-    initializeGlaucomaGrid()
-    const grid = group.querySelector('.glaucoma-grid')
-    const binary = params.get('glaucoma1')
-    if (grid && binary && binary.length === 16) {
-      const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-      const circle = group.querySelector('.circle')
-      const overlay = circle?.querySelector('.glaucoma-overlay')
-      cells.forEach((cell, i) => {
-        const segment = overlay?.querySelectorAll('.glaucoma-segment')[i]
-        if (binary[i] === '1') {
-          cell.classList.add('active')
-          if (segment) segment.style.opacity = '1'
-        } else {
-          cell.classList.remove('active')
-          if (segment) segment.style.opacity = '0'
-        }
-      })
-    }
   }
+  applyGlaucomaBinary(params.get('glaucoma1'))
   enforceSingleEye()
   createFloaters('floaters1', document.getElementById('floatersSlider1')?.value || 0, document.getElementById('sizeSlider1')?.value || 10)
 }
@@ -461,6 +469,9 @@ let resizeFillHandler = null
 
 onMounted(() => {
   enforceSingleEye()
+  // Always wire Can't see grid (previously skipped when URL had no params)
+  initializeGlaucomaGrid()
+
   // Encrypted restore first if present
   const s = new URLSearchParams(window.location.search).get('s')
   if (s) {
@@ -475,24 +486,7 @@ onMounted(() => {
           slider.dispatchEvent(new Event('input'))
         }
       })
-      initializeGlaucomaGrid()
-      const grid = firstGroup?.querySelector('.glaucoma-grid')
-      const binary = state.glaucoma1
-      if (grid && binary && binary.length === 16) {
-        const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-        const circle = firstGroup?.querySelector('.circle')
-        const overlay = circle?.querySelector('.glaucoma-overlay')
-        cells.forEach((cell, i) => {
-          const segment = overlay?.querySelectorAll('.glaucoma-segment')[i]
-          if (binary[i] === '1') {
-            cell.classList.add('active')
-            if (segment) segment.style.opacity = '1'
-          } else {
-            cell.classList.remove('active')
-            if (segment) segment.style.opacity = '0'
-          }
-        })
-      }
+      applyGlaucomaBinary(state.glaucoma1)
       enforceSingleEye()
       createFloaters('floaters1', state.floatersSlider1 ?? 0, state.sizeSlider1 ?? 10)
     } catch (e) {
@@ -578,17 +572,10 @@ onMounted(() => {
 
   // Share current config (encrypted)
   const shareConfig = async () => {
-    const params = { view: 'single' }
+    const params = { view: 'single', glaucoma1: glaucomaBinaryFromState() }
     const group = getFirstCircleGroup()
     if (group) {
       group.querySelectorAll('input[type="range"]').forEach(slider => { params[slider.id] = slider.value })
-      const grid = group.querySelector('.glaucoma-grid')
-      if (grid) {
-        const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-        let binary = ''
-        cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
-        params.glaucoma1 = binary
-      }
     }
     const encrypted = xorEncrypt(JSON.stringify(params))
     const url = `${window.location.origin}${window.location.pathname}?s=${encodeURIComponent(encrypted)}`
@@ -608,14 +595,8 @@ onMounted(() => {
       group.querySelectorAll('input[type="range"]').forEach(slider => {
         params.set(slider.id, slider.value)
       })
-      const grid = group.querySelector('.glaucoma-grid')
-      if (grid) {
-        const cells = Array.from(grid.querySelectorAll('.grid-cell'))
-        let binary = ''
-        cells.forEach(cell => { binary += cell.classList.contains('active') ? '1' : '0' })
-        params.set('glaucoma1', binary)
-      }
     }
+    params.set('glaucoma1', glaucomaBinaryFromState())
     params.set('view', 'single')
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`
     try {
@@ -663,12 +644,7 @@ onMounted(() => {
       const el = document.getElementById(id)
       if (el) { el.value = value; el.dispatchEvent(new Event('input')) }
     })
-    document.querySelectorAll('.glaucoma-grid').forEach(grid => {
-      grid.querySelectorAll('.grid-cell').forEach(cell => cell.classList.remove('active'))
-    })
-    document.querySelectorAll('.glaucoma-overlay').forEach(overlay => {
-      overlay.querySelectorAll('.glaucoma-segment').forEach(seg => { seg.style.opacity = '0' })
-    })
+    applyGlaucomaBinary('0000000000000000')
     createFloaters('floaters1', 0, 10)
     window.history.replaceState({}, '', window.location.pathname)
     showMobileNotification('Reset!')

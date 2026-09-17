@@ -640,6 +640,27 @@ body.dark-mode .glaucoma-label {
     transition: background-color 0.2s;
     min-width: 30px;
     min-height: 30px;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    touch-action: manipulation;
+}
+
+body.dark-mode .grid-cell {
+    background-color: #3a3a3a;
+    border-color: #555;
+}
+
+body.dark-mode .grid-cell:hover {
+    background-color: #4a4a4a;
+}
+
+body.dark-mode .grid-cell.active {
+    background-color: #2196F3;
+    border-color: #42a5f5;
 }
 
 .grid-cell:hover {
@@ -662,8 +683,8 @@ body.dark-mode .glaucoma-label {
 
 .glaucoma-segment {
     position: absolute;
-    background-color: #f0f0f0;
-    transition: opacity 0.3s;
+    background-color: #f2f0ea;
+    transition: opacity 0.2s ease;
     opacity: 0;
 }
 
