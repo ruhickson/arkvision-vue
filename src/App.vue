@@ -1,19 +1,38 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { applyThemeFromStorage } from './theme'
+import { ref, onMounted, onUnmounted } from 'vue'
+import {
+  applyThemeFromStorage,
+  applyAccessibleFromStorage,
+  setAccessibleMode,
+  isAccessibleMode,
+  ACCESSIBLE_EVENT
+} from './theme'
 
 const mobileMenuOpen = ref(false)
+const accessibleOn = ref(false)
+
 function toggleMobileMenu() {
   mobileMenuOpen.value = !mobileMenuOpen.value
   document.body.style.overflow = mobileMenuOpen.value ? 'hidden' : ''
 }
+
 function toggleAccessible() {
-  const on = document.body.classList.toggle('accessible-mode')
-  document.documentElement.classList.toggle('accessible-mode', on)
+  setAccessibleMode(!isAccessibleMode())
+}
+
+function syncAccessibleFromDom(e) {
+  accessibleOn.value = e?.detail?.enabled ?? isAccessibleMode()
 }
 
 onMounted(() => {
   applyThemeFromStorage()
+  applyAccessibleFromStorage()
+  accessibleOn.value = isAccessibleMode()
+  window.addEventListener(ACCESSIBLE_EVENT, syncAccessibleFromDom)
+})
+
+onUnmounted(() => {
+  window.removeEventListener(ACCESSIBLE_EVENT, syncAccessibleFromDom)
 })
 </script>
 
@@ -25,7 +44,15 @@ onMounted(() => {
           <router-link to="/">ArkSight</router-link>
           <span class="logo-ovo"></span>
         </h1>
-        <button class="accessible-btn" @click="toggleAccessible">Accessible</button>
+        <button
+          class="accessible-btn"
+          type="button"
+          :aria-pressed="accessibleOn ? 'true' : 'false'"
+          :title="accessibleOn ? 'Turn off accessible mode' : 'Turn on accessible mode'"
+          @click="toggleAccessible"
+        >
+          Accessible
+        </button>
       </div>
     </header>
 
@@ -66,7 +93,18 @@ onMounted(() => {
   background: #0b3a7e;
   border: 1px solid #0f4ea3;
   color: #fff;
-  padding: 8px 12px;
+  padding: 10px 14px;
+  min-height: 44px;
+  min-width: 7.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.accessible-btn[aria-pressed='true'] {
+  background: #e8f0fe;
+  color: #0b3a7e;
+  border-color: #fff;
 }
 .bottom-nav {
   position: fixed;
